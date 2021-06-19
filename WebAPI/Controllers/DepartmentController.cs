@@ -25,7 +25,16 @@ namespace WebAPI.Controllers
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<Department>>> GetDepartments()
 		{
-			return await _context.Departments.Include(c => c.Employees).ToListAsync();
+			return await _context.Departments.ToListAsync();
+		}
+
+		// GET: api/Department/EmployeeList/5
+		[HttpGet("employeelist/{id}")]
+		public async Task<ActionResult<IEnumerable<Employee>>> GetListEmployeeOfDepartment(int id)
+		{
+			var department = await _context.Departments.Include(c => c.Employees)
+											.FirstOrDefaultAsync(c => c.Id == id);
+			return department.Employees;
 		}
 
 		// GET: api/Department/5

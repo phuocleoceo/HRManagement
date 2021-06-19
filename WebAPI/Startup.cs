@@ -13,8 +13,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using WebAPI.Data;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace WebAPI
 {
@@ -30,13 +30,30 @@ namespace WebAPI
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			// Cors
+			services.AddCors(c =>
+				c.AddPolicy("AllowOrigin", options =>
+				{
+					options.AllowAnyOrigin()
+						   .AllowAnyMethod()
+						   .AllowAnyHeader();
+				})
+			);
+
+			// Database
 			services.AddDbContext<APIContext>(options =>
 			{
 				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 			});
-			services.AddControllers().AddNewtonsoftJson(options =>
-				options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
+			//Controller and JSON
+			services.AddControllers()
+			.AddNewtonsoftJson(options =>
+				options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
+			.AddNewtonsoftJson(options =>
+				options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+
+			//Swagger
 			services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
@@ -46,6 +63,10 @@ namespace WebAPI
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
+			app.UseCors(options => options.AllowAnyOrigin()
+										  .AllowAnyMethod()
+										  .AllowAnyHeader());
+
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
