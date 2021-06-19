@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
 		}
 
 		// GET: api/Department/EmployeeList/5
-		[HttpGet("employeelist/{id}")]
+		[HttpGet("employee-list/{id}")]
 		public async Task<ActionResult<IEnumerable<Employee>>> GetListEmployeeOfDepartment(int id)
 		{
 			var department = await _context.Departments.Include(c => c.Employees)

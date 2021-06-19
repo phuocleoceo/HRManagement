@@ -105,5 +105,12 @@ namespace WebAPI.Controllers
 		{
 			return _context.Employees.Any(e => e.Id == id);
 		}
+
+		// GET: api/Employee
+		[HttpGet("get-all-department-name")]
+		public async Task<ActionResult<IEnumerable<string>>> GetAllDepartmentName()
+		{
+			return await _context.Departments.Select(c => c.Name).ToListAsync();
+		}
 	}
 }
