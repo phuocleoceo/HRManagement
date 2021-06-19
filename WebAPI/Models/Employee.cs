@@ -17,6 +17,6 @@ namespace WebAPI.Models
 
 		public DateTime? DateOfJoining { get; set; }
 
-		public string PhotoFileName { get; set; }
+		public string PhotoURL { get; set; }
 	}
 }

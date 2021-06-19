@@ -17,7 +17,7 @@ namespace WebAPI.Data.Configuration
 				  Name = "Truong Minh Phuoc",
 				  DepartmentId = 1,
 				  DateOfJoining = new DateTime(2001, 08, 10),
-				  PhotoFileName = "phuoc.png"
+				  PhotoURL = "phuoc.png"
 			  }
 			);
 		}

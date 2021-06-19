@@ -41,8 +41,7 @@ namespace WebAPI.Controllers
 		[HttpGet("{id}")]
 		public async Task<ActionResult<Department>> GetDepartment(int id)
 		{
-			var department = await _context.Departments.Include(c => c.Employees)
-									.FirstOrDefaultAsync(c => c.Id == id);
+			var department = await _context.Departments.FirstOrDefaultAsync(c => c.Id == id);
 
 			if (department == null)
 			{
