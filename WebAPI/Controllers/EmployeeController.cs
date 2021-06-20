@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Data;
 using WebAPI.Models;
+using WebAPI.Models.DTO;
+using AutoMapper;
 
 namespace WebAPI.Controllers
 {
@@ -15,22 +17,26 @@ namespace WebAPI.Controllers
 	public class EmployeeController : ControllerBase
 	{
 		private readonly APIContext _context;
+		private readonly IMapper _mapper;
 
-		public EmployeeController(APIContext context)
+		public EmployeeController(APIContext context, IMapper mapper)
 		{
 			_context = context;
+			_mapper = mapper;
 		}
 
 		// GET: api/Employee
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+		public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetEmployees()
 		{
-			return await _context.Employees.Include(c => c.Department).ToListAsync();
+			return await _context.Employees.Include(c => c.Department)
+							.Select(c => _mapper.Map<EmployeeDTO>(c))
+							.ToListAsync();
 		}
 
 		// GET: api/Employee/5
 		[HttpGet("{id}")]
-		public async Task<ActionResult<Employee>> GetEmployee(int id)
+		public async Task<ActionResult<EmployeeDTO>> GetEmployee(int id)
 		{
 			var employee = await _context.Employees.Include(c => c.Department)
 											.FirstOrDefaultAsync(c => c.Id == id);
@@ -40,7 +46,7 @@ namespace WebAPI.Controllers
 				return NotFound();
 			}
 
-			return employee;
+			return _mapper.Map<EmployeeDTO>(employee);
 		}
 
 		// PUT: api/Employee/5
@@ -104,13 +110,6 @@ namespace WebAPI.Controllers
 		private bool EmployeeExists(int id)
 		{
 			return _context.Employees.Any(e => e.Id == id);
-		}
-
-		// GET: api/Employee
-		[HttpGet("get-all-department-name")]
-		public async Task<ActionResult<IEnumerable<string>>> GetAllDepartmentName()
-		{
-			return await _context.Departments.Select(c => c.Name).ToListAsync();
 		}
 	}
 }

@@ -36,11 +36,12 @@ namespace WebAPI.Controllers
 
 		// GET: api/Department/EmployeeList/5
 		[HttpGet("employee-list/{id}")]
-		public async Task<ActionResult<IEnumerable<Employee>>> GetListEmployeeOfDepartment(int id)
+		public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetListEmployeeOfDepartment(int id)
 		{
 			var department = await _context.Departments.Include(c => c.Employees)
 											.FirstOrDefaultAsync(c => c.Id == id);
-			return department.Employees;
+			var employeeList = department.Employees;
+			return employeeList.Select(c => _mapper.Map<EmployeeDTO>(c)).ToList();
 		}
 
 		// GET: api/Department/5
