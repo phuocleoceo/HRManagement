@@ -15,6 +15,8 @@ using Microsoft.OpenApi.Models;
 using WebAPI.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using WebAPI.Mapper;
+using AutoMapper;
 
 namespace WebAPI
 {
@@ -45,6 +47,9 @@ namespace WebAPI
 			{
 				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 			});
+
+			// DI
+			services.AddAutoMapper(typeof(HRMMapping));
 
 			//Controller and JSON
 			services.AddControllers()

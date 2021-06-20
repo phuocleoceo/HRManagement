@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Data;
 using WebAPI.Models;
+using AutoMapper;
+using WebAPI.Models.DTO;
 
 namespace WebAPI.Controllers
 {
@@ -15,17 +17,21 @@ namespace WebAPI.Controllers
 	public class DepartmentController : ControllerBase
 	{
 		private readonly APIContext _context;
+		private readonly IMapper _mapper;
 
-		public DepartmentController(APIContext context)
+		public DepartmentController(APIContext context, IMapper mapper)
 		{
 			_context = context;
+			_mapper = mapper;
 		}
 
 		// GET: api/Department
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Department>>> GetDepartments()
+		public async Task<ActionResult<IEnumerable<DepartmentDTO>>> GetDepartments()
 		{
-			return await _context.Departments.ToListAsync();
+			return await _context.Departments
+							.Select(c => _mapper.Map<DepartmentDTO>(c))
+							.ToListAsync();
 		}
 
 		// GET: api/Department/EmployeeList/5
@@ -39,7 +45,7 @@ namespace WebAPI.Controllers
 
 		// GET: api/Department/5
 		[HttpGet("{id}")]
-		public async Task<ActionResult<Department>> GetDepartment(int id)
+		public async Task<ActionResult<DepartmentDTO>> GetDepartment(int id)
 		{
 			var department = await _context.Departments.FirstOrDefaultAsync(c => c.Id == id);
 
@@ -48,18 +54,16 @@ namespace WebAPI.Controllers
 				return NotFound();
 			}
 
-			return department;
+			return _mapper.Map<DepartmentDTO>(department);
 		}
 
 		// PUT: api/Department/5
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPut("{id}")]
-		public async Task<IActionResult> PutDepartment(int id, Department department)
+		public async Task<IActionResult> PutDepartment(int id, DepartmentUpsertDTO duDTO)
 		{
-			if (id != department.Id)
-			{
-				return BadRequest();
-			}
+			var department = _mapper.Map<Department>(duDTO);
+			department.Id = id;
 
 			_context.Entry(department).State = EntityState.Modified;
 
@@ -85,8 +89,9 @@ namespace WebAPI.Controllers
 		// POST: api/Department
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPost]
-		public async Task<ActionResult<Department>> PostDepartment(Department department)
+		public async Task<ActionResult<Department>> PostDepartment(DepartmentUpsertDTO duDTO)
 		{
+			var department = _mapper.Map<Department>(duDTO);
 			_context.Departments.Add(department);
 			await _context.SaveChangesAsync();
 
