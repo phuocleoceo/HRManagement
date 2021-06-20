@@ -52,12 +52,10 @@ namespace WebAPI.Controllers
 		// PUT: api/Employee/5
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPut("{id}")]
-		public async Task<IActionResult> PutEmployee(int id, Employee employee)
+		public async Task<IActionResult> PutEmployee(int id, EmployeeUpsertDTO euDTO)
 		{
-			if (id != employee.Id)
-			{
-				return BadRequest();
-			}
+			var employee = _mapper.Map<Employee>(euDTO);
+			employee.Id = id;
 
 			_context.Entry(employee).State = EntityState.Modified;
 
@@ -83,8 +81,9 @@ namespace WebAPI.Controllers
 		// POST: api/Employee
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPost]
-		public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
+		public async Task<ActionResult<Employee>> PostEmployee(EmployeeUpsertDTO euDTO)
 		{
+			var employee = _mapper.Map<Employee>(euDTO);
 			_context.Employees.Add(employee);
 			await _context.SaveChangesAsync();
 
