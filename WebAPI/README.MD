@@ -1,14 +1,18 @@
 ## WebAPI
 
-**1. Restore Package**
+**0. Restore Package**
 <br/>
 dotnet restore
+
+**1. Run Command**
+<br/>
+dotnet run
 
 **2. Needed Tool**
 <br/>
 dotnet tool install --global dotnet-ef
 <br/>
-dotnet tool install -global dotnet-aspnet-codegenerator
+dotnet tool install --global dotnet-aspnet-codegenerator
 
 **3. Migrate Database**
 <br/>
@@ -24,5 +28,5 @@ dotnet aspnet-codegenerator controller -name DepartmentController -api -async -m
 
 **4. API List**
 <br/>
-![API](https://raw.githubusercontent.com/phuocleoceo/HRManagement/master/screen-shot/API.JPG?raw=true)
+![API](https://raw.githubusercontent.com/phuocleoceo/HRManagement/master/screen-shot/API.jpg)
 
