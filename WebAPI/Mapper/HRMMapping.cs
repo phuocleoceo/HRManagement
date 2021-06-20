@@ -21,9 +21,8 @@ namespace WebAPI.Mapper
 
 			CreateMap<EmployeeUpsertDTO, Employee>()
 				.ForMember(e => e.DateOfJoining, prop =>
-								   prop.MapFrom(edto => DateTime.ParseExact(edto.DateOfJoining,
-																			"dd/MM/yyyy",
-																			CultureInfo.InvariantCulture)));
+								prop.MapFrom(edto =>
+										DateTime.ParseExact(edto.DateOfJoining, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
 		}
 	}
 }

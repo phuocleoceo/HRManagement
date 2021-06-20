@@ -21,3 +21,8 @@ dotnet ef database update
 dotnet aspnet-codegenerator controller -name EmployeeController -api -async -m WebAPI.Models.Employee -dc WebAPI.Data.APIContext -outDir Controllers
 <br/>
 dotnet aspnet-codegenerator controller -name DepartmentController -api -async -m WebAPI.Models.Department -dc WebAPI.Data.APIContext -outDir Controllers
+
+**4. API List**
+<br/>
+![API](https://raw.githubusercontent.com/phuocleoceo/HRManagement/master/screen-shot/API.JPG?raw=true)
+
