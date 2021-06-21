@@ -4,37 +4,22 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
-
-
 <!-- PROJECT LOGO -->
 <br />
 
 <p align="center">
-  <p>
-    <img src="https://d33wubrfki0l68.cloudfront.net/4205d0600846259a187789ac358b9107a308d949/a4ec6/img/logo.svg" alt="Logo" style="display: block; margin-left: auto; margin-right: auto; width:50%">
+  <p align="center">
+    <img src="https://d33wubrfki0l68.cloudfront.net/4205d0600846259a187789ac358b9107a308d949/a4ec6/img/logo.svg" alt="Logo" width= 40%>
   </p>
 
   <h3 align="center">HR MANAGEMENT</h3>
-
-  <p align="center">
-    <br />
-    <a href="#">View Demo</a>
-    ·
-    <a href="#">Report Bug</a>
-    ·
-    <a href="#">Request Feature</a>
-  </p>
 </p>
 
-<!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
+        <a href="#built-with">Built With</a>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -43,35 +28,20 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
 
-
-
-<!-- ABOUT THE PROJECT -->
-## About The Project
-A simple app to learn about ASP.NET Web API 5.0 and ReactJS
-
-Benefits:
-* Bootstrap UI.
-* Easy to use.
-* Apply newest technology
-
 ### Built With
 
-This app is being developed by a group of student, currently studying at Danang University of Technology. We're using these technologies to develope the app:
+This app is being developed by phuocleoceo, currently studying at Danang University of Technology. We're using these technologies to develope the app:
 * [C#](https://docs.microsoft.com/en-us/dotnet/csharp/)
 * [ASP.NET API](https://dotnet.microsoft.com/apps/aspnet/apis)
 * [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)
 * [AutoMapper](https://automapper.org/)
 * [React Bootstrap](https://react-bootstrap.github.io/)
 
-
-<!-- GETTING STARTED -->
 ## Getting Started
 
 Necessary program to build and run this code:
@@ -84,7 +54,7 @@ Necessary program to build and run this code:
 
 1. Copy the address of the project
 2. Clone the repo
-   ```sh
+   ```
    git clone https://github.com/phuocleoceo/HRManagement
    ```
 3. Open with Visual Studio Code, change directory to WebAPI and run: 
@@ -92,16 +62,14 @@ Necessary program to build and run this code:
    dotnet run
    ```
 4. Change API_URL in client-app/src/api/apiService.js and run:
-   ```sh
+   ```
     npm i
    ```
 5.  Change directory to client-app and run: 
-	```sh
+	```
     npm start
-   ```
+    ```
 
-
-<!-- USAGE EXAMPLES -->
 ## Usage
 
 **1. Home Page**
@@ -134,14 +102,6 @@ Necessary program to build and run this code:
 	<br/>
     <br/>
     ![empEdit](https://raw.githubusercontent.com/phuocleoceo/HRManagement/master/screen-shot/EditDepartment.JPG)
-    
-
-<!-- ROADMAP -->
-## Roadmap
-
-See the [open issues](https://github.com/phuocleoceo/HRManagement) for a list of proposed features (and known issues).
-
-
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -153,15 +113,6 @@ Contributions are what make the open source community such an amazing place to b
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-
 
 <!-- CONTACT -->
 ## Contact
