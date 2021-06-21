@@ -9,6 +9,7 @@ function Department() {
 	const [addModalShow, setAddModalShow] = useState(false);
 	const [editModalShow, setEditModalShow] = useState(false);
 	const [currentDep, setCurrentDep] = useState({ Id: 0, Name: "" });
+	const [reload, setReload] = useState(0);
 
 	useEffect(() => {
 		async function refreshList() {
@@ -16,7 +17,7 @@ function Department() {
 			setDeps(list.data);
 		};
 		refreshList();
-	}, []);
+	}, [reload]);
 
 	function addModalClose() {
 		setAddModalShow(false);
@@ -26,10 +27,15 @@ function Department() {
 		setEditModalShow(false);
 	}
 
-	function deleteDep(depId) {
+	async function deleteDep(depId) {
 		if (window.confirm('Are you confirm to delete?')) {
-			DELETE_DEPARTMENT(depId);
+			await DELETE_DEPARTMENT(depId);
+			reloadPage();
 		}
+	}
+
+	function reloadPage() {
+		setReload(reload + 1);
 	}
 
 	return (
@@ -67,7 +73,8 @@ function Department() {
 
 									<EditDepModal show={editModalShow}
 										onHide={editModalClose}
-										currentDep={currentDep} />
+										currentDep={currentDep}
+										onReload={reloadPage} />
 								</ButtonToolbar>
 							</td>
 						</tr>)}
@@ -80,7 +87,9 @@ function Department() {
 					Add Department
 				</Button>
 
-				<AddDepModal show={addModalShow} onHide={addModalClose} />
+				<AddDepModal show={addModalShow}
+					onHide={addModalClose}
+					onReload={reloadPage} />
 			</ButtonToolbar>
 		</div>
 	)

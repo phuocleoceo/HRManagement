@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { POST_DEPARTMENT } from '../../api/apiService';
 
 function AddDepModal(props) {
-	const { onHide } = props;
+	const { onHide, onReload } = props;
 	async function handleSubmit(e) {
 		try {
 			e.preventDefault();
@@ -15,6 +15,8 @@ function AddDepModal(props) {
 			if (result.status === 201) {
 				alert("Add Department Success !");
 			}
+			onHide();
+			onReload();
 		}
 		catch (err) {
 			console.log(err);
@@ -25,7 +27,6 @@ function AddDepModal(props) {
 		<div className="container">
 			<Modal
 				{...props}
-				size="lg"
 				aria-labelledby="contained-modal-title-vcenter"
 				centered
 			>
@@ -45,6 +46,7 @@ function AddDepModal(props) {
 										placeholder="Department Name" />
 								</Form.Group>
 
+								<hr style={{ width: '225%' }} />
 								<Form.Group>
 									<Button variant="primary" type="submit">
 										Add Department
@@ -54,17 +56,14 @@ function AddDepModal(props) {
 						</Col>
 					</Row>
 				</Modal.Body>
-
-				<Modal.Footer>
-					<Button variant="danger" onClick={onHide}>Close</Button>
-				</Modal.Footer>
 			</Modal>
 		</div>
 	)
 }
 
 AddDepModal.propTypes = {
-	onHide: PropTypes.func
+	onHide: PropTypes.func,
+	onReload: PropTypes.func
 }
 
 export default AddDepModal;
