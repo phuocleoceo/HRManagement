@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { GET_DEPARTMENT, PUT_DEPARTMENT, DELETE_DEPARTMENT } from '../api/apiService';
-import { Table } from 'react-bootstrap';
+import { Table, Button, ButtonToolbar } from 'react-bootstrap';
+import AddDepModal from './AddDepModal';
 
 function Department() {
 	const [deps, setDeps] = useState([]);
+	const [addModalShow, setAddModalShow] = useState(false);
+	const [editModalShow, setEditModalShow] = useState(false);
 
 	useEffect(() => {
 		async function refreshList() {
@@ -11,8 +14,15 @@ function Department() {
 			setDeps(list.data);
 		};
 		refreshList();
-	}, []);
+	}, [addModalShow]);
 
+	function addModalClose() {
+		setAddModalShow(false);
+	}
+
+	function editModalClose() {
+		setEditModalShow(false);
+	}
 
 	return (
 		<div >
@@ -33,6 +43,16 @@ function Department() {
 						</tr>)}
 				</tbody>
 			</Table>
+
+			<ButtonToolbar>
+				<Button variant='primary'
+					onClick={() => setAddModalShow(true)}>
+					Add Department
+				</Button>
+
+				<AddDepModal show={addModalShow}
+					onHide={addModalClose} />
+			</ButtonToolbar>
 		</div>
 	)
 }
