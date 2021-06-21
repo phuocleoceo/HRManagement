@@ -50,7 +50,6 @@ function Employee() {
 						<th>Name</th>
 						<th>Department</th>
 						<th>DateOfJoining</th>
-						<th>PhotoURL</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -61,7 +60,6 @@ function Employee() {
 							<td>{emp.Name}</td>
 							<td>{emp.Department}</td>
 							<td>{emp.DateOfJoining}</td>
-							<td>{emp.PhotoURL}</td>
 							<td>
 								<ButtonToolbar>
 									<Button className="mr-2" variant="info"
@@ -85,7 +83,7 @@ function Employee() {
 
 									<EditEmpModal show={editModalShow}
 										onHide={editModalClose}
-										currentDep={currentEmp}
+										currentEmp={currentEmp}
 										onReload={reloadPage} />
 								</ButtonToolbar>
 							</td>
@@ -96,7 +94,7 @@ function Employee() {
 			<ButtonToolbar>
 				<Button variant='primary'
 					onClick={() => setAddModalShow(true)}>
-					Add Department
+					Add Employee
 				</Button>
 
 				<AddEmpModal show={addModalShow}

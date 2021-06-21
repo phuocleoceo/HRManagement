@@ -1,16 +1,114 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useEffect, useState } from 'react';
+import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import { POST_EMPLOYEE, GET_DEPARTMENT } from '../../api/apiService';
 
 function AddEmpModal(props) {
-	return (
-		<div>
+	const { onHide, onReload } = props;
+	const [deps, setDeps] = useState([]);
 
+	useEffect(() => {
+		async function loadDepartment() {
+			const list = await GET_DEPARTMENT();
+			setDeps(list.data);
+		};
+		loadDepartment();
+	}, []);
+
+	function formatDate(date) {
+		// yyyy-mm-dd => dd/mm/yyyy
+		var dateArray = date.split("-");
+		return dateArray[2] + "/" + dateArray[1] + "/" + dateArray[0];
+	}
+
+	async function handleSubmit(e) {
+		try {
+			e.preventDefault();
+			const employee = {
+				Name: e.target.Name.value,
+				DepartmentId: e.target.Department.value,
+				DateOfJoining: formatDate(e.target.DateOfJoining.value),
+				PhotoURL: e.target.PhotoURL.value
+			};
+			const result = await POST_EMPLOYEE(employee);
+			if (result.status === 201) {
+				alert("Add Employee Success !");
+			}
+			onHide();
+			onReload();
+		}
+		catch (err) {
+			console.log(err);
+		}
+	};
+
+	return (
+		<div className="container">
+			<Modal
+				{...props}
+				aria-labelledby="contained-modal-title-vcenter"
+				centered
+			>
+				<Modal.Header clooseButton>
+					<Modal.Title id="contained-modal-title-vcenter">
+						Add Employee
+					</Modal.Title>
+				</Modal.Header>
+
+				<Modal.Body>
+					<Row>
+						<Col sm={6}>
+							<Form onSubmit={handleSubmit}>
+								<Form.Group controlId="Name">
+									<Form.Label>Name</Form.Label>
+									<Form.Control type="text" name="Name" required
+										placeholder="Employee Name" />
+								</Form.Group>
+
+								<Form.Group controlId="Department">
+									<Form.Label>Department</Form.Label>
+									<Form.Control name="Department" as="select">
+										{deps.map(dep =>
+											<option key={dep.Id} value={dep.Id}>
+												{dep.Name}
+											</option>)}
+									</Form.Control>
+								</Form.Group>
+
+								<Form.Group controlId="DateOfJoining">
+									<Form.Label>DateOfJoining</Form.Label>
+									<Form.Control
+										type="date"
+										name="DateOfJoining"
+										required
+										placeholder="DateOfJoining"
+									/>
+								</Form.Group>
+
+								<Form.Group controlId="PhotoURL">
+									<Form.Label>PhotoURL</Form.Label>
+									<Form.Control type="text" name="PhotoURL" required
+										placeholder="PhotoURL" />
+								</Form.Group>
+
+								<hr style={{ width: '225%' }} />
+								<Form.Group>
+									<Button variant="primary" type="submit">
+										Add Department
+									</Button>
+								</Form.Group>
+							</Form>
+						</Col>
+					</Row>
+				</Modal.Body>
+			</Modal>
 		</div>
 	)
 }
 
 AddEmpModal.propTypes = {
-
+	onHide: PropTypes.func,
+	onReload: PropTypes.func
 }
 
 export default AddEmpModal;

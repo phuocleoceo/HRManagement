@@ -2,7 +2,7 @@ import axios from 'axios';
 
 let API_URL = "https://localhost:5001/api";
 
-export async function callAPI(endpoint, method, body) {
+async function callAPI(endpoint, method, body) {
     try {
         return axios({
             method,

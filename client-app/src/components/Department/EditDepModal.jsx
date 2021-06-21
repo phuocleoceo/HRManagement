@@ -8,11 +8,11 @@ function EditDepModal(props) {
 	async function handleSubmit(e) {
 		try {
 			e.preventDefault();
-			let id = e.target.Id.value;
-			let department = {
+			const id = e.target.Id.value;
+			const department = {
 				Name: e.target.Name.value
 			};
-			let result = await PUT_DEPARTMENT(id, department);
+			const result = await PUT_DEPARTMENT(id, department);
 			if (result.status === 204) {
 				alert("Edit Department Success !");
 			}

@@ -8,10 +8,10 @@ function AddDepModal(props) {
 	async function handleSubmit(e) {
 		try {
 			e.preventDefault();
-			let department = {
+			const department = {
 				Name: e.target.Name.value
 			};
-			let result = await POST_DEPARTMENT(department);
+			const result = await POST_DEPARTMENT(department);
 			if (result.status === 201) {
 				alert("Add Department Success !");
 			}
@@ -40,7 +40,7 @@ function AddDepModal(props) {
 					<Row>
 						<Col sm={6}>
 							<Form onSubmit={handleSubmit}>
-								<Form.Group controlId="DepartmentName">
+								<Form.Group controlId="Name">
 									<Form.Label>Name</Form.Label>
 									<Form.Control type="text" name="Name" required
 										placeholder="Department Name" />
