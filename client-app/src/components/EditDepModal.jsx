@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { PUT_DEPARTMENT } from '../api/apiService';
 
 function EditDepModal(props) {
-	const { show, onHide } = props;
+	const { onHide, currentDep } = props;
 	async function handleSubmit(e) {
 		try {
 			e.preventDefault();
@@ -40,15 +40,25 @@ function EditDepModal(props) {
 					<Row>
 						<Col sm={6}>
 							<Form onSubmit={handleSubmit}>
+
+								<Form.Group controlId="DepartmentId">
+									<Form.Label>Id</Form.Label>
+									<Form.Control type="text" name="Id" required
+										readOnly
+										defaultValue={currentDep.Id}
+										placeholder="Department Id" />
+								</Form.Group>
+
 								<Form.Group controlId="DepartmentName">
 									<Form.Label>Name</Form.Label>
 									<Form.Control type="text" name="Name" required
+										defaultValue={currentDep.Name}
 										placeholder="Department Name" />
 								</Form.Group>
 
 								<Form.Group>
 									<Button variant="primary" type="submit">
-										Edit Department
+										Update Department
 									</Button>
 								</Form.Group>
 							</Form>
@@ -65,7 +75,7 @@ function EditDepModal(props) {
 }
 
 EditDepModal.propTypes = {
-	show: PropTypes.bool,
+	currentDep: PropTypes.object,
 	onHide: PropTypes.func
 }
 

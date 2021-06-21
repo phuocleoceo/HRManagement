@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { POST_DEPARTMENT } from '../api/apiService';
 
 function AddDepModal(props) {
-	const { show, onHide } = props;
+	const { onHide } = props;
 	async function handleSubmit(e) {
 		try {
 			e.preventDefault();
@@ -64,7 +64,6 @@ function AddDepModal(props) {
 }
 
 AddDepModal.propTypes = {
-	show: PropTypes.bool,
 	onHide: PropTypes.func
 }
 
