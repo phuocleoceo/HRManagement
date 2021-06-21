@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { POST_DEPARTMENT } from '../api/apiService';
+import { POST_DEPARTMENT } from '../../api/apiService';
 
 function AddDepModal(props) {
 	const { onHide } = props;

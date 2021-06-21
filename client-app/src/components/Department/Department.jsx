@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GET_DEPARTMENT, DELETE_DEPARTMENT } from '../api/apiService';
+import { GET_DEPARTMENT, DELETE_DEPARTMENT } from '../../api/apiService';
 import { Table, Button, ButtonToolbar } from 'react-bootstrap';
 import AddDepModal from './AddDepModal';
 import EditDepModal from './EditDepModal';

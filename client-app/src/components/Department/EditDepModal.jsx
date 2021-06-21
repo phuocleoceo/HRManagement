@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { PUT_DEPARTMENT } from '../api/apiService';
+import { PUT_DEPARTMENT } from '../../api/apiService';
 
 function EditDepModal(props) {
 	const { onHide, currentDep } = props;
