@@ -10,7 +10,7 @@ function Employee() {
 	const [editModalShow, setEditModalShow] = useState(false);
 	const [reload, setReload] = useState(0);
 	const [currentEmp, setCurrentEmp] = useState({
-		Id: 0, Name: "", DepartmentId: 0,
+		Id: 0, Name: "", Department: "",
 		DateOfJoining: "", PhotoURL: ""
 	});
 

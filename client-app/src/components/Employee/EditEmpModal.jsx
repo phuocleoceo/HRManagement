@@ -74,7 +74,6 @@ function EditEmpModal(props) {
 								<Form.Group controlId="Department">
 									<Form.Label>Department</Form.Label>
 									<Form.Control
-
 										name="Department"
 										as="select"
 										defaultValue={currentEmp.Department}>
