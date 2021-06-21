@@ -87,7 +87,8 @@ function Employee() {
 										onReload={reloadPage} />
 								</ButtonToolbar>
 							</td>
-						</tr>)}
+						</tr>)
+					}
 				</tbody>
 			</Table>
 

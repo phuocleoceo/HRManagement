@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { POST_EMPLOYEE, GET_DEPARTMENT } from '../../api/apiService';
+import { formatDateForBE } from '../../extension';
 
 function AddEmpModal(props) {
 	const { onHide, onReload } = props;
@@ -15,19 +16,13 @@ function AddEmpModal(props) {
 		loadDepartment();
 	}, []);
 
-	function formatDate(date) {
-		// yyyy-mm-dd => dd/mm/yyyy
-		var dateArray = date.split("-");
-		return dateArray[2] + "/" + dateArray[1] + "/" + dateArray[0];
-	}
-
 	async function handleSubmit(e) {
 		try {
 			e.preventDefault();
 			const employee = {
 				Name: e.target.Name.value,
 				DepartmentId: e.target.Department.value,
-				DateOfJoining: formatDate(e.target.DateOfJoining.value),
+				DateOfJoining: formatDateForBE(e.target.DateOfJoining.value),
 				PhotoURL: e.target.PhotoURL.value
 			};
 			const result = await POST_EMPLOYEE(employee);
@@ -71,7 +66,8 @@ function AddEmpModal(props) {
 										{deps.map(dep =>
 											<option key={dep.Id} value={dep.Id}>
 												{dep.Name}
-											</option>)}
+											</option>)
+										}
 									</Form.Control>
 								</Form.Group>
 
