@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GET_ALL_DEPARTMENT } from '../api/apiService';
+import { GET_DEPARTMENT, PUT_DEPARTMENT, DELETE_DEPARTMENT } from '../api/apiService';
 import { Table } from 'react-bootstrap';
 
 function Department() {
@@ -7,7 +7,7 @@ function Department() {
 
 	useEffect(() => {
 		async function refreshList() {
-			const list = await GET_ALL_DEPARTMENT();
+			const list = await GET_DEPARTMENT();
 			setDeps(list.data);
 		};
 		refreshList();
@@ -21,7 +21,7 @@ function Department() {
 					<tr>
 						<th>Id</th>
 						<th>Name</th>
-						<th>Options</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>

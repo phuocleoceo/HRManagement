@@ -2,24 +2,24 @@ import Home from './components/Home';
 import Department from './components/Department';
 import Employee from './components/Employee';
 import Navigation from './components/Navigation';
-import {BrowserRouter,Route,Switch} from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 function App() {
   return (
     <BrowserRouter>
-    <div className="container">
-     <h3 className="m-3 d-flex justify-content-center">
-       HRManagement
-     </h3>
+      <div className="container">
+        <h3 className="m-3 d-flex justify-content-center">
+          HRManagement
+        </h3>
 
-     <Navigation/>
+        <Navigation />
 
-     <Switch>
-       <Route path='/' component={Home} exact/>
-       <Route path='/department' component={Department}/>
-       <Route path='/employee' component={Employee}/>
-     </Switch>
-    </div>
+        <Switch>
+          <Route path='/' component={Home} exact />
+          <Route path='/department' component={Department} />
+          <Route path='/employee' component={Employee} />
+        </Switch>
+      </div>
     </BrowserRouter>
   );
 }
