@@ -41,13 +41,16 @@ This app is being developed by phuocleoceo, currently studying at Danang Univers
 * [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)
 * [AutoMapper](https://automapper.org/)
 * [React Bootstrap](https://react-bootstrap.github.io/)
+* [Axios](https://www.npmjs.com/package/axios)
 
 ## Getting Started
 
 Necessary program to build and run this code:
   1. Visual Studio Code or Terminal
-  2. NodeJS
-  3. npm
+  2. Microsoft SQL Server 2019
+  3. NodeJS
+  4. npm
+  
 
 
 ### Installation
@@ -57,15 +60,23 @@ Necessary program to build and run this code:
    ```
    git clone https://github.com/phuocleoceo/HRManagement
    ```
-3. Open with Visual Studio Code, change directory to WebAPI and run: 
+3. Open with Visual Studio Code, change connectionstring in WebAPI/appsettings.json
    ```
-   dotnet run
+    "DefaultConnection": "Server={yourServerName};Database={yourDBName};Trusted_Connection=True;MultipleActiveResultSets=true"
    ```
-4. Change API_URL in client-app/src/api/apiService.js and run:
+4. Run the Migration ( detail in WebAPI/README.md ):
+   ```
+    dotnet ef migrations add Init ; dotnet ef database update
+   ```
+5. Run the WebAPI:
+   ```
+    dotnet run
+   ```
+6. Change directory to client-app, edit API_URL in src/api/apiService.js and run:
    ```
     npm i
    ```
-5.  Change directory to client-app and run: 
+7.  Run the Client-App: 
 	```
     npm start
     ```

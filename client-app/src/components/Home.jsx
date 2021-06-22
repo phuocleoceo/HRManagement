@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GET_EMPLOYEE } from '../api/apiService';
-import { Card } from 'react-bootstrap';
+import { Card, Row, Container, Col } from 'react-bootstrap';
 
 export default function Home() {
 	const [emps, setEmps] = useState([]);
@@ -13,10 +13,10 @@ export default function Home() {
 	}, []);
 
 	return (
-		<div class="mt4">
-			<div class="row">
+		<Container>
+			<Row>
 				{emps.map(emp =>
-					<div className="col-sm-6 col-lg-4">
+					<Col sm={6} lg={4}>
 						<Card style={{ width: '18rem', marginTop: '24px', marginBottom: '24px' }}>
 							<Card.Img variant="top" src={emp.PhotoURL} />
 							<Card.Body>
@@ -25,9 +25,9 @@ export default function Home() {
 								<Card.Text>{emp.DateOfJoining}</Card.Text>
 							</Card.Body>
 						</Card>
-					</div>)
+					</Col>)
 				}
-			</div>
-		</div>
+			</Row>
+		</Container>
 	)
 }
