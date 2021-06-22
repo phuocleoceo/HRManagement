@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
+import { Modal, Button, Row, Col, Form, Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { PUT_DEPARTMENT } from '../../api/apiService';
 
@@ -25,7 +25,7 @@ function EditDepModal(props) {
 	};
 
 	return (
-		<div className="container">
+		<Container>
 			<Modal
 				{...props}
 				aria-labelledby="contained-modal-title-vcenter"
@@ -68,7 +68,7 @@ function EditDepModal(props) {
 					</Row>
 				</Modal.Body>
 			</Modal>
-		</div>
+		</Container>
 	)
 }
 

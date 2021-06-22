@@ -3,11 +3,12 @@ import Department from './components/Department/Department';
 import Employee from './components/Employee/Employee';
 import Navigation from './components/Navigation';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="container">
+      <Container>
         <h3 className="m-3 d-flex justify-content-center">
           HRManagement
         </h3>
@@ -19,7 +20,7 @@ function App() {
           <Route path='/department' component={Department} />
           <Route path='/employee' component={Employee} />
         </Switch>
-      </div>
+      </Container>
     </BrowserRouter>
   );
 }

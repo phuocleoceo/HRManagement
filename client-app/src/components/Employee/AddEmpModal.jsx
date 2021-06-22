@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
+import { Modal, Button, Row, Col, Form, Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { POST_EMPLOYEE, GET_DEPARTMENT } from '../../api/apiService';
 import { formatDateForBE } from '../../extension';
@@ -38,7 +38,7 @@ function AddEmpModal(props) {
 	};
 
 	return (
-		<div className="container">
+		<Container>
 			<Modal
 				{...props}
 				aria-labelledby="contained-modal-title-vcenter"
@@ -98,7 +98,7 @@ function AddEmpModal(props) {
 					</Row>
 				</Modal.Body>
 			</Modal>
-		</div>
+		</Container>
 	)
 }
 
