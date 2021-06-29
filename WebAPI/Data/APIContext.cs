@@ -11,9 +11,10 @@ namespace WebAPI.Data
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			base.OnModelCreating(modelBuilder);
 			modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
 			modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
-			base.OnModelCreating(modelBuilder);
+			modelBuilder.ApplyConfiguration(new RoleConfiguration());
 			foreach (var entityType in modelBuilder.Model.GetEntityTypes())
 			{
 				var tableName = entityType.GetTableName();
