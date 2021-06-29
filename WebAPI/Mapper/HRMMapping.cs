@@ -10,6 +10,8 @@ namespace WebAPI.Mapper
 	{
 		public HRMMapping()
 		{
+			CreateMap<UserForRegistrationDTO, User>();
+
 			CreateMap<Department, DepartmentDTO>();
 
 			CreateMap<DepartmentUpsertDTO, Department>();
