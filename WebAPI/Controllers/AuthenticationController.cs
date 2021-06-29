@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Authentication;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
 
@@ -14,10 +15,13 @@ namespace WebAPI.Controllers
 	{
 		private readonly IMapper _mapper;
 		private readonly UserManager<User> _userManager;
-		public AuthenticationController(IMapper mapper, UserManager<User> userManager)
+		private readonly IAuthenticationManager _authManager;
+		public AuthenticationController(IMapper mapper, UserManager<User> userManager,
+										IAuthenticationManager authManager)
 		{
 			_mapper = mapper;
 			_userManager = userManager;
+			_authManager = authManager;
 		}
 
 		[HttpPost]
@@ -37,5 +41,16 @@ namespace WebAPI.Controllers
 			await _userManager.AddToRolesAsync(user, userForRegistration.Roles); //Roles : many / Role : one
 			return StatusCode(((int)HttpStatusCode.Created)); //201
 		}
+
+		[HttpPost("login")]
+		public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDTO user)
+		{
+			if (!await _authManager.ValidateUser(user))
+			{
+				return Unauthorized();
+			}
+			return Ok(new { Token = await _authManager.CreateToken() });
+		}
+
 	}
 }
