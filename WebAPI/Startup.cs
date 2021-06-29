@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using WebAPI.Mapper;
 using AutoMapper;
+using WebAPI.Extension;
 
 namespace WebAPI
 {
@@ -63,6 +64,10 @@ namespace WebAPI
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
 			});
+
+			// Authentication
+			services.AddAuthentication();
+			services.ConfigureIdentity();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,6 +92,7 @@ namespace WebAPI
 
 			app.UseRouting();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>
