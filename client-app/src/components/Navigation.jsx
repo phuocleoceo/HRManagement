@@ -7,7 +7,7 @@ export default function Navigation() {
         <Navbar bg="dark" expand="lg">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-                <Nav>
+                <Nav className="mr-auto">
 
                     <NavLink className="d-inline p-2 bg-dark text-white" to="/">
                         Home
@@ -19,6 +19,15 @@ export default function Navigation() {
                         Employee
                     </NavLink>
 
+                </Nav>
+                <Nav>
+                    <NavLink className="d-inline p-2 bg-dark text-white" to="/register">
+                        Register
+                    </NavLink>
+
+                    <NavLink className="d-inline p-2 bg-dark text-white" to="/login">
+                        Login
+                    </NavLink>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	//[Authorize]
+	[Authorize]
 	public class EmployeeController : ControllerBase
 	{
 		private readonly IEmployeeRepository _db;
@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
 
 		// GET: api/Employee
 		[HttpGet]
-		//[AllowAnonymous]
+		[AllowAnonymous]
 		public async Task<IEnumerable<EmployeeDTO>> GetEmployees()
 		{
 			var employees = await _db.GetAllEmployee();
