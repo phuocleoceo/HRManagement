@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button, Row, Col, Form, Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { POST_DEPARTMENT } from '../../api/apiService';
+import { POST_DEPARTMENT } from '../../api/apiDepartment';
 
 function AddDepModal(props) {
 	const { onHide, onReload } = props;

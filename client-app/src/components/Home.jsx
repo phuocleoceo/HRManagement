@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GET_EMPLOYEE } from '../api/apiService';
+import { GET_EMPLOYEE } from '../api/apiEmployee';
 import { Card, Row, Container, Col } from 'react-bootstrap';
 
 export default function Home() {

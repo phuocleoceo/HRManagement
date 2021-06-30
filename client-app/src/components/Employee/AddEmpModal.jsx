@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Row, Col, Form, Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { POST_EMPLOYEE, GET_DEPARTMENT } from '../../api/apiService';
+import { GET_DEPARTMENT } from '../../api/apiDepartment';
+import { POST_EMPLOYEE } from '../../api/apiEmployee';
 import { formatDateForBE } from '../../extension';
 
 function AddEmpModal(props) {

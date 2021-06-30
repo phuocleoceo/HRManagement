@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GET_EMPLOYEE, DELETE_EMPLOYEE } from '../../api/apiService';
+import { GET_EMPLOYEE, DELETE_EMPLOYEE } from '../../api/apiEmployee';
 import { Table, Button, ButtonToolbar } from 'react-bootstrap';
 import AddEmpModal from './AddEmpModal';
 import EditEmpModal from './EditEmpModal';

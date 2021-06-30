@@ -19,6 +19,8 @@ using WebAPI.Mapper;
 using AutoMapper;
 using WebAPI.Extension;
 using WebAPI.Authentication;
+using WebAPI.Repository.Implement;
+using WebAPI.Repository.Interface;
 
 namespace WebAPI
 {
@@ -51,6 +53,8 @@ namespace WebAPI
 			});
 
 			// DI
+			services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+			services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 			services.AddAutoMapper(typeof(HRMMapping));
 
 			//Controller and JSON

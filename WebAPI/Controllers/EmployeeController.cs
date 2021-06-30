@@ -10,39 +10,38 @@ using WebAPI.Models;
 using WebAPI.Models.DTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using WebAPI.Repository.Interface;
 
 namespace WebAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	[Authorize]
+	//[Authorize]
 	public class EmployeeController : ControllerBase
 	{
-		private readonly APIContext _context;
+		private readonly IEmployeeRepository _db;
 		private readonly IMapper _mapper;
 
-		public EmployeeController(APIContext context, IMapper mapper)
+		public EmployeeController(IEmployeeRepository db, IMapper mapper)
 		{
-			_context = context;
+			_db = db;
 			_mapper = mapper;
 		}
 
 		// GET: api/Employee
 		[HttpGet]
-		[AllowAnonymous]
-		public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetEmployees()
+		//[AllowAnonymous]
+		public async Task<IEnumerable<EmployeeDTO>> GetEmployees()
 		{
-			return await _context.Employees.Include(c => c.Department)
-							.Select(c => _mapper.Map<EmployeeDTO>(c))
-							.ToListAsync();
+			var employees = await _db.GetAllEmployee();
+			return employees.Select(c => _mapper.Map<EmployeeDTO>(c));
 		}
 
 		// GET: api/Employee/5
 		[HttpGet("{id}")]
 		public async Task<ActionResult<EmployeeDTO>> GetEmployee(int id)
 		{
-			var employee = await _context.Employees.Include(c => c.Department)
-											.FirstOrDefaultAsync(c => c.Id == id);
+			var employee = await _db.GetEmployeeById(id);
 
 			if (employee == null)
 			{
@@ -53,42 +52,26 @@ namespace WebAPI.Controllers
 		}
 
 		// PUT: api/Employee/5
-		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPut("{id}")]
 		public async Task<IActionResult> PutEmployee(int id, EmployeeUpsertDTO euDTO)
 		{
+			bool employeeExist = await _db.EmployeeExists(id);
+			if (!employeeExist)
+			{
+				return NotFound();
+			}
 			var employee = _mapper.Map<Employee>(euDTO);
 			employee.Id = id;
-
-			_context.Entry(employee).State = EntityState.Modified;
-
-			try
-			{
-				await _context.SaveChangesAsync();
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				if (!EmployeeExists(id))
-				{
-					return NotFound();
-				}
-				else
-				{
-					throw;
-				}
-			}
-
+			await _db.UpdateEmployee(employee);
 			return NoContent();
 		}
 
 		// POST: api/Employee
-		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPost]
 		public async Task<ActionResult<Employee>> PostEmployee(EmployeeUpsertDTO euDTO)
 		{
 			var employee = _mapper.Map<Employee>(euDTO);
-			_context.Employees.Add(employee);
-			await _context.SaveChangesAsync();
+			await _db.CreateEmployee(employee);
 
 			return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
 		}
@@ -97,21 +80,13 @@ namespace WebAPI.Controllers
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteEmployee(int id)
 		{
-			var employee = await _context.Employees.FindAsync(id);
-			if (employee == null)
+			bool employeeExist = await _db.EmployeeExists(id);
+			if (!employeeExist)
 			{
 				return NotFound();
 			}
-
-			_context.Employees.Remove(employee);
-			await _context.SaveChangesAsync();
-
+			await _db.DeleteEmployee(id);
 			return NoContent();
-		}
-
-		private bool EmployeeExists(int id)
-		{
-			return _context.Employees.Any(e => e.Id == id);
 		}
 	}
 }
