@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Row, Col, Form, Image, Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { PUT_EMPLOYEE, GET_DEPARTMENT } from '../../api/apiService';
+import { GET_DEPARTMENT } from '../../api/apiDepartment';
+import { PUT_EMPLOYEE } from '../../api/apiEmployee';
 import { formatDateForBE, formatDateForFE } from '../../extension';
 
 function EditEmpModal(props) {
