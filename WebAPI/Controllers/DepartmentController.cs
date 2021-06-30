@@ -9,11 +9,13 @@ using WebAPI.Data;
 using WebAPI.Models;
 using AutoMapper;
 using WebAPI.Models.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize]
 	public class DepartmentController : ControllerBase
 	{
 		private readonly APIContext _context;
@@ -27,6 +29,7 @@ namespace WebAPI.Controllers
 
 		// GET: api/Department
 		[HttpGet]
+		[AllowAnonymous]
 		public async Task<ActionResult<IEnumerable<DepartmentDTO>>> GetDepartments()
 		{
 			return await _context.Departments

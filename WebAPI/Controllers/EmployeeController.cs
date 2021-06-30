@@ -9,11 +9,13 @@ using WebAPI.Data;
 using WebAPI.Models;
 using WebAPI.Models.DTO;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize]
 	public class EmployeeController : ControllerBase
 	{
 		private readonly APIContext _context;
@@ -27,6 +29,7 @@ namespace WebAPI.Controllers
 
 		// GET: api/Employee
 		[HttpGet]
+		[AllowAnonymous]
 		public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetEmployees()
 		{
 			return await _context.Employees.Include(c => c.Department)

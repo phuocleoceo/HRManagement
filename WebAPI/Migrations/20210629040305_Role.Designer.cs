@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAPI.Data;
 
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(APIContext))]
-    partial class APIContextModelSnapshot : ModelSnapshot
+    [Migration("20210629040305_Role")]
+    partial class Role
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0ae7c0e1-96b0-402e-94ee-1744d4bdc5af",
-                            ConcurrencyStamp = "af5a092f-920e-40eb-b4e9-7fd137ecd438",
+                            Id = "d60958ef-4ecd-4850-8b6b-d6b8d0591a59",
+                            ConcurrencyStamp = "37122c06-8c9b-41de-b0f6-a878f685ff8a",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
-                            Id = "2fd53892-8a34-47f7-89dd-6c63ee416858",
-                            ConcurrencyStamp = "d67650d0-ee7b-44ad-a1d4-7f8b5d857e98",
+                            Id = "262aeca8-e523-478d-bd07-1bd851f756c5",
+                            ConcurrencyStamp = "053d6069-7885-4ac1-85b4-4df0e178265c",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -247,6 +249,12 @@ namespace WebAPI.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Birthday")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -292,6 +300,9 @@ namespace WebAPI.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
+
+                    b.Property<string>("University")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)

@@ -17,6 +17,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using WebAPI.Mapper;
 using AutoMapper;
+using WebAPI.Extension;
+using WebAPI.Authentication;
 
 namespace WebAPI
 {
@@ -59,10 +61,16 @@ namespace WebAPI
 				options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
 			//Swagger
-			services.AddSwaggerGen(c =>
-			{
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
-			});
+			services.ConfigureSwaggerWithAuth();
+
+			// Authentication
+			services.AddAuthentication();
+
+			services.ConfigureIdentity();
+
+			services.ConfigureJWT(this.Configuration);
+
+			services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,6 +95,7 @@ namespace WebAPI
 
 			app.UseRouting();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>
