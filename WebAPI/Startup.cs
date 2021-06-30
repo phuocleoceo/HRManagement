@@ -61,10 +61,7 @@ namespace WebAPI
 				options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
 			//Swagger
-			services.AddSwaggerGen(c =>
-			{
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
-			});
+			services.ConfigureSwaggerWithAuth();
 
 			// Authentication
 			services.AddAuthentication();

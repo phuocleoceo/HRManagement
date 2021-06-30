@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
 			_authManager = authManager;
 		}
 
-		[HttpPost]
+		[HttpPost("Register")]
 		public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDTO
 																	userForRegistration)
 		{
@@ -42,15 +42,14 @@ namespace WebAPI.Controllers
 			return StatusCode(((int)HttpStatusCode.Created)); //201
 		}
 
-		[HttpPost("login")]
+		[HttpPost("Login")]
 		public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDTO user)
 		{
 			if (!await _authManager.ValidateUser(user))
 			{
-				return Unauthorized();
+				return Unauthorized();  // 401 Unauthorized
 			}
 			return Ok(new { Token = await _authManager.CreateToken() });
 		}
-
 	}
 }
