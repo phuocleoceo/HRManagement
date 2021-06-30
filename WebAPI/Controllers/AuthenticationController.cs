@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
 				}
 				return BadRequest(ModelState);
 			}
-			await _userManager.AddToRolesAsync(user, userForRegistration.Roles); //Roles : many / Role : one
+			await _userManager.AddToRoleAsync(user, userForRegistration.Role); //Roles : many / Role : one
 			return StatusCode(((int)HttpStatusCode.Created)); //201
 		}
 

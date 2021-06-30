@@ -20,6 +20,6 @@ namespace WebAPI.Models.DTO
 
 		public string PhoneNumber { get; set; }
 
-		public ICollection<string> Roles { get; set; }
+		public string Role { get; set; }
 	}
 }
