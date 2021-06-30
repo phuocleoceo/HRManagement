@@ -1,6 +1,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Authentication;
@@ -11,6 +12,7 @@ namespace WebAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize]
 	public class AuthenticationController : ControllerBase
 	{
 		private readonly IMapper _mapper;
@@ -25,6 +27,7 @@ namespace WebAPI.Controllers
 		}
 
 		[HttpPost("Register")]
+		[AllowAnonymous]
 		public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDTO
 																	userForRegistration)
 		{
@@ -43,6 +46,7 @@ namespace WebAPI.Controllers
 		}
 
 		[HttpPost("Login")]
+		[AllowAnonymous]
 		public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDTO user)
 		{
 			if (!await _authManager.ValidateUser(user))

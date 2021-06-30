@@ -10,48 +10,46 @@ using WebAPI.Models;
 using AutoMapper;
 using WebAPI.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
+using WebAPI.Repository.Interface;
 
 namespace WebAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	[Authorize]
+	//[Authorize]
 	public class DepartmentController : ControllerBase
 	{
-		private readonly APIContext _context;
+		private readonly IDepartmentRepository _db;
 		private readonly IMapper _mapper;
 
-		public DepartmentController(APIContext context, IMapper mapper)
+		public DepartmentController(IDepartmentRepository db, IMapper mapper)
 		{
-			_context = context;
+			_db = db;
 			_mapper = mapper;
 		}
 
 		// GET: api/Department
 		[HttpGet]
-		[AllowAnonymous]
-		public async Task<ActionResult<IEnumerable<DepartmentDTO>>> GetDepartments()
+		//[AllowAnonymous]
+		public async Task<IEnumerable<DepartmentDTO>> GetDepartments()
 		{
-			return await _context.Departments
-							.Select(c => _mapper.Map<DepartmentDTO>(c))
-							.ToListAsync();
+			var departments = await _db.GetAllDepartment();
+			return departments.Select(c => _mapper.Map<DepartmentDTO>(c));
 		}
 
 		// GET: api/Department/EmployeeList/5
 		[HttpGet("employee-list/{id}")]
-		public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetListEmployeeOfDepartment(int id)
+		public async Task<IEnumerable<EmployeeDTO>> GetListEmployeeOfDepartment(int id)
 		{
-			var department = await _context.Departments.Include(c => c.Employees)
-											.FirstOrDefaultAsync(c => c.Id == id);
-			var employeeList = department.Employees;
-			return employeeList.Select(c => _mapper.Map<EmployeeDTO>(c)).ToList();
+			var employeeList = await _db.GetListEmployee(id);
+			return employeeList.Select(c => _mapper.Map<EmployeeDTO>(c));
 		}
 
 		// GET: api/Department/5
 		[HttpGet("{id}")]
 		public async Task<ActionResult<DepartmentDTO>> GetDepartment(int id)
 		{
-			var department = await _context.Departments.FirstOrDefaultAsync(c => c.Id == id);
+			var department = await _db.GetDepartmentById(id);
 
 			if (department == null)
 			{
@@ -62,42 +60,26 @@ namespace WebAPI.Controllers
 		}
 
 		// PUT: api/Department/5
-		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPut("{id}")]
 		public async Task<IActionResult> PutDepartment(int id, DepartmentUpsertDTO duDTO)
 		{
+			bool departmentExist = await _db.DepartmentExists(id);
+			if (!departmentExist)
+			{
+				return NotFound();
+			}
 			var department = _mapper.Map<Department>(duDTO);
 			department.Id = id;
-
-			_context.Entry(department).State = EntityState.Modified;
-
-			try
-			{
-				await _context.SaveChangesAsync();
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				if (!DepartmentExists(id))
-				{
-					return NotFound();
-				}
-				else
-				{
-					throw;
-				}
-			}
-
+			await _db.UpdateDepartment(department);
 			return NoContent();
 		}
 
 		// POST: api/Department
-		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPost]
 		public async Task<ActionResult<Department>> PostDepartment(DepartmentUpsertDTO duDTO)
 		{
 			var department = _mapper.Map<Department>(duDTO);
-			_context.Departments.Add(department);
-			await _context.SaveChangesAsync();
+			await _db.CreateDepartment(department);
 
 			return CreatedAtAction("GetDepartment", new { id = department.Id }, department);
 		}
@@ -106,21 +88,13 @@ namespace WebAPI.Controllers
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteDepartment(int id)
 		{
-			var department = await _context.Departments.FindAsync(id);
-			if (department == null)
+			bool departmentExist = await _db.DepartmentExists(id);
+			if (!departmentExist)
 			{
 				return NotFound();
 			}
-
-			_context.Departments.Remove(department);
-			await _context.SaveChangesAsync();
-
+			await _db.DeleteDepartment(id);
 			return NoContent();
-		}
-
-		private bool DepartmentExists(int id)
-		{
-			return _context.Departments.Any(e => e.Id == id);
 		}
 	}
 }

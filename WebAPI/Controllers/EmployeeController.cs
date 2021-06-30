@@ -15,7 +15,7 @@ namespace WebAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	[Authorize]
+	//[Authorize]
 	public class EmployeeController : ControllerBase
 	{
 		private readonly APIContext _context;
@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
 
 		// GET: api/Employee
 		[HttpGet]
-		[AllowAnonymous]
+		//[AllowAnonymous]
 		public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetEmployees()
 		{
 			return await _context.Employees.Include(c => c.Department)
