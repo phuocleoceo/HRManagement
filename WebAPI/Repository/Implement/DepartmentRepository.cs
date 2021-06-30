@@ -4,7 +4,6 @@ using WebAPI.Models;
 using WebAPI.Repository.Interface;
 using WebAPI.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace WebAPI.Repository.Implement
 {
@@ -27,7 +26,7 @@ namespace WebAPI.Repository.Implement
 
 		public async Task<IEnumerable<Employee>> GetListEmployee(int id)
 		{
-			var department = await _db.Departments.Include(c => c.Employees)
+			Department department = await _db.Departments.Include(c => c.Employees)
 											.FirstOrDefaultAsync(c => c.Id == id);
 			return department.Employees;
 		}
@@ -40,7 +39,7 @@ namespace WebAPI.Repository.Implement
 
 		public async Task DeleteDepartment(int id)
 		{
-			var d = await GetDepartmentById(id);
+			Department d = await GetDepartmentById(id);
 			_db.Departments.Remove(d);
 			await SaveAsync();
 		}

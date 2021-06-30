@@ -54,6 +54,7 @@ namespace WebAPI
 
 			// DI
 			services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+			services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 			services.AddAutoMapper(typeof(HRMMapping));
 
 			//Controller and JSON
