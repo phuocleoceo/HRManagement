@@ -85,7 +85,7 @@ Necessary program to build and run this code:
 **0. Update Authentication and Authorization (1/7/2021)**
     <br/>
     <br/>
-    ![doubleauth](https://raw.githubusercontent.com/phuocleoceo/HRManagement/master/screen-shot/DoubleAuth.jpg)
+    ![doubleauth](https://raw.githubusercontent.com/phuocleoceo/HRManagement/master/screen-shot/DoubleAuth.JPG)
 
 **1. Home Page**
     <br/>

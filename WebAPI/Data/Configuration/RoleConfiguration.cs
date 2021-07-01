@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using WebAPI.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace WebAPI.Data.Configuration

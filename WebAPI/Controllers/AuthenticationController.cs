@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
 
 		[HttpPost("Register")]
 		[AllowAnonymous]
-		public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDTO
+		public async Task<IActionResult> Register([FromBody] UserForRegistrationDTO
 																	userForRegistration)
 		{
 			var user = _mapper.Map<User>(userForRegistration);
@@ -47,12 +47,14 @@ namespace WebAPI.Controllers
 
 		[HttpPost("Login")]
 		[AllowAnonymous]
-		public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDTO user)
+		public async Task<IActionResult> Login([FromBody] UserForAuthenticationDTO user)
 		{
 			if (!await _authManager.ValidateUser(user))
 			{
 				return Unauthorized();  // 401 Unauthorized
 			}
+
+			var token = await _authManager.CreateToken();
 			var userCurrent = await _userManager.FindByNameAsync(user.UserName);
 			var userInfor = new
 			{
@@ -63,7 +65,7 @@ namespace WebAPI.Controllers
 			};
 			return Ok(new
 			{
-				Token = await _authManager.CreateToken(),
+				Token = token,
 				User = userInfor
 			});
 		}
