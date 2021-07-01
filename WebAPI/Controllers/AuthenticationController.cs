@@ -53,7 +53,19 @@ namespace WebAPI.Controllers
 			{
 				return Unauthorized();  // 401 Unauthorized
 			}
-			return Ok(new { Token = await _authManager.CreateToken() });
+			var userCurrent = await _userManager.FindByNameAsync(user.UserName);
+			var userInfor = new
+			{
+				Name = userCurrent.FirstName + " " + userCurrent.LastName,
+				UserName = userCurrent.UserName,
+				Email = userCurrent.Email,
+				PhoneNumber = userCurrent.PhoneNumber
+			};
+			return Ok(new
+			{
+				Token = await _authManager.CreateToken(),
+				User = userInfor
+			});
 		}
 	}
 }

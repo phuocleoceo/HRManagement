@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	//[Authorize]
+	[Authorize]
 	public class DepartmentController : ControllerBase
 	{
 		private readonly IDepartmentRepository _db;
@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
 
 		// GET: api/Department
 		[HttpGet]
-		//[AllowAnonymous]
+		[AllowAnonymous]
 		public async Task<IEnumerable<DepartmentDTO>> GetDepartments()
 		{
 			var departments = await _db.GetAllDepartment();
@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
 		}
 
 		// GET: api/Department/EmployeeList/5
-		[HttpGet("employee-list/{id}")]
+		[HttpGet("Employee-List/{id}")]
 		public async Task<IEnumerable<EmployeeDTO>> GetListEmployeeOfDepartment(int id)
 		{
 			var employeeList = await _db.GetListEmployee(id);
