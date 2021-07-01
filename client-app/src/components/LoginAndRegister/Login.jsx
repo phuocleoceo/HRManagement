@@ -1,13 +1,19 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { LOGIN } from '../../api/apiAuthentication';
 
 export default function Login() {
+	function handleLogin(e) {
+		e.preventDefault();
+
+	}
+
 	return (
 		<Form style={{ maxWidth: '50%' }}>
 			<h3>Login</h3>
-			<Form.Group controlId="username">
+			<Form.Group controlId="userName">
 				<Form.Label>Username</Form.Label>
-				<Form.Control type="text" name="username" placeholder="Enter username" />
+				<Form.Control type="text" name="userName" placeholder="Enter username" />
 			</Form.Group>
 
 			<Form.Group controlId="password">

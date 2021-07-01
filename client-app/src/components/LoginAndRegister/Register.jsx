@@ -15,9 +15,9 @@ export default function Register() {
 				<Form.Control type="text" name="lastname" placeholder="Enter lastname" />
 			</Form.Group>
 
-			<Form.Group controlId="username">
+			<Form.Group controlId="userName">
 				<Form.Label>Username</Form.Label>
-				<Form.Control type="text" name="username" placeholder="Enter username" />
+				<Form.Control type="text" name="userName" placeholder="Enter username" />
 			</Form.Group>
 
 			<Form.Group controlId="password">
@@ -33,9 +33,9 @@ export default function Register() {
 				<Form.Control type="email" name="email" placeholder="Enter email" />
 			</Form.Group>
 
-			<Form.Group controlId="phonenumber">
+			<Form.Group controlId="phoneNumber">
 				<Form.Label>Phone number</Form.Label>
-				<Form.Control type="tel" name="phonenumber" placeholder="Enter phone number" />
+				<Form.Control type="tel" name="phoneNumber" placeholder="Enter phone number" />
 			</Form.Group>
 
 			<Button variant="primary" type="submit">
