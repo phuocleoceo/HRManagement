@@ -3,13 +3,23 @@ import { Form, Button } from 'react-bootstrap';
 import { LOGIN } from '../../api/apiAuthentication';
 
 export default function Login() {
-	function handleLogin(e) {
+	async function handleLogin(e) {
 		e.preventDefault();
-
+		const infor = {
+			userName: e.target.userName.value,
+			password: e.target.password.value
+		};
+		const auth = await LOGIN(infor);
+		if (auth) {
+			alert("Login Successfully");
+		}
+		else {
+			alert("Login Fail");
+		}
 	}
 
 	return (
-		<Form style={{ maxWidth: '50%' }}>
+		<Form style={{ maxWidth: '50%' }} onSubmit={handleLogin}>
 			<h3>Login</h3>
 			<Form.Group controlId="userName">
 				<Form.Label>Username</Form.Label>
