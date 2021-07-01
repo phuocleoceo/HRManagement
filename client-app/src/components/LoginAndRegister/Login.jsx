@@ -16,6 +16,7 @@ export default function Login() {
 		else {
 			alert("Login Fail");
 		}
+		window.location.href = "/";
 	}
 
 	return (
