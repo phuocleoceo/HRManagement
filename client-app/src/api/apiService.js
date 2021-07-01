@@ -1,16 +1,14 @@
 import axios from 'axios';
-import AUTH_HEADER from './apiAuthentication';
 
 let API_URL = "https://localhost:5001/api";
 
-async function callAPI(endpoint, method, body) {
-    const hd = AUTH_HEADER();
+async function callAPI(endpoint, method, body, header) {
     try {
         return axios({
             method,
             url: API_URL + "/" + endpoint,
             data: body,
-            headers: hd
+            headers: header
         });
     } catch (e) {
         console.log(e);
