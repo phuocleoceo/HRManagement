@@ -1,7 +1,15 @@
 import callAPI from './apiService';
 
-export function REGISTER(body) {
-	return callAPI("authentication/register", "POST", body);
+export async function REGISTER(body) {
+	try {
+		const response = await callAPI("authentication/register", "POST", body);
+		if (response.status === 201)
+			return true;
+		return false;
+	}
+	catch {
+		return false;
+	}
 };
 export async function LOGIN(body) {
 	try {

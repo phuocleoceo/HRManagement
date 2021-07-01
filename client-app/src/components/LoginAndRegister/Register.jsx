@@ -1,9 +1,33 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { REGISTER } from '../../api/apiAuthentication';
+import { useHistory } from 'react-router-dom';
 
 export default function Register() {
+	const history = useHistory();
+	async function handleRegister(e) {
+		e.preventDefault();
+		const infor = {
+			firstname: e.target.firstname.value,
+			lastname: e.target.lastname.value,
+			userName: e.target.userName.value,
+			password: e.target.password.value,
+			email: e.target.email.value,
+			phoneNumber: e.target.phoneNumber.value,
+			role: "Administrator"
+		};
+		const reg = await REGISTER(infor);
+		if (reg) {
+			alert("Register Successfully");
+			history.push("/login");
+		}
+		else {
+			alert("Register Fail");
+		}
+	}
+
 	return (
-		<Form style={{ maxWidth: '50%' }}>
+		<Form style={{ maxWidth: '50%' }} onSubmit={handleRegister}>
 			<h3>Register</h3>
 			<Form.Group controlId="firstname">
 				<Form.Label>Firstname</Form.Label>

@@ -17,7 +17,7 @@ export default function Navigation() {
 
     function handleLogout() {
         LOGOUT();
-        window.location.reload();
+        window.location.href = "/";
     }
 
     return (
