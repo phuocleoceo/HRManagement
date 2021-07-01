@@ -19,7 +19,7 @@ export function GET_CURRENT_USER() {
 	return JSON.parse(localStorage.getItem("user"));
 }
 
-export function AUTH_HEADER() {
+export default function AUTH_HEADER() {
 	const user = GET_CURRENT_USER();
 
 	if (user && user.Token) {
