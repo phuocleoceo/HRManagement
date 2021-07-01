@@ -18,3 +18,13 @@ export function LOGOUT() {
 export function GET_CURRENT_USER() {
 	return JSON.parse(localStorage.getItem("user"));
 }
+
+export function AUTH_HEADER() {
+	const user = GET_CURRENT_USER();
+
+	if (user && user.Token) {
+		return { Authorization: 'Bearer ' + user.Token };
+	} else {
+		return {};
+	}
+}
