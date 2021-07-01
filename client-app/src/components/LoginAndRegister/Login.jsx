@@ -12,11 +12,11 @@ export default function Login() {
 		const auth = await LOGIN(infor);
 		if (auth) {
 			alert("Login Successfully");
+			window.location.href = "/";
 		}
 		else {
 			alert("Login Fail");
 		}
-		window.location.href = "/";
 	}
 
 	return (
