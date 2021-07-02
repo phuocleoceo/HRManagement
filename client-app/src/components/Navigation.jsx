@@ -4,14 +4,14 @@ import { Nav, Navbar } from 'react-bootstrap';
 import { LOGOUT } from '../api/apiAuthentication';
 
 export default function Navigation() {
-    const [loggedin, setLoggedin] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
     useEffect(() => {
         const hrm_user = localStorage.getItem("hrm_user");
         if (!hrm_user) {
-            setLoggedin(false);
+            setLoggedIn(false);
         }
         else {
-            setLoggedin(true);
+            setLoggedIn(true);
         }
     }, [])
 
@@ -29,7 +29,7 @@ export default function Navigation() {
                     <NavLink className="d-inline p-2 bg-dark text-white" to="/">
                         Home
                     </NavLink>
-                    {loggedin &&
+                    {loggedIn &&
                         <>
                             <NavLink className="d-inline p-2 bg-dark text-white" to="/department">
                                 Department
@@ -41,7 +41,7 @@ export default function Navigation() {
                     }
                 </Nav>
 
-                {loggedin &&
+                {loggedIn &&
                     <Nav>
                         <NavLink onClick={handleLogout} className="d-inline p-2 bg-dark text-white" to="/">
                             Logout
@@ -49,7 +49,7 @@ export default function Navigation() {
                     </Nav>
                 }
 
-                {!loggedin &&
+                {!loggedIn &&
                     <Nav>
                         <NavLink className="d-inline p-2 bg-dark text-white" to="/register">
                             Register

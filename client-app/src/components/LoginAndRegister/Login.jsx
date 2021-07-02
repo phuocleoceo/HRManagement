@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { LOGIN } from '../../api/apiAuthentication';
+import { toast } from 'react-toastify';
 
 export default function Login() {
 	async function handleLogin(e) {
@@ -11,11 +12,13 @@ export default function Login() {
 		};
 		const auth = await LOGIN(infor);
 		if (auth) {
-			alert("Login Successfully");
-			window.location.href = "/";
+			toast.success("Login Successfully");
+			setTimeout(() => {
+				window.location.href = "/";
+			}, 1000);
 		}
 		else {
-			alert("Login Fail");
+			toast.error("Login Fail");
 		}
 	}
 

@@ -11,7 +11,25 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Container>
+          <h3 className="m-3 d-flex justify-content-center">
+            HRManagement
+          </h3>
+
+          <Navigation />
+
+          <Switch>
+            <Route path='/' component={Home} exact />
+            <Route path='/department' component={Department} />
+            <Route path='/employee' component={Employee} />
+            <Route path='/login' component={Login} />
+            <Route path='/register' component={Register} />
+          </Switch>
+        </Container>
+      </BrowserRouter>
+
       <ToastContainer
         position="top-center"
         autoClose={3000}
@@ -23,22 +41,7 @@ function App() {
         draggable
         pauseOnHover
       />
-      <Container>
-        <h3 className="m-3 d-flex justify-content-center">
-          HRManagement
-        </h3>
-
-        <Navigation />
-
-        <Switch>
-          <Route path='/' component={Home} exact />
-          <Route path='/department' component={Department} />
-          <Route path='/employee' component={Employee} />
-          <Route path='/login' component={Login} />
-          <Route path='/register' component={Register} />
-        </Switch>
-      </Container>
-    </BrowserRouter>
+    </>
   );
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { REGISTER } from '../../api/apiAuthentication';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function Register() {
 	const history = useHistory();
@@ -18,11 +19,11 @@ export default function Register() {
 		};
 		const reg = await REGISTER(infor);
 		if (reg) {
-			alert("Register Successfully");
+			toast.success("Register Successfully");
 			history.push("/login");
 		}
 		else {
-			alert("Register Fail");
+			toast.error("Register Fail");
 		}
 	}
 
