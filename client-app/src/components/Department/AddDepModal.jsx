@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, Button, Row, Col, Form, Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { POST_DEPARTMENT } from '../../api/apiDepartment';
+import { toast } from 'react-toastify';
 
 function AddDepModal(props) {
 	const { onHide, onReload } = props;
@@ -13,13 +14,13 @@ function AddDepModal(props) {
 			};
 			const result = await POST_DEPARTMENT(department);
 			if (result.status === 201) {
-				alert("Add Department Success !");
+				toast.success("Add Department Successfully !");
 			}
 			onHide();
 			onReload();
 		}
 		catch (err) {
-			console.log(err);
+			toast.error(err);
 		}
 	};
 

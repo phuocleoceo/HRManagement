@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, Button, Row, Col, Form, Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { PUT_DEPARTMENT } from '../../api/apiDepartment';
+import { toast } from 'react-toastify';
 
 function EditDepModal(props) {
 	const { onHide, onReload, currentDep } = props;
@@ -14,13 +15,13 @@ function EditDepModal(props) {
 			};
 			const result = await PUT_DEPARTMENT(id, department);
 			if (result.status === 204) {
-				alert("Edit Department Success !");
+				toast.success("Edit Department Successfully !");
 			}
 			onHide();
 			onReload();
 		}
 		catch (err) {
-			console.log(err);
+			toast.error(err);
 		}
 	};
 

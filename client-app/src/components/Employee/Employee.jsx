@@ -3,6 +3,7 @@ import { GET_EMPLOYEE, DELETE_EMPLOYEE } from '../../api/apiEmployee';
 import { Table, Button, ButtonToolbar } from 'react-bootstrap';
 import AddEmpModal from './AddEmpModal';
 import EditEmpModal from './EditEmpModal';
+import { toast } from 'react-toastify';
 
 function Employee() {
 	const [emps, setEmps] = useState([]);
@@ -32,8 +33,14 @@ function Employee() {
 
 	async function deleteEmp(empId) {
 		if (window.confirm('Are you confirm to delete?')) {
-			await DELETE_EMPLOYEE(empId);
-			reloadPage();
+			try {
+				await DELETE_EMPLOYEE(empId);
+				toast.success("Delete Employee Successfully !");
+				reloadPage();
+			}
+			catch (err) {
+				toast.error(err);
+			}
 		}
 	}
 

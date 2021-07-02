@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { GET_DEPARTMENT } from '../../api/apiDepartment';
 import { PUT_EMPLOYEE } from '../../api/apiEmployee';
 import { formatDateForBE, formatDateForFE } from '../../extension';
+import { toast } from 'react-toastify';
 
 function EditEmpModal(props) {
 	const { onHide, onReload, currentEmp } = props;
@@ -29,13 +30,13 @@ function EditEmpModal(props) {
 			};
 			const result = await PUT_EMPLOYEE(id, employee);
 			if (result.status === 204) {
-				alert("Edit Employee Success !");
+				toast.success("Edit Employee Successfully !");
 			}
 			onHide();
 			onReload();
 		}
 		catch (err) {
-			console.log(err);
+			toast.error(err);
 		}
 	};
 

@@ -3,6 +3,7 @@ import { GET_DEPARTMENT, DELETE_DEPARTMENT } from '../../api/apiDepartment';
 import { Table, Button, ButtonToolbar } from 'react-bootstrap';
 import AddDepModal from './AddDepModal';
 import EditDepModal from './EditDepModal';
+import { toast } from 'react-toastify';
 
 function Department() {
 	const [deps, setDeps] = useState([]);
@@ -29,8 +30,14 @@ function Department() {
 
 	async function deleteDep(depId) {
 		if (window.confirm('Are you confirm to delete?')) {
-			await DELETE_DEPARTMENT(depId);
-			reloadPage();
+			try {
+				await DELETE_DEPARTMENT(depId);
+				toast.success("Delete Department Successfully !");
+				reloadPage();
+			}
+			catch (err) {
+				toast.error(err);
+			}
 		}
 	}
 
