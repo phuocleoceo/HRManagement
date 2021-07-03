@@ -16,8 +16,9 @@ export async function LOGIN(body) {
 		const response = await callAPI("authentication/login", "POST", body);
 		if (response.data) {
 			localStorage.setItem("hrm_user", JSON.stringify(response.data));
+			return true;
 		}
-		return true;
+		return false;
 	}
 	catch {
 		return false;

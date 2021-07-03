@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { GET_EMPLOYEE, DELETE_EMPLOYEE } from '../../api/apiEmployee';
+import { DELETE_EMPLOYEE } from '../../api/apiEmployee';
 import { Table, Button, ButtonToolbar } from 'react-bootstrap';
 import AddEmpModal from './AddEmpModal';
 import EditEmpModal from './EditEmpModal';
 import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux';
+import { GetEmps } from '../../redux/slices/employeeSlice';
 
 function Employee() {
-	const [emps, setEmps] = useState([]);
+	const emps = useSelector(state => state.employee);
+	const dispatch = useDispatch();
+
 	const [addModalShow, setAddModalShow] = useState(false);
 	const [editModalShow, setEditModalShow] = useState(false);
 	const [reload, setReload] = useState(0);
@@ -16,12 +20,8 @@ function Employee() {
 	});
 
 	useEffect(() => {
-		async function refreshList() {
-			const list = await GET_EMPLOYEE();
-			setEmps(list.data);
-		};
-		refreshList();
-	}, [reload]);
+		dispatch(GetEmps());
+	}, [reload, dispatch]);
 
 	function addModalClose() {
 		setAddModalShow(false);
