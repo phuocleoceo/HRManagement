@@ -4,9 +4,12 @@ import { Table, Button, ButtonToolbar } from 'react-bootstrap';
 import AddEmpModal from './AddEmpModal';
 import EditEmpModal from './EditEmpModal';
 import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from "react-redux";
+import { GET_ALL_EMPLOYEE } from '../../redux/actions/employeeAction';
 
 function Employee() {
-	const [emps, setEmps] = useState([]);
+	const emps = useSelector((state) => state.employee);
+	const dispatch = useDispatch();
 	const [addModalShow, setAddModalShow] = useState(false);
 	const [editModalShow, setEditModalShow] = useState(false);
 	const [reload, setReload] = useState(0);
@@ -16,12 +19,8 @@ function Employee() {
 	});
 
 	useEffect(() => {
-		async function refreshList() {
-			const list = await GET_EMPLOYEE();
-			setEmps(list.data);
-		};
-		refreshList();
-	}, [reload]);
+		dispatch(GET_ALL_EMPLOYEE())
+	}, [dispatch]);
 
 	function addModalClose() {
 		setAddModalShow(false);
