@@ -1,42 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Modal, Button, Row, Col, Form, Container } from 'react-bootstrap';
-import PropTypes from 'prop-types';
-import { GET_DEPARTMENT } from '../../api/apiDepartment';
-import { POST_EMPLOYEE } from '../../api/apiEmployee';
+import { GetDeps } from '../../redux/slices/departmentSlice';
+import { CreateEmps } from '../../redux/slices/employeeSlice';
+import { useSelector, useDispatch } from 'react-redux';
 import { formatDateForBE } from '../../extension';
-import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 function AddEmpModal(props) {
 	const { onHide, onReload } = props;
-	const [deps, setDeps] = useState([]);
+	const deps = useSelector(state => state.department);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		async function loadDepartment() {
-			const list = await GET_DEPARTMENT();
-			setDeps(list.data);
-		};
-		loadDepartment();
-	}, []);
+		dispatch(GetDeps());
+	}, [dispatch]);
 
 	async function handleSubmit(e) {
-		try {
-			e.preventDefault();
-			const employee = {
-				Name: e.target.Name.value,
-				DepartmentId: e.target.Department.value,
-				DateOfJoining: formatDateForBE(e.target.DateOfJoining.value),
-				PhotoURL: e.target.PhotoURL.value
-			};
-			const result = await POST_EMPLOYEE(employee);
-			if (result.status === 201) {
-				toast.success("Add Employee Successfully !");
-			}
-			onHide();
-			onReload();
-		}
-		catch (err) {
-			toast.error(err);
-		}
+		e.preventDefault();
+		const employee = {
+			Name: e.target.Name.value,
+			DepartmentId: e.target.Department.value,
+			DateOfJoining: formatDateForBE(e.target.DateOfJoining.value),
+			PhotoURL: e.target.PhotoURL.value
+		};
+		await dispatch(CreateEmps(employee));
+		onHide();
+		onReload();
 	};
 
 	return (

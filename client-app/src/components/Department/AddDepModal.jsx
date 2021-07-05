@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 function AddDepModal(props) {
 	const { onHide, onReload } = props;
 	const dispatch = useDispatch();
+
 	async function handleSubmit(e) {
 		e.preventDefault();
 		const department = {

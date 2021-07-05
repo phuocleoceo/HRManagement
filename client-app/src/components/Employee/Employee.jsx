@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { DELETE_EMPLOYEE } from '../../api/apiEmployee';
 import { Table, Button, ButtonToolbar } from 'react-bootstrap';
 import AddEmpModal from './AddEmpModal';
 import EditEmpModal from './EditEmpModal';
-import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
-import { GetEmps } from '../../redux/slices/employeeSlice';
+import { GetEmps, DeleteEmps } from '../../redux/slices/employeeSlice';
 
 function Employee() {
 	const emps = useSelector(state => state.employee);
@@ -33,14 +31,8 @@ function Employee() {
 
 	async function deleteEmp(empId) {
 		if (window.confirm('Are you confirm to delete?')) {
-			try {
-				await DELETE_EMPLOYEE(empId);
-				toast.success("Delete Employee Successfully !");
-				reloadPage();
-			}
-			catch (err) {
-				toast.error(err);
-			}
+			await dispatch(DeleteEmps(empId));
+			reloadPage();
 		}
 	}
 
