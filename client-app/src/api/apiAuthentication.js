@@ -1,4 +1,5 @@
 import callAPI from './apiService';
+import { toast } from 'react-toastify';
 
 export async function REGISTER(body) {
 	try {
@@ -16,8 +17,9 @@ export async function LOGIN(body) {
 		const response = await callAPI("authentication/login", "POST", body);
 		if (response.data) {
 			localStorage.setItem("hrm_user", JSON.stringify(response.data));
+			return true;
 		}
-		return true;
+		return false;
 	}
 	catch {
 		return false;
@@ -34,10 +36,10 @@ export function GET_CURRENT_HRM_USER() {
 
 export default function AUTH_HEADER() {
 	const hrm = GET_CURRENT_HRM_USER();
-	console.log(hrm);
-	if (hrm.User && hrm.Token) {
+	if (hrm) {
 		return { Authorization: "Bearer " + hrm.Token };
 	} else {
+		toast.warn("Chưa đăng nhập kìa !");
 		return {};
 	}
 }

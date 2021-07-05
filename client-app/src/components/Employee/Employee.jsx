@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { GET_EMPLOYEE, DELETE_EMPLOYEE } from '../../api/apiEmployee';
 import { Table, Button, ButtonToolbar } from 'react-bootstrap';
 import AddEmpModal from './AddEmpModal';
 import EditEmpModal from './EditEmpModal';
-import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux';
+import { GetEmps, DeleteEmps } from '../../redux/slices/employeeSlice';
 
 function Employee() {
-	const [emps, setEmps] = useState([]);
+	const emps = useSelector(state => state.employee);
+	const dispatch = useDispatch();
+
 	const [addModalShow, setAddModalShow] = useState(false);
 	const [editModalShow, setEditModalShow] = useState(false);
-	const [reload, setReload] = useState(0);
+	const [reload, setReload] = useState(false);
 	const [currentEmp, setCurrentEmp] = useState({
 		Id: 0, Name: "", Department: "",
 		DateOfJoining: "", PhotoURL: ""
 	});
 
 	useEffect(() => {
-		async function refreshList() {
-			const list = await GET_EMPLOYEE();
-			setEmps(list.data);
-		};
-		refreshList();
-	}, [reload]);
+		dispatch(GetEmps());
+	}, [reload, dispatch]);
 
 	function addModalClose() {
 		setAddModalShow(false);
@@ -33,19 +31,13 @@ function Employee() {
 
 	async function deleteEmp(empId) {
 		if (window.confirm('Are you confirm to delete?')) {
-			try {
-				await DELETE_EMPLOYEE(empId);
-				toast.success("Delete Employee Successfully !");
-				reloadPage();
-			}
-			catch (err) {
-				toast.error(err);
-			}
+			await dispatch(DeleteEmps(empId));
+			reloadPage();
 		}
 	}
 
 	function reloadPage() {
-		setReload(reload + 1);
+		setReload(!reload);
 	}
 
 	return (

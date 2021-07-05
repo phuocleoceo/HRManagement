@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { GET_DEPARTMENT, DELETE_DEPARTMENT } from '../../api/apiDepartment';
 import { Table, Button, ButtonToolbar } from 'react-bootstrap';
 import AddDepModal from './AddDepModal';
 import EditDepModal from './EditDepModal';
-import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux';
+import { GetDeps, DeleteDeps } from '../../redux/slices/departmentSlice';
+
 
 function Department() {
-	const [deps, setDeps] = useState([]);
+	const deps = useSelector(state => state.department);
+	const dispatch = useDispatch();
+
 	const [addModalShow, setAddModalShow] = useState(false);
 	const [editModalShow, setEditModalShow] = useState(false);
 	const [currentDep, setCurrentDep] = useState({ Id: 0, Name: "" });
-	const [reload, setReload] = useState(0);
+	const [reload, setReload] = useState(false);
 
 	useEffect(() => {
-		async function refreshList() {
-			const list = await GET_DEPARTMENT();
-			setDeps(list.data);
-		};
-		refreshList();
-	}, [reload]);
+		dispatch(GetDeps());
+	}, [reload, dispatch]);
 
 	function addModalClose() {
 		setAddModalShow(false);
@@ -30,19 +29,13 @@ function Department() {
 
 	async function deleteDep(depId) {
 		if (window.confirm('Are you confirm to delete?')) {
-			try {
-				await DELETE_DEPARTMENT(depId);
-				toast.success("Delete Department Successfully !");
-				reloadPage();
-			}
-			catch (err) {
-				toast.error(err);
-			}
+			await dispatch(DeleteDeps(depId));
+			reloadPage();
 		}
 	}
 
 	function reloadPage() {
-		setReload(reload + 1);
+		setReload(!reload);
 	}
 
 	return (
