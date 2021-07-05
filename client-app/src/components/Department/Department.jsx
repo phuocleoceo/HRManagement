@@ -15,7 +15,7 @@ function Department() {
 	const [addModalShow, setAddModalShow] = useState(false);
 	const [editModalShow, setEditModalShow] = useState(false);
 	const [currentDep, setCurrentDep] = useState({ Id: 0, Name: "" });
-	const [reload, setReload] = useState(0);
+	const [reload, setReload] = useState(false);
 
 	useEffect(() => {
 		dispatch(GetDeps());
@@ -43,7 +43,7 @@ function Department() {
 	}
 
 	function reloadPage() {
-		setReload(reload + 1);
+		setReload(!reload);
 	}
 
 	return (

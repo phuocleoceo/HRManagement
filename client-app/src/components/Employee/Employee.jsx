@@ -13,7 +13,7 @@ function Employee() {
 
 	const [addModalShow, setAddModalShow] = useState(false);
 	const [editModalShow, setEditModalShow] = useState(false);
-	const [reload, setReload] = useState(0);
+	const [reload, setReload] = useState(false);
 	const [currentEmp, setCurrentEmp] = useState({
 		Id: 0, Name: "", Department: "",
 		DateOfJoining: "", PhotoURL: ""
@@ -45,7 +45,7 @@ function Employee() {
 	}
 
 	function reloadPage() {
-		setReload(reload + 1);
+		setReload(!reload);
 	}
 
 	return (
