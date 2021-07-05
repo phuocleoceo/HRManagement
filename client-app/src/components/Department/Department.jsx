@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { DELETE_DEPARTMENT } from '../../api/apiDepartment';
 import { Table, Button, ButtonToolbar } from 'react-bootstrap';
 import AddDepModal from './AddDepModal';
 import EditDepModal from './EditDepModal';
-import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
-import { GetDeps } from '../../redux/slices/departmentSlice';
+import { GetDeps, DeleteDeps } from '../../redux/slices/departmentSlice';
 
 
 function Department() {
@@ -31,14 +29,8 @@ function Department() {
 
 	async function deleteDep(depId) {
 		if (window.confirm('Are you confirm to delete?')) {
-			try {
-				await DELETE_DEPARTMENT(depId);
-				toast.success("Delete Department Successfully !");
-				reloadPage();
-			}
-			catch (err) {
-				toast.error(err);
-			}
+			await dispatch(DeleteDeps(depId));
+			reloadPage();
 		}
 	}
 

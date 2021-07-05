@@ -1,28 +1,21 @@
 import React from 'react';
 import { Modal, Button, Row, Col, Form, Container } from 'react-bootstrap';
+import { UpdateDeps } from '../../redux/slices/departmentSlice';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { PUT_DEPARTMENT } from '../../api/apiDepartment';
-import { toast } from 'react-toastify';
 
 function EditDepModal(props) {
 	const { onHide, onReload, currentDep } = props;
+	const dispatch = useDispatch();
 	async function handleSubmit(e) {
-		try {
-			e.preventDefault();
-			const id = e.target.Id.value;
-			const department = {
-				Name: e.target.Name.value
-			};
-			const result = await PUT_DEPARTMENT(id, department);
-			if (result.status === 204) {
-				toast.success("Edit Department Successfully !");
-			}
-			onHide();
-			onReload();
-		}
-		catch (err) {
-			toast.error(err);
-		}
+		e.preventDefault();
+		const department = {
+			id: e.target.Id.value,
+			Name: e.target.Name.value
+		};
+		await dispatch(UpdateDeps(department));
+		onHide();
+		onReload();
 	};
 
 	return (
