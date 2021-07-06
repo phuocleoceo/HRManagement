@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Modal, Button, Row, Col, Form, Container } from 'react-bootstrap';
 import { GetDeps } from '../../redux/slices/departmentSlice';
-import { CreateEmps } from '../../redux/slices/employeeSlice';
+import { AddEmps } from '../../redux/slices/employeeSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { formatDateForBE } from '../../extension';
 import PropTypes from 'prop-types';
@@ -23,7 +23,7 @@ function AddEmpModal(props) {
 			DateOfJoining: formatDateForBE(e.target.DateOfJoining.value),
 			PhotoURL: e.target.PhotoURL.value
 		};
-		await dispatch(CreateEmps(employee));
+		await dispatch(AddEmps(employee));
 		onHide();
 		onReload();
 	};
@@ -81,7 +81,7 @@ function AddEmpModal(props) {
 								<hr style={{ width: '225%' }} />
 								<Form.Group>
 									<Button variant="primary" type="submit">
-										Add Department
+										Add Employee
 									</Button>
 								</Form.Group>
 							</Form>

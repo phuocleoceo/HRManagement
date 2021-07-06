@@ -8,41 +8,42 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './style.css';
 
 function App() {
-  return (
-    <>
-      <BrowserRouter>
-        <Container>
-          <h3 className="m-3 d-flex justify-content-center">
-            HRManagement
-          </h3>
+	return (
+		<>
+			<BrowserRouter>
+				<Container>
+					<h3 className="m-3 d-flex justify-content-center">
+						HRManagement
+					</h3>
 
-          <Navigation />
+					<Navigation />
 
-          <Switch>
-            <Route path='/' component={Home} exact />
-            <Route path='/department' component={Department} />
-            <Route path='/employee' component={Employee} />
-            <Route path='/login' component={Login} />
-            <Route path='/register' component={Register} />
-          </Switch>
-        </Container>
-      </BrowserRouter>
+					<Switch>
+						<Route path='/' component={Home} exact />
+						<Route path='/department' component={Department} />
+						<Route path='/employee' component={Employee} />
+						<Route path='/login' component={Login} />
+						<Route path='/register' component={Register} />
+					</Switch>
+				</Container>
+			</BrowserRouter>
 
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-    </>
-  );
+			<ToastContainer
+				position="top-center"
+				autoClose={3000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+			/>
+		</>
+	);
 }
 
 export default App;

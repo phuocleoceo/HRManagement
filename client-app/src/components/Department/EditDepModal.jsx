@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button, Row, Col, Form, Container } from 'react-bootstrap';
-import { UpdateDeps } from '../../redux/slices/departmentSlice';
+import { EditDeps } from '../../redux/slices/departmentSlice';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -14,7 +14,7 @@ function EditDepModal(props) {
 			id: e.target.Id.value,
 			Name: e.target.Name.value
 		};
-		await dispatch(UpdateDeps(department));
+		await dispatch(EditDeps(department));
 		onHide();
 		onReload();
 	};

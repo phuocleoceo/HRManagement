@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Modal, Button, Row, Col, Form, Image, Container } from 'react-bootstrap';
 import { formatDateForBE, formatDateForFE } from '../../extension';
 import { GetDeps } from '../../redux/slices/departmentSlice';
-import { UpdateEmps } from '../../redux/slices/employeeSlice';
+import { EditEmps } from '../../redux/slices/employeeSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -24,7 +24,7 @@ function EditEmpModal(props) {
 			DateOfJoining: formatDateForBE(e.target.DateOfJoining.value),
 			PhotoURL: e.target.PhotoURL.value
 		};
-		await dispatch(UpdateEmps(employee));
+		await dispatch(EditEmps(employee));
 		onHide();
 		onReload();
 	};

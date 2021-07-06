@@ -15,8 +15,8 @@ export const GetEmps = createAsyncThunk(
 	}
 );
 
-export const CreateEmps = createAsyncThunk(
-	"employee/CreateEmps",
+export const AddEmps = createAsyncThunk(
+	"employee/AddEmps",
 	async (emp) => {
 		try {
 			const response = await POST_EMPLOYEE(emp);
@@ -30,8 +30,8 @@ export const CreateEmps = createAsyncThunk(
 	}
 );
 
-export const UpdateEmps = createAsyncThunk(
-	"employee/UpdateEmps",
+export const EditEmps = createAsyncThunk(
+	"employee/EditEmps",
 	async (emp) => {
 		try {
 			const response = await PUT_EMPLOYEE(emp.id, emp);

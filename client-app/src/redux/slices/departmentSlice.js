@@ -15,8 +15,8 @@ export const GetDeps = createAsyncThunk(
 	}
 );
 
-export const CreateDeps = createAsyncThunk(
-	"department/CreateDeps",
+export const AddDeps = createAsyncThunk(
+	"department/AddDeps",
 	async (dep) => {
 		try {
 			const response = await POST_DEPARTMENT(dep);
@@ -30,8 +30,8 @@ export const CreateDeps = createAsyncThunk(
 	}
 );
 
-export const UpdateDeps = createAsyncThunk(
-	"department/UpdateDeps",
+export const EditDeps = createAsyncThunk(
+	"department/EditDeps",
 	async (dep) => {
 		try {
 			const response = await PUT_DEPARTMENT(dep.id, dep);
