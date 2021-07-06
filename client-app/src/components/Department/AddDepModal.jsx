@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, Button, Row, Col, Form, Container } from 'react-bootstrap';
-import { CreateDeps } from '../../redux/slices/departmentSlice';
+import { AddDeps } from '../../redux/slices/departmentSlice';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -13,7 +13,7 @@ function AddDepModal(props) {
 		const department = {
 			Name: e.target.Name.value
 		};
-		await dispatch(CreateDeps(department));
+		await dispatch(AddDeps(department));
 		onHide();
 		onReload();
 	};
