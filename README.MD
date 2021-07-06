@@ -9,7 +9,7 @@
 
 <p align="center">
   <p align="center">
-    <img src="https://d33wubrfki0l68.cloudfront.net/4205d0600846259a187789ac358b9107a308d949/a4ec6/img/logo.svg" alt="Logo" width= 40%>
+    <img src="https://raw.githubusercontent.com/phuocleoceo/HRManagement/master/screen-shot/NetReact.svg" alt="Logo" width= 40%>
   </p>
 
   <h3 align="center">HR MANAGEMENT</h3>
@@ -42,6 +42,8 @@ This app is being developed by phuocleoceo, currently studying at Danang Univers
 * [AutoMapper](https://automapper.org/)
 * [React Bootstrap](https://react-bootstrap.github.io/)
 * [Axios](https://www.npmjs.com/package/axios)
+* [Redux](https://redux.js.org/)
+* [ReduxToolkit](https://redux-toolkit.js.org/)
 
 ## Getting Started
 
