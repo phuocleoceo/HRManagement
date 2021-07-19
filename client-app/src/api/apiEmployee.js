@@ -13,3 +13,6 @@ export function POST_EMPLOYEE(body) {
 export function PUT_EMPLOYEE(id, body) {
 	return callAPI("employee/" + id, "PUT", body, AUTH_HEADER());
 }
+export function SAVE_PHOTO(body) {
+	return callAPI("employee/savefile", "POST", body, AUTH_HEADER());
+}

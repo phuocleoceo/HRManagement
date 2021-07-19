@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Button, Row, Col, Form, Image, Container } from 'react-bootstrap';
 import { formatDateForBE, formatDateForFE } from '../../extension';
 import { GetDeps } from '../../redux/slices/departmentSlice';
 import { EditEmps } from '../../redux/slices/employeeSlice';
+import { SavePhoto } from '../../redux/slices/photoSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 function EditEmpModal(props) {
 	const { onHide, onReload, currentEmp } = props;
 	const deps = useSelector(state => state.department);
+	const photo = useSelector(state => state.photo);
 	const dispatch = useDispatch();
+	const [fileName, setFileName] = useState("anonymous.png");
 
 	useEffect(() => {
 		dispatch(GetDeps());
@@ -22,12 +25,25 @@ function EditEmpModal(props) {
 			Name: e.target.Name.value,
 			DepartmentId: e.target.Department.value,
 			DateOfJoining: formatDateForBE(e.target.DateOfJoining.value),
-			PhotoURL: e.target.PhotoURL.value
+			PhotoURL: fileName
 		};
 		await dispatch(EditEmps(employee));
 		onHide();
 		onReload();
 	};
+
+	const handleFileSelected = (e) => {
+		e.preventDefault();
+		setFileName(e.target.files[0].name);
+		const formData = new FormData();
+		formData.append(
+			"myFile",
+			e.target.files[0],
+			e.target.files[0].name
+		);
+		const action = SavePhoto(formData);
+		dispatch(action);
+	}
 
 	return (
 		<Container>
@@ -87,26 +103,22 @@ function EditEmpModal(props) {
 									/>
 								</Form.Group>
 
-								<Form.Group controlId="PhotoURL">
-									<Form.Label>PhotoURL</Form.Label>
-									<Form.Control type="text" name="PhotoURL"
-										required
-										defaultValue={currentEmp.PhotoURL}
-										placeholder="PhotoURL" />
-								</Form.Group>
-
 								<hr style={{ width: '225%' }} />
 								<Form.Group>
 									<Button variant="primary" type="submit">
 										Update Employee
+									</Button>
+									&nbsp;
+									<Button variant="danger" onClick={onHide}>
+										Close
 									</Button>
 								</Form.Group>
 							</Form>
 						</Col>
 
 						<Col sm={6}>
-							<Image width="200px" height="200px"
-								src={currentEmp.PhotoURL} />
+							<Image src={photo} width="200px" height="200px" />
+							<input type="file" onChange={handleFileSelected} />
 						</Col>
 					</Row>
 				</Modal.Body>

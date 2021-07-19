@@ -34,7 +34,7 @@ function EditDepModal(props) {
 
 				<Modal.Body>
 					<Row>
-						<Col sm={6}>
+						<Col sm={7}>
 							<Form onSubmit={handleSubmit}>
 
 								<Form.Group controlId="DepartmentId">
@@ -56,6 +56,10 @@ function EditDepModal(props) {
 								<Form.Group>
 									<Button variant="primary" type="submit">
 										Update Department
+									</Button>
+									&nbsp;
+									<Button variant="danger" onClick={onHide}>
+										Close
 									</Button>
 								</Form.Group>
 							</Form>

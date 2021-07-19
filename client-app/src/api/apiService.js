@@ -1,7 +1,5 @@
 import axios from 'axios';
-
-// let API_URL = "https://localhost:5001/api";
-let API_URL = "https://bsite.net/phuocleoceo/api";
+import { API_URL } from '../extension';
 
 async function callAPI(endpoint, method, body, header) {
 	try {

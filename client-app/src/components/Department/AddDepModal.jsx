@@ -46,6 +46,10 @@ function AddDepModal(props) {
 									<Button variant="primary" type="submit">
 										Add Department
 									</Button>
+									&nbsp;
+									<Button variant="danger" onClick={onHide}>
+										Close
+									</Button>
 								</Form.Group>
 							</Form>
 						</Col>

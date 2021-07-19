@@ -7,6 +7,10 @@ using WebAPI.Models.DTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using WebAPI.Repository.Interface;
+using System;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace WebAPI.Controllers
 {
@@ -17,11 +21,13 @@ namespace WebAPI.Controllers
 	{
 		private readonly IEmployeeRepository _db;
 		private readonly IMapper _mapper;
+		private readonly IWebHostEnvironment _env;
 
-		public EmployeeController(IEmployeeRepository db, IMapper mapper)
+		public EmployeeController(IEmployeeRepository db, IMapper mapper, IWebHostEnvironment env)
 		{
 			_db = db;
 			_mapper = mapper;
+			_env = env;
 		}
 
 		// GET: api/Employee
@@ -83,6 +89,30 @@ namespace WebAPI.Controllers
 			}
 			await _db.DeleteEmployee(id);
 			return NoContent();
+		}
+
+		[Route("SaveFile")]
+		[HttpPost]
+		public async Task<IActionResult> SaveFile()
+		{
+			try
+			{
+				IFormCollection httpRequest = Request.Form;
+				IFormFile postedFile = httpRequest.Files[0];
+				string filename = postedFile.FileName;
+				string physicalPath = _env.ContentRootPath + "/Photos/" + filename;
+
+				using (var stream = new FileStream(physicalPath, FileMode.Create))
+				{
+					await postedFile.CopyToAsync(stream);
+				}
+
+				return Ok(filename);
+			}
+			catch (Exception)
+			{
+				return Ok("anonymous.png");
+			}
 		}
 	}
 }

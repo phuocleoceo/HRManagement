@@ -12,6 +12,8 @@ using WebAPI.Extension;
 using WebAPI.Authentication;
 using WebAPI.Repository.Implement;
 using WebAPI.Repository.Interface;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace WebAPI
 {
@@ -49,12 +51,13 @@ namespace WebAPI
 			services.AddAutoMapper(typeof(HRMMapping));
 
 			//Controller and JSON
-			services.AddControllers()
+			services.AddControllersWithViews()
 			.AddNewtonsoftJson(options =>
 				options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore)
 			.AddNewtonsoftJson(options =>
 				options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
+			services.AddControllers();
 			//Swagger
 			services.ConfigureSwaggerWithAuth();
 
@@ -96,6 +99,13 @@ namespace WebAPI
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
+			});
+
+			app.UseStaticFiles(new StaticFileOptions
+			{
+				FileProvider = new PhysicalFileProvider(
+					Path.Combine(Directory.GetCurrentDirectory(), "Photos")),
+				RequestPath = "/Photos"
 			});
 		}
 	}
