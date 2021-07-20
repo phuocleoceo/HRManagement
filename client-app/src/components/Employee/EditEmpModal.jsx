@@ -3,16 +3,15 @@ import { Modal, Button, Row, Col, Form, Image, Container } from 'react-bootstrap
 import { formatDateForBE, formatDateForFE } from '../../extension';
 import { GetDeps } from '../../redux/slices/departmentSlice';
 import { EditEmps } from '../../redux/slices/employeeSlice';
-import { SavePhoto } from '../../redux/slices/photoSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { SAVE_PHOTO } from '../../api/apiEmployee';
 import PropTypes from 'prop-types';
 
 function EditEmpModal(props) {
 	const { onHide, onReload, currentEmp } = props;
 	const deps = useSelector(state => state.department);
-	const photo = useSelector(state => state.photo);
 	const dispatch = useDispatch();
-	const [fileName, setFileName] = useState("anonymous.png");
+	const [file, setFile] = useState(null);
 
 	useEffect(() => {
 		dispatch(GetDeps());
@@ -25,24 +24,23 @@ function EditEmpModal(props) {
 			Name: e.target.Name.value,
 			DepartmentId: e.target.Department.value,
 			DateOfJoining: formatDateForBE(e.target.DateOfJoining.value),
-			PhotoURL: fileName
+			PhotoURL: e.target.PhotoURL.files[0].name
 		};
 		await dispatch(EditEmps(employee));
+		const formData = new FormData();
+		formData.append(
+			"myFile",
+			e.target.PhotoURL.files[0],
+			e.target.PhotoURL.files[0].name
+		);
+		await SAVE_PHOTO(formData);
 		onHide();
 		onReload();
 	};
 
 	const handleFileSelected = (e) => {
 		e.preventDefault();
-		setFileName(e.target.files[0].name);
-		const formData = new FormData();
-		formData.append(
-			"myFile",
-			e.target.files[0],
-			e.target.files[0].name
-		);
-		const action = SavePhoto(formData);
-		dispatch(action);
+		setFile(e.target.files[0]);
 	}
 
 	return (
@@ -59,10 +57,9 @@ function EditEmpModal(props) {
 				</Modal.Header>
 
 				<Modal.Body>
-					<Row>
-						<Col sm={6}>
-							<Form onSubmit={handleSubmit}>
-
+					<Form onSubmit={handleSubmit}>
+						<Row>
+							<Col sm={6}>
 								<Form.Group controlId="Id">
 									<Form.Label>Id</Form.Label>
 									<Form.Control type="text" name="Id" required
@@ -113,14 +110,20 @@ function EditEmpModal(props) {
 										Close
 									</Button>
 								</Form.Group>
-							</Form>
-						</Col>
+							</Col>
 
-						<Col sm={6}>
-							<Image src={photo} width="200px" height="200px" />
-							<input type="file" onChange={handleFileSelected} />
-						</Col>
-					</Row>
+							<Col sm={6}>
+								<Image src={file ? URL.createObjectURL(file) : null}
+									alt={file ? file.name : null}
+									width="200px" height="200px" />
+								<p></p>
+								<Form.Group controlId="PhotoURL" className="mb-3">
+									<Form.Control name="PhotoURL" type="file"
+										onChange={handleFileSelected} />
+								</Form.Group>
+							</Col>
+						</Row>
+					</Form>
 				</Modal.Body>
 			</Modal>
 		</Container>
