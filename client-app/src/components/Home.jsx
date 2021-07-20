@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Card, Row, Container, Col } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { GetEmps } from '../redux/slices/employeeSlice';
-import { PHOTO_URL } from '../extension';
+import { PHOTO_PATH_URL } from '../extension';
 
 export default function Home() {
 	const emps = useSelector(state => state.employee);
@@ -16,7 +16,7 @@ export default function Home() {
 				{emps.map(emp =>
 					<Col sm={6} lg={4}>
 						<Card className="card-home">
-							<Card.Img variant="top" src={PHOTO_URL + emp.PhotoURL}
+							<Card.Img variant="top" src={PHOTO_PATH_URL + emp.PhotoURL}
 								className="img-home" />
 							<Card.Body>
 								<Card.Title>{emp.Name}</Card.Title>
