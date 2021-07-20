@@ -4,7 +4,7 @@ import { LOGIN } from '../../api/apiAuthentication';
 import { toast } from 'react-toastify';
 
 export default function Login() {
-	async function handleLogin(e) {
+	const handleLogin = async (e) => {
 		e.preventDefault();
 		const infor = {
 			userName: e.target.userName.value,

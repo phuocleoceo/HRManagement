@@ -19,24 +19,18 @@ function Department() {
 		dispatch(GetDeps());
 	}, [reload, dispatch]);
 
-	function addModalClose() {
-		setAddModalShow(false);
-	}
+	const addModalClose = () => setAddModalShow(false);
 
-	function editModalClose() {
-		setEditModalShow(false);
-	}
+	const editModalClose = () => setEditModalShow(false);
 
-	async function deleteDep(depId) {
+	const deleteDep = async (depId) => {
 		if (window.confirm('Are you confirm to delete?')) {
 			await dispatch(DeleteDeps(depId));
 			reloadPage();
 		}
 	}
 
-	function reloadPage() {
-		setReload(!reload);
-	}
+	const reloadPage = () => setReload(!reload);
 
 	return (
 		<div >

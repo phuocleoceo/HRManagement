@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 export default function Register() {
 	const history = useHistory();
-	async function handleRegister(e) {
+	const handleRegister = async (e) => {
 		e.preventDefault();
 		const infor = {
 			firstname: e.target.firstname.value,

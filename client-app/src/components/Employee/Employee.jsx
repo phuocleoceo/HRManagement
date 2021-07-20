@@ -21,24 +21,18 @@ function Employee() {
 		dispatch(GetEmps());
 	}, [reload, dispatch]);
 
-	function addModalClose() {
-		setAddModalShow(false);
-	}
+	const addModalClose = () => setAddModalShow(false);
 
-	function editModalClose() {
-		setEditModalShow(false);
-	}
+	const editModalClose = () => setEditModalShow(false);
 
-	async function deleteEmp(empId) {
+	const deleteEmp = async (empId) => {
 		if (window.confirm('Are you confirm to delete?')) {
 			await dispatch(DeleteEmps(empId));
 			reloadPage();
 		}
 	}
 
-	function reloadPage() {
-		setReload(!reload);
-	}
+	const reloadPage = () => setReload(!reload);
 
 	return (
 		<div >

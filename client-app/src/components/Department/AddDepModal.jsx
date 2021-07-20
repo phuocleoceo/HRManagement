@@ -8,7 +8,7 @@ function AddDepModal(props) {
 	const { onHide, onReload } = props;
 	const dispatch = useDispatch();
 
-	async function handleSubmit(e) {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const department = {
 			Name: e.target.Name.value
