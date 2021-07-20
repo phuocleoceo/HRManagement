@@ -4,14 +4,14 @@ import { GetDeps } from '../../redux/slices/departmentSlice';
 import { AddEmps } from '../../redux/slices/employeeSlice';
 import { SAVE_PHOTO } from '../../api/apiEmployee';
 import { useSelector, useDispatch } from 'react-redux';
-import { formatDateForBE } from '../../extension';
+import { formatDateForBE, PHOTO_PATH_URL } from '../../extension';
 import PropTypes from 'prop-types';
 
 function AddEmpModal(props) {
 	const { onHide, onReload } = props;
 	const deps = useSelector(state => state.department);
 	const dispatch = useDispatch();
-	const [file, setFile] = useState(null);
+	const [image, setImage] = useState(PHOTO_PATH_URL + "anonymous.png");
 
 	useEffect(() => {
 		dispatch(GetDeps());
@@ -39,7 +39,7 @@ function AddEmpModal(props) {
 
 	const handleFileSelected = (e) => {
 		e.preventDefault();
-		setFile(e.target.files[0]);
+		setImage(URL.createObjectURL(e.target.files[0]));
 	}
 
 	return (
@@ -99,8 +99,7 @@ function AddEmpModal(props) {
 							</Col>
 
 							<Col sm={6}>
-								<Image src={file ? URL.createObjectURL(file) : null}
-									alt={file ? file.name : null}
+								<Image src={image}
 									width="200px" height="200px" />
 								<p></p>
 								<Form.Group controlId="PhotoURL" className="mb-3">

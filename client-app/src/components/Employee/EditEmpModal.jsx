@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Row, Col, Form, Image, Container } from 'react-bootstrap';
-import { formatDateForBE, formatDateForFE } from '../../extension';
-import { GetDeps } from '../../redux/slices/departmentSlice';
+import { formatDateForBE, formatDateForFE, PHOTO_PATH_URL } from '../../extension';
 import { EditEmps } from '../../redux/slices/employeeSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { SAVE_PHOTO } from '../../api/apiEmployee';
 import PropTypes from 'prop-types';
 
 function EditEmpModal(props) {
-	const { onHide, onReload, currentEmp } = props;
+	const { onHide, onReload } = props;
 	const deps = useSelector(state => state.department);
+	const currentEmp = useSelector(state => state.currentEmp);
 	const dispatch = useDispatch();
-	const [file, setFile] = useState(null);
-
+	const [image, setImage] = useState("");
 	useEffect(() => {
-		dispatch(GetDeps());
-	}, [dispatch]);
+		setImage(PHOTO_PATH_URL + currentEmp.PhotoURL);
+	}, [dispatch, currentEmp]);
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -40,7 +39,7 @@ function EditEmpModal(props) {
 
 	const handleFileSelected = (e) => {
 		e.preventDefault();
-		setFile(e.target.files[0]);
+		setImage(URL.createObjectURL(e.target.files[0]));
 	}
 
 	return (
@@ -113,8 +112,7 @@ function EditEmpModal(props) {
 							</Col>
 
 							<Col sm={6}>
-								<Image src={file ? URL.createObjectURL(file) : null}
-									alt={file ? file.name : null}
+								<Image src={image}
 									width="200px" height="200px" />
 								<p></p>
 								<Form.Group controlId="PhotoURL" className="mb-3">
