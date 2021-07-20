@@ -7,11 +7,11 @@ import { SAVE_PHOTO } from '../../api/apiEmployee';
 import PropTypes from 'prop-types';
 
 function EditEmpModal(props) {
-	const { onHide, onReload } = props;
+	const { onHide, onReload, currentEmp } = props;
 	const deps = useSelector(state => state.department);
-	const currentEmp = useSelector(state => state.currentEmp);
 	const dispatch = useDispatch();
 	const [image, setImage] = useState("");
+
 	useEffect(() => {
 		setImage(PHOTO_PATH_URL + currentEmp.PhotoURL);
 	}, [dispatch, currentEmp]);

@@ -4,7 +4,6 @@ import AddEmpModal from './AddEmpModal';
 import EditEmpModal from './EditEmpModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { GetEmps, DeleteEmps } from '../../redux/slices/employeeSlice';
-import { setCurrentEmp } from '../../redux/slices/currentEmpSlice';
 
 function Employee() {
 	const emps = useSelector(state => state.employee);
@@ -13,6 +12,10 @@ function Employee() {
 	const [addModalShow, setAddModalShow] = useState(false);
 	const [editModalShow, setEditModalShow] = useState(false);
 	const [reload, setReload] = useState(false);
+	const [currentEmp, setCurrentEmp] = useState({
+		Id: 0, Name: "", Department: "",
+		DateOfJoining: "", PhotoURL: ""
+	});
 
 	useEffect(() => {
 		dispatch(GetEmps());
@@ -61,13 +64,13 @@ function Employee() {
 									<Button className="mr-2" variant="info"
 										onClick={() => {
 											setEditModalShow(true);
-											dispatch(setCurrentEmp({
+											setCurrentEmp({
 												Id: emp.Id,
 												Name: emp.Name,
 												Department: emp.Department,
 												DateOfJoining: emp.DateOfJoining,
 												PhotoURL: emp.PhotoURL
-											}));
+											});
 										}}>
 										Edit
 									</Button>
@@ -80,7 +83,8 @@ function Employee() {
 									<EditEmpModal
 										show={editModalShow}
 										onHide={editModalClose}
-										onReload={reloadPage} />
+										onReload={reloadPage}
+										currentEmp={currentEmp} />
 								</ButtonToolbar>
 							</td>
 						</tr>)
