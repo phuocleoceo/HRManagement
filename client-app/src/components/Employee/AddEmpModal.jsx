@@ -31,8 +31,8 @@ function AddEmpModal(props) {
 			const formData = new FormData();
 			formData.append(
 				"myFile",
-				e.target.PhotoURL.files[0],
-				e.target.PhotoURL.files[0].name
+				photo,
+				photo.name
 			);
 			await SAVE_PHOTO(formData);
 		}

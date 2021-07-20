@@ -16,23 +16,27 @@ function EditEmpModal(props) {
 		setImage(PHOTO_PATH_URL + currentEmp.PhotoURL);
 	}, [dispatch, currentEmp]);
 
-	async function handleSubmit(e) {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
+		const photo = e.target.PhotoURL.files[0];
 		const employee = {
 			id: e.target.Id.value,
 			Name: e.target.Name.value,
 			DepartmentId: e.target.Department.value,
 			DateOfJoining: formatDateForBE(e.target.DateOfJoining.value),
-			PhotoURL: e.target.PhotoURL.files[0].name
+			PhotoURL: photo ? photo.name : currentEmp.PhotoURL
 		};
 		await dispatch(EditEmps(employee));
-		const formData = new FormData();
-		formData.append(
-			"myFile",
-			e.target.PhotoURL.files[0],
-			e.target.PhotoURL.files[0].name
-		);
-		await SAVE_PHOTO(formData);
+		//photo undefined when It's current Photo loaded by URL
+		if (photo) {
+			const formData = new FormData();
+			formData.append(
+				"myFile",
+				photo,
+				photo.name
+			);
+			await SAVE_PHOTO(formData);
+		}
 		onHide();
 		onReload();
 	};
