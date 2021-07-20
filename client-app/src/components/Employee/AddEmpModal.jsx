@@ -19,20 +19,23 @@ function AddEmpModal(props) {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		const photo = e.target.PhotoURL.files[0];
 		const employee = {
 			Name: e.target.Name.value,
 			DepartmentId: e.target.Department.value,
 			DateOfJoining: formatDateForBE(e.target.DateOfJoining.value),
-			PhotoURL: e.target.PhotoURL.files[0].name
+			PhotoURL: photo ? photo.name : "anonymous.png"
 		};
 		await dispatch(AddEmps(employee));
-		const formData = new FormData();
-		formData.append(
-			"myFile",
-			e.target.PhotoURL.files[0],
-			e.target.PhotoURL.files[0].name
-		);
-		await SAVE_PHOTO(formData);
+		if (photo) {
+			const formData = new FormData();
+			formData.append(
+				"myFile",
+				e.target.PhotoURL.files[0],
+				e.target.PhotoURL.files[0].name
+			);
+			await SAVE_PHOTO(formData);
+		}
 		onHide();
 		onReload();
 	};
