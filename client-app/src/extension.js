@@ -10,8 +10,9 @@ export function formatDateForFE(date) {
 	return dateArray[2] + "-" + dateArray[1] + "-" + dateArray[0];
 }
 
-export const API_URL = "https://bsite.net/phuocleoceo/api";
-//export const API_URL = "https://localhost:5001/api";
+//const DOMAIN_NAME = "https://bsite.net/phuocleoceo/";
+const DOMAIN_NAME = "https://localhost:5001/";
 
-export const PHOTO_URL = "https://bsite.net/phuocleoceo/Photos/";
-//export const PHOTO_URL = "https://localhost:5001/Photos/";
+export const API_URL = DOMAIN_NAME + "api";
+
+export const PHOTO_URL = DOMAIN_NAME + "Photos/";
