@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using WebAPI.Models;
@@ -7,12 +8,14 @@ namespace WebAPI.Authentication
 {
 	public interface IAuthenticationManager
 	{
-		Task<bool> ValidateUser(UserForAuthenticationDTO userForAuth);
-		Task<string> CreateAccessToken();
+		Task<User> ValidateUser(UserForAuthenticationDTO userForAuth);
+
+		Task<IEnumerable<Claim>> GetClaims(User _user);
+
+		string CreateAccessToken(IEnumerable<Claim> claims);
 
 		string CreateRefreshToken();
-		ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
 
-		Task<TokenAPI> GetToken();
+		ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
 	}
 }

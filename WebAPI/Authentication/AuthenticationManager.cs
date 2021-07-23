@@ -17,7 +17,6 @@ namespace WebAPI.Authentication
 	{
 		private readonly UserManager<User> _userManager;
 		private readonly IConfiguration _configuration;
-		private User _user;
 
 		public AuthenticationManager(UserManager<User> userManager,
 									IConfiguration configuration)
@@ -25,37 +24,21 @@ namespace WebAPI.Authentication
 			_userManager = userManager;
 			_configuration = configuration;
 		}
-		public async Task<bool> ValidateUser(UserForAuthenticationDTO userForAuth)
+		public async Task<User> ValidateUser(UserForAuthenticationDTO userForAuth)
 		{
-			_user = await _userManager.FindByNameAsync(userForAuth.UserName);
-			if (_user != null)
+			User _user = await _userManager.FindByNameAsync(userForAuth.UserName);
+			if (_user != null && await _userManager.CheckPasswordAsync(_user, userForAuth.Password))
 			{
-				return await _userManager.CheckPasswordAsync(_user, userForAuth.Password);
+				return _user;
 			}
 			else
 			{
-				return false;
+				return null;
 			}
 		}
 
 		// ACCESS TOKEN
-		public async Task<string> CreateAccessToken()
-		{
-			var signingCredentials = GetSigningCredentials();
-			var claims = await GetClaims();
-			var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
-			return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-		}
-
-		private SigningCredentials GetSigningCredentials()
-		{
-			var _configKey = _configuration.GetSection("JwtSettings:secretKey").Value;
-			var key = Encoding.UTF8.GetBytes(_configKey);
-			var secret = new SymmetricSecurityKey(key);
-			return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
-		}
-
-		private async Task<List<Claim>> GetClaims()
+		public async Task<IEnumerable<Claim>> GetClaims(User _user)
 		{
 			var claims = new List<Claim>
 			{
@@ -69,8 +52,16 @@ namespace WebAPI.Authentication
 			return claims;
 		}
 
+		private SigningCredentials GetSigningCredentials()
+		{
+			var _configKey = _configuration.GetSection("JwtSettings:secretKey").Value;
+			var key = Encoding.UTF8.GetBytes(_configKey);
+			var secret = new SymmetricSecurityKey(key);
+			return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
+		}
+
 		private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials,
-														List<Claim> claims)
+														IEnumerable<Claim> claims)
 		{
 			var jwtSettings = _configuration.GetSection("JwtSettings");
 			var tokenOptions = new JwtSecurityToken
@@ -82,6 +73,13 @@ namespace WebAPI.Authentication
 				signingCredentials: signingCredentials
 			);
 			return tokenOptions;
+		}
+
+		public string CreateAccessToken(IEnumerable<Claim> claims)
+		{
+			var signingCredentials = GetSigningCredentials();
+			var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
+			return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 		}
 
 		// REFRESH TOKEN
@@ -116,24 +114,6 @@ namespace WebAPI.Authentication
 										StringComparison.InvariantCultureIgnoreCase))
 				throw new SecurityTokenException("Invalid token");
 			return principal;
-		}
-
-		// GET TOKEN
-		public async Task<TokenAPI> GetToken()
-		{
-			string accessToken = await CreateAccessToken();
-			string refreshToken = CreateRefreshToken();
-
-			_user.RefreshToken = refreshToken;
-			var refreshTokenExpires = Convert.ToDouble(_configuration.GetSection("JwtSettings:refreshTokenExpires").Value);
-			_user.RefreshTokenExpiryTime = DateTime.Now.AddDays(refreshTokenExpires);
-			await _userManager.UpdateAsync(_user);
-
-			return new TokenAPI
-			{
-				AccessToken = accessToken,
-				RefreshToken = refreshToken
-			};
 		}
 	}
 }
