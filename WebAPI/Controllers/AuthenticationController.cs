@@ -54,8 +54,8 @@ namespace WebAPI.Controllers
 				return Unauthorized();  // 401 Unauthorized
 			}
 
-			var token = await _authManager.CreateToken();
-			var userCurrent = await _userManager.FindByNameAsync(user.UserName);
+			TokenAPI tokenAPI = await _authManager.GetToken();
+			User userCurrent = await _userManager.FindByNameAsync(user.UserName);
 			var userInfor = new
 			{
 				Name = userCurrent.FirstName + " " + userCurrent.LastName,
@@ -65,7 +65,8 @@ namespace WebAPI.Controllers
 			};
 			return Ok(new
 			{
-				Token = token,
+				Token = tokenAPI.AccessToken,
+				RefreshToken = tokenAPI.RefreshToken,
 				User = userInfor
 			});
 		}
