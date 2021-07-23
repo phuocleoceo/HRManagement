@@ -37,7 +37,7 @@ export function GET_CURRENT_HRM_USER() {
 export default function AUTH_HEADER() {
 	const hrm = GET_CURRENT_HRM_USER();
 	if (hrm) {
-		return { Authorization: "Bearer " + hrm.Token };
+		return { Authorization: "Bearer " + hrm.AccessToken };
 	} else {
 		toast.warn("Chưa đăng nhập kìa !");
 		return {};

@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
 
 			return Ok(new
 			{
-				Token = newAccessToken,
+				AccessToken = newAccessToken,
 				RefreshToken = newRefreshToken
 			});
 		}

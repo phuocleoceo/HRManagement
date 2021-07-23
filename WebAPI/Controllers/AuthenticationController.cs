@@ -79,7 +79,7 @@ namespace WebAPI.Controllers
 			};
 			return Ok(new
 			{
-				Token = accessToken,
+				AccessToken = accessToken,
 				RefreshToken = refreshToken,
 				User = userInfor
 			});
