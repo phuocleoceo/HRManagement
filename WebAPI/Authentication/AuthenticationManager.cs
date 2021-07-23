@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -16,7 +17,6 @@ namespace WebAPI.Authentication
 	{
 		private readonly UserManager<User> _userManager;
 		private readonly IConfiguration _configuration;
-		private User _user;
 
 		public AuthenticationManager(UserManager<User> userManager,
 									IConfiguration configuration)
@@ -24,35 +24,21 @@ namespace WebAPI.Authentication
 			_userManager = userManager;
 			_configuration = configuration;
 		}
-		public async Task<bool> ValidateUser(UserForAuthenticationDTO userForAuth)
+		public async Task<User> ValidateUser(UserForAuthenticationDTO userForAuth)
 		{
-			_user = await _userManager.FindByNameAsync(userForAuth.UserName);
-			if (_user != null)
+			User _user = await _userManager.FindByNameAsync(userForAuth.UserName);
+			if (_user != null && await _userManager.CheckPasswordAsync(_user, userForAuth.Password))
 			{
-				return await _userManager.CheckPasswordAsync(_user, userForAuth.Password);
+				return _user;
 			}
 			else
 			{
-				return false;
+				return null;
 			}
 		}
 
-		public async Task<string> CreateToken()
-		{
-			var signingCredentials = GetSigningCredentials();
-			var claims = await GetClaims();
-			var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
-			return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-		}
-
-		private SigningCredentials GetSigningCredentials()
-		{
-			var _configKey = _configuration.GetSection("JwtSettings:secretKey").Value;
-			var key = Encoding.UTF8.GetBytes(_configKey);
-			var secret = new SymmetricSecurityKey(key);
-			return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
-		}
-		private async Task<List<Claim>> GetClaims()
+		// ACCESS TOKEN
+		public async Task<IEnumerable<Claim>> GetClaims(User _user)
 		{
 			var claims = new List<Claim>
 			{
@@ -66,8 +52,16 @@ namespace WebAPI.Authentication
 			return claims;
 		}
 
+		private SigningCredentials GetSigningCredentials()
+		{
+			var _configKey = _configuration.GetSection("JwtSettings:secretKey").Value;
+			var key = Encoding.UTF8.GetBytes(_configKey);
+			var secret = new SymmetricSecurityKey(key);
+			return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
+		}
+
 		private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials,
-														List<Claim> claims)
+														IEnumerable<Claim> claims)
 		{
 			var jwtSettings = _configuration.GetSection("JwtSettings");
 			var tokenOptions = new JwtSecurityToken
@@ -79,6 +73,47 @@ namespace WebAPI.Authentication
 				signingCredentials: signingCredentials
 			);
 			return tokenOptions;
+		}
+
+		public string CreateAccessToken(IEnumerable<Claim> claims)
+		{
+			var signingCredentials = GetSigningCredentials();
+			var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
+			return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+		}
+
+		// REFRESH TOKEN
+		public string CreateRefreshToken()
+		{
+			byte[] randomNumber = new byte[32];
+			using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+			{
+				rng.GetBytes(randomNumber);
+				return Convert.ToBase64String(randomNumber);
+			}
+		}
+
+		public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+		{
+			var _configKey = _configuration.GetSection("JwtSettings:secretKey").Value;
+			var key = Encoding.UTF8.GetBytes(_configKey);
+			var tokenValidationParameters = new TokenValidationParameters
+			{
+				ValidateAudience = false, //you might want to validate the audience and issuer depending on your use case
+				ValidateIssuer = false,
+				ValidateIssuerSigningKey = true,
+				IssuerSigningKey = new SymmetricSecurityKey(key),
+				ValidateLifetime = false //here we are saying that we don't care about the token's expiration date
+			};
+			var tokenHandler = new JwtSecurityTokenHandler();
+			SecurityToken securityToken;
+			var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+			var jwtSecurityToken = securityToken as JwtSecurityToken;
+			if (jwtSecurityToken == null ||
+				!jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
+										StringComparison.InvariantCultureIgnoreCase))
+				throw new SecurityTokenException("Invalid token");
+			return principal;
 		}
 	}
 }
