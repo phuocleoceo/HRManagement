@@ -53,13 +53,9 @@ function AddEmpModal(props) {
 
 	return (
 		<Container>
-			<Modal
-				{...props}
-				aria-labelledby="contained-modal-title-vcenter"
-				centered
-			>
-				<Modal.Header clooseButton>
-					<Modal.Title id="contained-modal-title-vcenter">
+			<Modal {...props} centered>
+				<Modal.Header closeButton>
+					<Modal.Title>
 						Add Employee
 					</Modal.Title>
 				</Modal.Header>

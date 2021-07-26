@@ -37,15 +37,12 @@ function App() {
 						<Route path='/' component={Home} exact />
 						<Route path='/login' component={Login} />
 						<Route path='/register' component={Register} />
-						{
-							isLoggedIn ?
-								<>
-									<Route path='/department' component={Department} />
-									<Route path='/employee' component={Employee} />
-								</>
-								:
-								<Route path={['/department', '/employee']}
-									component={AccessDenied} />
+
+						{/* Complex but avoids Route warnings and doesn't get lost NotFound*/}
+						{isLoggedIn && <Route path='/department' component={Department} />}
+						{isLoggedIn && <Route path='/employee' component={Employee} />}
+						{!isLoggedIn && <Route component={AccessDenied}
+							path={['/department', '/employee']} />
 						}
 						<Route component={NotFound} />
 					</Switch>
