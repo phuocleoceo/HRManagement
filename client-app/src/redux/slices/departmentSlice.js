@@ -8,9 +8,7 @@ export const GetDeps = createAsyncThunk(
 			const response = await GET_DEPARTMENT();
 			return response.data;
 		}
-		catch {
-			return [];
-		}
+		catch { return []; }
 	}
 );
 
@@ -19,12 +17,9 @@ export const AddDeps = createAsyncThunk(
 	async (dep) => {
 		try {
 			const response = await POST_DEPARTMENT(dep);
-			if (response.status === 201) return true;
-			return false;
+			return response.status === 201;
 		}
-		catch {
-			return false;
-		}
+		catch { return false; }
 	}
 );
 
@@ -33,12 +28,9 @@ export const EditDeps = createAsyncThunk(
 	async (dep) => {
 		try {
 			const response = await PUT_DEPARTMENT(dep.id, dep);
-			if (response.status === 204) return true;
-			return false;
+			return response.status === 204;
 		}
-		catch {
-			return false;
-		}
+		catch { return false; }
 	}
 );
 
@@ -47,12 +39,9 @@ export const DeleteDeps = createAsyncThunk(
 	async (id) => {
 		try {
 			const response = await DELETE_DEPARTMENT(id);
-			if (response.status === 204) return true;
-			return false;
+			return response.status === 204;
 		}
-		catch {
-			return true;
-		}
+		catch { return false; }
 	}
 );
 

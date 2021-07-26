@@ -7,5 +7,5 @@ export const LOGIN = (body) => callAPI("authentication/login", "POST", body);
 export const AUTH_HEADER = () => {
 	const hrm = JSON.parse(localStorage.getItem("hrm_user"));
 	if (hrm) return { Authorization: "Bearer " + hrm.AccessToken };
-	else return {};
+	return {};
 }

@@ -6,14 +6,9 @@ export const RegisterAction = createAsyncThunk(
 	async (body) => {
 		try {
 			const response = await REGISTER(body);
-			if (response.status === 201) {
-				return true;
-			}
-			return false;
+			return response.status === 201;
 		}
-		catch {
-			return false;
-		}
+		catch { return false; }
 	}
 );
 
@@ -22,7 +17,7 @@ export const LoginAction = createAsyncThunk(
 	async (body) => {
 		try {
 			const response = await LOGIN(body);
-			if (response.data) {
+			if (response.status === 200) {
 				return {
 					Accepted: true,
 					ResponseData: response.data

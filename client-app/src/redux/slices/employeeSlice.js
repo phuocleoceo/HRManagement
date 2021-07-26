@@ -8,9 +8,7 @@ export const GetEmps = createAsyncThunk(
 			const response = await GET_EMPLOYEE();
 			return response.data;
 		}
-		catch {
-			return [];
-		}
+		catch { return []; }
 	}
 );
 
@@ -19,12 +17,9 @@ export const AddEmps = createAsyncThunk(
 	async (emp) => {
 		try {
 			const response = await POST_EMPLOYEE(emp);
-			if (response.status === 201) return true;
-			else return false;
+			return response.status === 201;
 		}
-		catch {
-			return false;
-		}
+		catch { return false; }
 	}
 );
 
@@ -33,12 +28,9 @@ export const EditEmps = createAsyncThunk(
 	async (emp) => {
 		try {
 			const response = await PUT_EMPLOYEE(emp.id, emp);
-			if (response.status === 204) return true;
-			return false;
+			return response.status === 204;
 		}
-		catch {
-			return false;
-		}
+		catch { return false; }
 	}
 );
 
@@ -47,12 +39,9 @@ export const DeleteEmps = createAsyncThunk(
 	async (id) => {
 		try {
 			const response = await DELETE_EMPLOYEE(id);
-			if (response.status === 204) return true;
-			return false;
+			return response.status === 204;
 		}
-		catch {
-			return false;
-		}
+		catch { return false; }
 	}
 );
 
@@ -61,12 +50,9 @@ export const SavePhotoFile = createAsyncThunk(
 	async (body) => {
 		try {
 			const response = await SAVE_PHOTO(body);
-			if (response.status === 200) return true;
-			return false;
+			return response.status === 200;
 		}
-		catch {
-			return false;
-		}
+		catch { return false; }
 	}
 );
 

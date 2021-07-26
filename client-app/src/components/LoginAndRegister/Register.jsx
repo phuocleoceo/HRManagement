@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -22,26 +22,29 @@ export default function Register() {
 		};
 		const check = await dispatch(RegisterAction(infor));
 		if (check.payload) {
-			toast.success("Register Successfully");
+			toast.success("Register Successfully !");
 			history.push("/login");
 		}
 		else {
-			toast.error("Register Failure");
+			toast.error("Register Failure !");
 		}
 	}
 
 	return (
 		<Form style={{ maxWidth: '50%' }} onSubmit={handleRegister}>
 			<h3>Register</h3>
-			<Form.Group controlId="firstname">
-				<Form.Label>Firstname</Form.Label>
-				<Form.Control type="text" name="firstname" placeholder="Enter firstname" />
-			</Form.Group>
 
-			<Form.Group controlId="lastname">
-				<Form.Label>Lastname</Form.Label>
-				<Form.Control type="text" name="lastname" placeholder="Enter lastname" />
-			</Form.Group>
+			<Form.Row>
+				<Form.Group as={Col} controlId="firstname">
+					<Form.Label>Firstname</Form.Label>
+					<Form.Control type="text" name="firstname" placeholder="Enter firstname" />
+				</Form.Group>
+
+				<Form.Group as={Col} controlId="lastname">
+					<Form.Label>Lastname</Form.Label>
+					<Form.Control type="text" name="lastname" placeholder="Enter lastname" />
+				</Form.Group>
+			</Form.Row>
 
 			<Form.Group controlId="userName">
 				<Form.Label>Username</Form.Label>
