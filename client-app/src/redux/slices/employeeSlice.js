@@ -1,6 +1,5 @@
-import { GET_EMPLOYEE, POST_EMPLOYEE, PUT_EMPLOYEE, DELETE_EMPLOYEE } from '../../api/apiEmployee';
+import { GET_EMPLOYEE, POST_EMPLOYEE, PUT_EMPLOYEE, DELETE_EMPLOYEE, SAVE_PHOTO } from '../../api/apiEmployee';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
 
 export const GetEmps = createAsyncThunk(
 	"employee/GetEmps",
@@ -20,12 +19,11 @@ export const AddEmps = createAsyncThunk(
 	async (emp) => {
 		try {
 			const response = await POST_EMPLOYEE(emp);
-			if (response.status === 201) {
-				toast.success("Add Employee Successfully !");
-			}
+			if (response.status === 201) return true;
+			else return false;
 		}
 		catch {
-			toast.error("Add Employee Fail");
+			return false;
 		}
 	}
 );
@@ -35,12 +33,11 @@ export const EditEmps = createAsyncThunk(
 	async (emp) => {
 		try {
 			const response = await PUT_EMPLOYEE(emp.id, emp);
-			if (response.status === 204) {
-				toast.success("Edit Employee Successfully !");
-			}
+			if (response.status === 204) return true;
+			return false;
 		}
 		catch {
-			toast.error("Edit Employee Fail");
+			return false;
 		}
 	}
 );
@@ -50,12 +47,25 @@ export const DeleteEmps = createAsyncThunk(
 	async (id) => {
 		try {
 			const response = await DELETE_EMPLOYEE(id);
-			if (response.status === 204) {
-				toast.success("Delete Employee Successfully !");
-			}
+			if (response.status === 204) return true;
+			return false;
 		}
 		catch {
-			toast.error("Delete Employee Fail");
+			return false;
+		}
+	}
+);
+
+export const SavePhotoFile = createAsyncThunk(
+	"employee/SavePhotoFile",
+	async (body) => {
+		try {
+			const response = await SAVE_PHOTO(body);
+			if (response.status === 200) return true;
+			return false;
+		}
+		catch {
+			return false;
 		}
 	}
 );

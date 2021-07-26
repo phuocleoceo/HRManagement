@@ -1,6 +1,5 @@
 import { GET_DEPARTMENT, POST_DEPARTMENT, PUT_DEPARTMENT, DELETE_DEPARTMENT } from '../../api/apiDepartment';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
 
 export const GetDeps = createAsyncThunk(
 	"department/GetDeps",
@@ -20,12 +19,11 @@ export const AddDeps = createAsyncThunk(
 	async (dep) => {
 		try {
 			const response = await POST_DEPARTMENT(dep);
-			if (response.status === 201) {
-				toast.success("Add Department Successfully !");
-			}
+			if (response.status === 201) return true;
+			return false;
 		}
 		catch {
-			toast.error("Add Department Fail");
+			return false;
 		}
 	}
 );
@@ -35,12 +33,11 @@ export const EditDeps = createAsyncThunk(
 	async (dep) => {
 		try {
 			const response = await PUT_DEPARTMENT(dep.id, dep);
-			if (response.status === 204) {
-				toast.success("Edit Department Successfully !");
-			}
+			if (response.status === 204) return true;
+			return false;
 		}
 		catch {
-			toast.error("Edit Department Fail");
+			return false;
 		}
 	}
 );
@@ -50,12 +47,11 @@ export const DeleteDeps = createAsyncThunk(
 	async (id) => {
 		try {
 			const response = await DELETE_DEPARTMENT(id);
-			if (response.status === 204) {
-				toast.success("Delete Department Successfully !");
-			}
+			if (response.status === 204) return true;
+			return false;
 		}
 		catch {
-			toast.error("Delete Department Fail");
+			return true;
 		}
 	}
 );

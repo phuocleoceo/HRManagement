@@ -4,6 +4,7 @@ import AddDepModal from './AddDepModal';
 import EditDepModal from './EditDepModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { GetDeps, DeleteDeps } from '../../redux/slices/departmentSlice';
+import { toast } from 'react-toastify';
 
 
 function Department() {
@@ -25,7 +26,13 @@ function Department() {
 
 	const deleteDep = async (depId) => {
 		if (window.confirm('Are you confirm to delete?')) {
-			await dispatch(DeleteDeps(depId));
+			const check = await dispatch(DeleteDeps(depId));
+			if (check.payload) {
+				toast.success("Delete Department Successfully !");
+			}
+			else {
+				toast.error("Delete Department Failure !");
+			}
 			reloadPage();
 		}
 	}

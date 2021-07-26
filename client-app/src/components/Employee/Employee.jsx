@@ -4,6 +4,7 @@ import AddEmpModal from './AddEmpModal';
 import EditEmpModal from './EditEmpModal';
 import { useSelector, useDispatch } from 'react-redux';
 import { GetEmps, DeleteEmps } from '../../redux/slices/employeeSlice';
+import { toast } from 'react-toastify';
 
 function Employee() {
 	const emps = useSelector(state => state.employee);
@@ -27,7 +28,13 @@ function Employee() {
 
 	const deleteEmp = async (empId) => {
 		if (window.confirm('Are you confirm to delete?')) {
-			await dispatch(DeleteEmps(empId));
+			const check = await dispatch(DeleteEmps(empId));
+			if (check.payload) {
+				toast.success("Delete Employee Successfully !");
+			}
+			else {
+				toast.error("Delete Employee Fail");
+			}
 			reloadPage();
 		}
 	}

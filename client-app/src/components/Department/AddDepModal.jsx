@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, Button, Row, Col, Form, Container } from 'react-bootstrap';
 import { AddDeps } from '../../redux/slices/departmentSlice';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
 function AddDepModal(props) {
@@ -13,7 +14,13 @@ function AddDepModal(props) {
 		const department = {
 			Name: e.target.Name.value
 		};
-		await dispatch(AddDeps(department));
+		const check = await dispatch(AddDeps(department));
+		if (check.payload) {
+			toast.success("Add Department Successfully !");
+		}
+		else {
+			toast.error("Add Department Failure !");
+		}
 		onHide();
 		onReload();
 	};
