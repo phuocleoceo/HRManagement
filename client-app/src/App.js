@@ -1,9 +1,12 @@
+import React, { useEffect } from 'react';
 import Home from './components/Home';
 import Department from './components/Department/Department';
 import Employee from './components/Employee/Employee';
 import Navigation from './components/Navigation';
 import Login from './components/LoginAndRegister/Login';
 import Register from './components/LoginAndRegister/Register';
+import { CheckLoggedin } from './redux/slices/authenticationSlice';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
@@ -11,6 +14,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import './style.css';
 
 function App() {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(CheckLoggedin());
+	}, [dispatch]);
+
 	return (
 		<>
 			<BrowserRouter>

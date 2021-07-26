@@ -60,7 +60,7 @@ namespace WebAPI.Controllers
 			User _user = await _userManager.FindByNameAsync(username);
 			if (_user == null)
 			{
-				return BadRequest("Revoke refresh token");
+				return BadRequest("Revoke refresh token fail");
 			}
 			_user.RefreshToken = null;
 			_user.RefreshTokenExpiryTime = new DateTime();

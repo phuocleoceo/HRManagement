@@ -1,24 +1,27 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { LOGIN } from '../../api/apiAuthentication';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { LoginAction } from '../../redux/slices/authenticationSlice';
 
 export default function Login() {
+	const dispatch = useDispatch();
+	const history = useHistory();
+
 	const handleLogin = async (e) => {
 		e.preventDefault();
 		const infor = {
 			userName: e.target.userName.value,
 			password: e.target.password.value
 		};
-		const auth = await LOGIN(infor);
-		if (auth) {
+		const check = await dispatch(LoginAction(infor));
+		if (check.payload.Accepted) {
 			toast.success("Login Successfully");
-			setTimeout(() => {
-				window.location.href = "/";
-			}, 1000);
+			history.push("/");
 		}
 		else {
-			toast.error("Login Fail");
+			toast.error("Login Failure");
 		}
 	}
 
@@ -40,9 +43,6 @@ export default function Login() {
 			<Button variant="primary" type="submit">
 				Login
 			</Button>
-			<p className="forgot-password text-right">
-				Forgot <a href="#/">password?</a>
-			</p>
 		</Form>
 	)
 }
