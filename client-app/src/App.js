@@ -5,8 +5,10 @@ import Employee from './components/Employee/Employee';
 import Navigation from './components/Navigation';
 import Login from './components/LoginAndRegister/Login';
 import Register from './components/LoginAndRegister/Register';
+import AccessDenied from './components/InvalidPath/AccessDenied';
+import NotFound from './components/InvalidPath/NotFound';
 import { CheckLoggedin } from './redux/slices/authenticationSlice';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
@@ -14,7 +16,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import './style.css';
 
 function App() {
+	const isLoggedIn = useSelector(state => state.authentication);
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		dispatch(CheckLoggedin());
 	}, [dispatch]);
@@ -31,10 +35,19 @@ function App() {
 
 					<Switch>
 						<Route path='/' component={Home} exact />
-						<Route path='/department' component={Department} />
-						<Route path='/employee' component={Employee} />
 						<Route path='/login' component={Login} />
 						<Route path='/register' component={Register} />
+						{
+							isLoggedIn ?
+								<>
+									<Route path='/department' component={Department} />
+									<Route path='/employee' component={Employee} />
+								</>
+								:
+								<Route path={['/department', '/employee']}
+									component={AccessDenied} />
+						}
+						<Route component={NotFound} />
 					</Switch>
 				</Container>
 			</BrowserRouter>
