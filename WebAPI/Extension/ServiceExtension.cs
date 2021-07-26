@@ -49,9 +49,12 @@ namespace WebAPI.Extension
 					ValidateIssuerSigningKey = true,
 					ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
 					ValidAudience = jwtSettings.GetSection("validAudience").Value,
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+					ClockSkew = System.TimeSpan.Zero
 				};
 			});
+			// Default expires is 5 minutes , if in appsetting.json expires is 1 minute => 6 minutes
+			// Use ClockSkew = System.TimeSpan.Zero to TokenValidationParameters for set to 0 minute
 		}
 
 		public static void ConfigureSwaggerWithAuth(this IServiceCollection services)

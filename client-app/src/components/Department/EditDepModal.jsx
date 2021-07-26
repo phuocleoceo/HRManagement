@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, Button, Row, Col, Form, Container } from 'react-bootstrap';
 import { EditDeps } from '../../redux/slices/departmentSlice';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
 function EditDepModal(props) {
@@ -14,7 +15,13 @@ function EditDepModal(props) {
 			id: e.target.Id.value,
 			Name: e.target.Name.value
 		};
-		await dispatch(EditDeps(department));
+		const check = await dispatch(EditDeps(department));
+		if (check.payload) {
+			toast.success("Edit Department Successfully !");
+		}
+		else {
+			toast.error("Edit Department Failure !");
+		}
 		onHide();
 		onReload();
 	};

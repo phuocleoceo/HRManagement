@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Row, Col, Form, Container, Image } from 'react-bootstrap';
 import { GetDeps } from '../../redux/slices/departmentSlice';
-import { AddEmps } from '../../redux/slices/employeeSlice';
-import { SAVE_PHOTO } from '../../api/apiEmployee';
+import { AddEmps, SavePhotoFile } from '../../redux/slices/employeeSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { formatDateForBE, PHOTO_PATH_URL } from '../../extension';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
 function AddEmpModal(props) {
@@ -26,7 +26,13 @@ function AddEmpModal(props) {
 			DateOfJoining: formatDateForBE(e.target.DateOfJoining.value),
 			PhotoURL: photo ? photo.name : "anonymous.png"
 		};
-		await dispatch(AddEmps(employee));
+		const check = await dispatch(AddEmps(employee));
+		if (check.payload) {
+			toast.success("Add Employee Successfully !");
+		}
+		else {
+			toast.error("Add Employee Failure !");
+		}
 		if (photo) {
 			const formData = new FormData();
 			formData.append(
@@ -34,7 +40,7 @@ function AddEmpModal(props) {
 				photo,
 				photo.name
 			);
-			await SAVE_PHOTO(formData);
+			await dispatch(SavePhotoFile(formData));
 		}
 		onHide();
 		onReload();

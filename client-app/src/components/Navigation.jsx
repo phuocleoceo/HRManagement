@@ -1,24 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Nav, Navbar } from 'react-bootstrap';
-import { LOGOUT } from '../api/apiAuthentication';
+import { useSelector, useDispatch } from 'react-redux';
+import { Logout } from '../redux/slices/authenticationSlice';
 
 export default function Navigation() {
-	const [loggedIn, setLoggedIn] = useState(false);
-	useEffect(() => {
-		const hrm_user = localStorage.getItem("hrm_user");
-		if (!hrm_user) {
-			setLoggedIn(false);
-		}
-		else {
-			setLoggedIn(true);
-		}
-	}, [])
-
-	const handleLogout = () => {
-		LOGOUT();
-		window.location.href = "/";
-	}
+	const isLoggedIn = useSelector(state => state.authentication);
+	const dispatch = useDispatch();
+	const handleLogout = () => dispatch(Logout());
 
 	return (
 		<Navbar bg="dark" expand="lg">
@@ -29,7 +18,7 @@ export default function Navigation() {
 					<NavLink className="d-inline p-2 bg-dark text-white" to="/">
 						Home
 					</NavLink>
-					{loggedIn &&
+					{isLoggedIn &&
 						<>
 							<NavLink className="d-inline p-2 bg-dark text-white" to="/department">
 								Department
@@ -41,7 +30,7 @@ export default function Navigation() {
 					}
 				</Nav>
 
-				{loggedIn &&
+				{isLoggedIn &&
 					<Nav>
 						<NavLink onClick={handleLogout} className="d-inline p-2 bg-dark text-white" to="/">
 							Logout
@@ -49,7 +38,7 @@ export default function Navigation() {
 					</Nav>
 				}
 
-				{!loggedIn &&
+				{!isLoggedIn &&
 					<Nav>
 						<NavLink className="d-inline p-2 bg-dark text-white" to="/register">
 							Register

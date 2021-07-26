@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Row, Col, Form, Image, Container } from 'react-bootstrap';
 import { formatDateForBE, formatDateForFE, PHOTO_PATH_URL } from '../../extension';
-import { EditEmps } from '../../redux/slices/employeeSlice';
+import { EditEmps, SavePhotoFile } from '../../redux/slices/employeeSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import { SAVE_PHOTO } from '../../api/apiEmployee';
+import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
 function EditEmpModal(props) {
@@ -26,7 +26,13 @@ function EditEmpModal(props) {
 			DateOfJoining: formatDateForBE(e.target.DateOfJoining.value),
 			PhotoURL: photo ? photo.name : currentEmp.PhotoURL
 		};
-		await dispatch(EditEmps(employee));
+		const check = await dispatch(EditEmps(employee));
+		if (check.payload) {
+			toast.success("Edit Employee Successfully !");
+		}
+		else {
+			toast.error("Edit Employee Failure !");
+		}
 		//photo undefined when It's current Photo loaded by URL
 		if (photo) {
 			const formData = new FormData();
@@ -35,7 +41,7 @@ function EditEmpModal(props) {
 				photo,
 				photo.name
 			);
-			await SAVE_PHOTO(formData);
+			await dispatch(SavePhotoFile(formData));
 		}
 		onHide();
 		onReload();

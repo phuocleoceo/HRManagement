@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Card, Row, Container, Col } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { GetEmps } from '../redux/slices/employeeSlice';
 import { PHOTO_PATH_URL } from '../extension';
+import { GetEmps } from '../redux/slices/employeeSlice';
 
 export default function Home() {
 	const emps = useSelector(state => state.employee);
@@ -10,11 +10,12 @@ export default function Home() {
 	useEffect(() => {
 		dispatch(GetEmps());
 	}, [dispatch]);
+
 	return (
 		<Container>
 			<Row>
 				{emps.map(emp =>
-					<Col sm={6} lg={4}>
+					<Col key={emp.Id} sm={6} lg={4}>
 						<Card className="card-home">
 							<Card.Img variant="top" src={PHOTO_PATH_URL + emp.PhotoURL}
 								className="img-home" />

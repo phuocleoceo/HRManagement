@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API_URL } from '../extension';
 
-async function callAPI(endpoint, method, body, header) {
+const callAPI = async (endpoint, method, body, header) => {
 	try {
 		return axios({
 			method,

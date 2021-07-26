@@ -1,11 +1,14 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { REGISTER } from '../../api/apiAuthentication';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { RegisterAction } from '../../redux/slices/authenticationSlice';
 
 export default function Register() {
+	const dispatch = useDispatch();
 	const history = useHistory();
+
 	const handleRegister = async (e) => {
 		e.preventDefault();
 		const infor = {
@@ -17,13 +20,13 @@ export default function Register() {
 			phoneNumber: e.target.phoneNumber.value,
 			role: "Administrator"
 		};
-		const reg = await REGISTER(infor);
-		if (reg) {
+		const check = await dispatch(RegisterAction(infor));
+		if (check.payload) {
 			toast.success("Register Successfully");
 			history.push("/login");
 		}
 		else {
-			toast.error("Register Fail");
+			toast.error("Register Failure");
 		}
 	}
 
