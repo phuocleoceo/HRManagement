@@ -15,44 +15,32 @@ export const GetEmps = createAsyncThunk(
 export const AddEmps = createAsyncThunk(
 	"employee/AddEmps",
 	async (emp) => {
-		try {
-			const response = await POST_EMPLOYEE(emp);
-			return response.status === 201;
-		}
-		catch { return false; }
+		const response = await POST_EMPLOYEE(emp);
+		return response.status === 201;
 	}
 );
 
 export const EditEmps = createAsyncThunk(
 	"employee/EditEmps",
 	async (emp) => {
-		try {
-			const response = await PUT_EMPLOYEE(emp.id, emp);
-			return response.status === 204;
-		}
-		catch { return false; }
+		const response = await PUT_EMPLOYEE(emp.id, emp);
+		return response.status === 204;
 	}
 );
 
 export const DeleteEmps = createAsyncThunk(
 	"employee/DeleteEmps",
 	async (id) => {
-		try {
-			const response = await DELETE_EMPLOYEE(id);
-			return response.status === 204;
-		}
-		catch { return false; }
+		const response = await DELETE_EMPLOYEE(id);
+		return response.status === 204;
 	}
 );
 
 export const SavePhotoFile = createAsyncThunk(
 	"employee/SavePhotoFile",
 	async (body) => {
-		try {
-			const response = await SAVE_PHOTO(body);
-			return response.status === 200;
-		}
-		catch { return false; }
+		const response = await SAVE_PHOTO(body);
+		return response.status === 200;
 	}
 );
 
