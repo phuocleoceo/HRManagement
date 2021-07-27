@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Card, Row, Container, Col } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { PHOTO_PATH_URL } from '../extension';
+import { PHOTO_PATH_URL } from '../extension/AppURL';
 import { GetEmps } from '../redux/slices/employeeSlice';
 
 export default function Home() {

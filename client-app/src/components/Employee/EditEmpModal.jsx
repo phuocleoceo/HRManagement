@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Row, Col, Form, Image, Container } from 'react-bootstrap';
-import { formatDateForBE, formatDateForFE, PHOTO_PATH_URL } from '../../extension';
+import { formatDateForBE, formatDateForFE } from '../../extension/FormatDate';
+import { PHOTO_PATH_URL } from '../../extension/AppURL';
 import { EditEmps, SavePhotoFile } from '../../redux/slices/employeeSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';

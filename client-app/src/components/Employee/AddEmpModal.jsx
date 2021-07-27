@@ -3,7 +3,8 @@ import { Modal, Button, Row, Col, Form, Container, Image } from 'react-bootstrap
 import { GetDeps } from '../../redux/slices/departmentSlice';
 import { AddEmps, SavePhotoFile } from '../../redux/slices/employeeSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import { formatDateForBE, PHOTO_PATH_URL } from '../../extension';
+import { formatDateForBE } from '../../extension/FormatDate';
+import { PHOTO_PATH_URL } from '../../extension/AppURL';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 

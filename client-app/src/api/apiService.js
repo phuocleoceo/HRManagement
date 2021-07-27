@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { API_URL } from '../extension';
+import { API_URL } from '../extension/AppURL';
+import { GET_ACCESS_TOKEN, GET_REFRESH_TOKEN, GET_USER_INFOR, SET_HRM_USER } from '../extension/LocalStorageService';
 
 const callAPI = axios.create({
 	baseURL: API_URL,
@@ -10,9 +11,7 @@ const callAPI = axios.create({
 
 callAPI.interceptors.request.use((config) => {
 	// Add AccessToken to Headers
-	const hrm = JSON.parse(localStorage.getItem("hrm_user"));
-	const accessToken = hrm ? hrm.AccessToken : "";
-	config.headers["Authorization"] = "Bearer " + accessToken;
+	config.headers["Authorization"] = "Bearer " + GET_ACCESS_TOKEN();
 	return config;
 }, (error) => {
 	Promise.reject(error);
@@ -25,20 +24,19 @@ callAPI.interceptors.response.use((response) => {
 	if (error.response.status === 401 && !originalRequest._retry) {
 		originalRequest._retry = true;
 		// Get Current TokenAPI
-		const hrm = JSON.parse(localStorage.getItem("hrm_user"));
-		const tokenAPI = hrm ? {
-			accessToken: hrm.AccessToken,
-			refreshToken: hrm.RefreshToken
-		} : {};
+		const tokenAPI = {
+			accessToken: GET_ACCESS_TOKEN(),
+			refreshToken: GET_REFRESH_TOKEN()
+		};
 		// RefreshToken
 		const check = await callAPI.post("token/refresh", tokenAPI);
 		if (check.status === 200) {
 			const newHRMUser = {
 				AccessToken: check.data.AccessToken,
 				RefreshToken: check.data.RefreshToken,
-				User: hrm.User
+				User: GET_USER_INFOR()
 			}
-			localStorage.setItem("hrm_user", JSON.stringify(newHRMUser));
+			SET_HRM_USER(newHRMUser);
 			// Recall API
 			callAPI.defaults.headers.common["Authorization"] = "Bearer " + check.data.AccessToken;
 			return callAPI(originalRequest);
