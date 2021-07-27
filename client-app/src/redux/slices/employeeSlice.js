@@ -8,65 +8,39 @@ export const GetEmps = createAsyncThunk(
 			const response = await GET_EMPLOYEE();
 			return response.data;
 		}
-		catch {
-			return [];
-		}
+		catch { return []; }
 	}
 );
 
 export const AddEmps = createAsyncThunk(
 	"employee/AddEmps",
 	async (emp) => {
-		try {
-			const response = await POST_EMPLOYEE(emp);
-			if (response.status === 201) return true;
-			else return false;
-		}
-		catch {
-			return false;
-		}
+		const response = await POST_EMPLOYEE(emp);
+		return response.status === 201;
 	}
 );
 
 export const EditEmps = createAsyncThunk(
 	"employee/EditEmps",
 	async (emp) => {
-		try {
-			const response = await PUT_EMPLOYEE(emp.id, emp);
-			if (response.status === 204) return true;
-			return false;
-		}
-		catch {
-			return false;
-		}
+		const response = await PUT_EMPLOYEE(emp.id, emp);
+		return response.status === 204;
 	}
 );
 
 export const DeleteEmps = createAsyncThunk(
 	"employee/DeleteEmps",
 	async (id) => {
-		try {
-			const response = await DELETE_EMPLOYEE(id);
-			if (response.status === 204) return true;
-			return false;
-		}
-		catch {
-			return false;
-		}
+		const response = await DELETE_EMPLOYEE(id);
+		return response.status === 204;
 	}
 );
 
 export const SavePhotoFile = createAsyncThunk(
 	"employee/SavePhotoFile",
 	async (body) => {
-		try {
-			const response = await SAVE_PHOTO(body);
-			if (response.status === 200) return true;
-			return false;
-		}
-		catch {
-			return false;
-		}
+		const response = await SAVE_PHOTO(body);
+		return response.status === 200;
 	}
 );
 

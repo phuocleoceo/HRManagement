@@ -1,19 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { LOGIN, REGISTER } from '../../api/apiAuthentication';
+import { SET_HRM_USER, GET_HRM_USER, REMOVE_HRM_USER } from '../../extension/LocalStorageService';
 
 export const RegisterAction = createAsyncThunk(
 	"authentication/RegisterAction",
 	async (body) => {
 		try {
 			const response = await REGISTER(body);
-			if (response.status === 201) {
-				return true;
-			}
-			return false;
+			return response.status === 201;
 		}
-		catch {
-			return false;
-		}
+		catch { return false; }
 	}
 );
 
@@ -22,7 +18,7 @@ export const LoginAction = createAsyncThunk(
 	async (body) => {
 		try {
 			const response = await LOGIN(body);
-			if (response.data) {
+			if (response.status === 200) {
 				return {
 					Accepted: true,
 					ResponseData: response.data
@@ -41,19 +37,19 @@ export const authenticationSlice = createSlice({
 	initialState: false,
 	reducers: {
 		CheckLoggedin: (state, action) => {
-			const hrm_user = localStorage.getItem("hrm_user");
+			const hrm_user = GET_HRM_USER();
 			if (!hrm_user) return false;
 			else return true;
 		},
 		Logout: (state, action) => {
-			localStorage.removeItem("hrm_user");
+			REMOVE_HRM_USER();
 			return false;
 		}
 	},
 	extraReducers: {
 		[LoginAction.fulfilled]: (state, action) => {
 			if (action.payload.Accepted) {
-				localStorage.setItem("hrm_user", JSON.stringify(action.payload.ResponseData));
+				SET_HRM_USER(action.payload.ResponseData);
 				return true;
 			}
 			return false;

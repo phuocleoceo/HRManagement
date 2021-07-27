@@ -8,51 +8,31 @@ export const GetDeps = createAsyncThunk(
 			const response = await GET_DEPARTMENT();
 			return response.data;
 		}
-		catch {
-			return [];
-		}
+		catch { return []; }
 	}
 );
 
 export const AddDeps = createAsyncThunk(
 	"department/AddDeps",
 	async (dep) => {
-		try {
-			const response = await POST_DEPARTMENT(dep);
-			if (response.status === 201) return true;
-			return false;
-		}
-		catch {
-			return false;
-		}
+		const response = await POST_DEPARTMENT(dep);
+		return response.status === 201;
 	}
 );
 
 export const EditDeps = createAsyncThunk(
 	"department/EditDeps",
 	async (dep) => {
-		try {
-			const response = await PUT_DEPARTMENT(dep.id, dep);
-			if (response.status === 204) return true;
-			return false;
-		}
-		catch {
-			return false;
-		}
+		const response = await PUT_DEPARTMENT(dep.id, dep);
+		return response.status === 204;
 	}
 );
 
 export const DeleteDeps = createAsyncThunk(
 	"department/DeleteDeps",
 	async (id) => {
-		try {
-			const response = await DELETE_DEPARTMENT(id);
-			if (response.status === 204) return true;
-			return false;
-		}
-		catch {
-			return true;
-		}
+		const response = await DELETE_DEPARTMENT(id);
+		return response.status === 204;
 	}
 );
 

@@ -1,11 +1,5 @@
 import callAPI from './apiService';
 
-export const REGISTER = (body) => callAPI("authentication/register", "POST", body);
+export const REGISTER = (body) => callAPI.post("authentication/register", body);
 
-export const LOGIN = (body) => callAPI("authentication/login", "POST", body);
-
-export const AUTH_HEADER = () => {
-	const hrm = JSON.parse(localStorage.getItem("hrm_user"));
-	if (hrm) return { Authorization: "Bearer " + hrm.AccessToken };
-	else return {};
-}
+export const LOGIN = (body) => callAPI.post("authentication/login", body);
