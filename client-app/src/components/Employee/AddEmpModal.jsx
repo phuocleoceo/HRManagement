@@ -34,6 +34,12 @@ function AddEmpModal(props) {
 		else {
 			toast.error("Add Employee Failure !");
 		}
+		onHide();
+		onReload();
+		await savePhoto(photo);
+	};
+
+	const savePhoto = async (photo) => {
 		if (photo) {
 			const formData = new FormData();
 			formData.append(
@@ -43,9 +49,7 @@ function AddEmpModal(props) {
 			);
 			await dispatch(SavePhotoFile(formData));
 		}
-		onHide();
-		onReload();
-	};
+	}
 
 	const handleFileSelected = (e) => {
 		e.preventDefault();

@@ -1,5 +1,5 @@
-//const DOMAIN_NAME = "https://bsite.net/phuocleoceo/";
-const DOMAIN_NAME = "https://localhost:5001/";
+const DOMAIN_NAME = "https://bsite.net/phuocleoceo/";
+//const DOMAIN_NAME = "https://localhost:5001/";
 
 export const API_URL = DOMAIN_NAME + "api/";
 

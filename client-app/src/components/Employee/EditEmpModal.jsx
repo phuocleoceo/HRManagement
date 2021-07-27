@@ -34,7 +34,13 @@ function EditEmpModal(props) {
 		else {
 			toast.error("Edit Employee Failure !");
 		}
+		onHide();
+		onReload();
 		//photo undefined when It's current Photo loaded by URL
+		await savePhoto();
+	};
+
+	const savePhoto = async (photo) => {
 		if (photo) {
 			const formData = new FormData();
 			formData.append(
@@ -44,9 +50,7 @@ function EditEmpModal(props) {
 			);
 			await dispatch(SavePhotoFile(formData));
 		}
-		onHide();
-		onReload();
-	};
+	}
 
 	const handleFileSelected = (e) => {
 		e.preventDefault();
