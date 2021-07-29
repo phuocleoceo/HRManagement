@@ -36,19 +36,13 @@ function AddEmpModal(props) {
 		}
 		onHide();
 		onReload();
-		await savePhoto(photo);
+		if (photo) await savePhoto(photo);
 	};
 
 	const savePhoto = async (photo) => {
-		if (photo) {
-			const formData = new FormData();
-			formData.append(
-				"myFile",
-				photo,
-				photo.name
-			);
-			await dispatch(SavePhotoFile(formData));
-		}
+		const formData = new FormData();
+		formData.append("myFile", photo, photo.name);
+		await dispatch(SavePhotoFile(formData));
 	}
 
 	const handleFileSelected = (e) => {
@@ -97,8 +91,7 @@ function AddEmpModal(props) {
 						</Col>
 
 						<Col sm={6}>
-							<Image src={image}
-								width="200px" height="200px" />
+							<Image src={image} width="200vw" height="auto" />
 							<p></p>
 							<Form.Group controlId="PhotoURL" className="mb-3">
 								<Form.Control name="PhotoURL" type="file"

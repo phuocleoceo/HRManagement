@@ -6,6 +6,8 @@ namespace WebAPI.Models.DTO
 
 		public string Name { get; set; }
 
+		public int DepartmentId { get; set; }
+
 		public string Department { get; set; }
 
 		public string DateOfJoining { get; set; }

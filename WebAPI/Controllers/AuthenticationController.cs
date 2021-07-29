@@ -72,6 +72,7 @@ namespace WebAPI.Controllers
 
 			var userInfor = new
 			{
+				Id = _user.Id,
 				Name = _user.FirstName + " " + _user.LastName,
 				UserName = _user.UserName,
 				Email = _user.Email,
