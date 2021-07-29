@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { AddDeps } from '../../redux/slices/departmentSlice';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -34,28 +34,23 @@ function AddDepModal(props) {
 			</Modal.Header>
 
 			<Modal.Body>
-				<Row>
-					<Col sm={6}>
-						<Form onSubmit={handleSubmit}>
-							<Form.Group controlId="Name">
-								<Form.Label>Name</Form.Label>
-								<Form.Control type="text" name="Name" required
-									placeholder="Department Name" />
-							</Form.Group>
+				<Form onSubmit={handleSubmit}>
+					<Form.Group controlId="Name">
+						<Form.Label>Name</Form.Label>
+						<Form.Control type="text" name="Name" required
+							placeholder="Department Name" />
+					</Form.Group>
 
-							<hr style={{ width: '225%' }} />
-							<Form.Group>
-								<Button variant="primary" type="submit">
-									Add Department
-								</Button>
-								&nbsp;
-								<Button variant="danger" onClick={onHide}>
-									Close
-								</Button>
-							</Form.Group>
-						</Form>
-					</Col>
-				</Row>
+					<hr style={{ width: '225%' }} />
+					<Form.Group>
+						<Button variant="primary" type="submit" className="mr-2">
+							Add Department
+						</Button>
+						<Button variant="danger" onClick={onHide} className="mr-2">
+							Close
+						</Button>
+					</Form.Group>
+				</Form>
 			</Modal.Body>
 		</Modal>
 	)

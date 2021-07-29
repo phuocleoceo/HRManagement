@@ -20,6 +20,7 @@ function EditEmpModal(props) {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const photo = e.target.PhotoURL.files[0];
+		console.log(photo);
 		const employee = {
 			id: e.target.Id.value,
 			Name: e.target.Name.value,
@@ -37,7 +38,7 @@ function EditEmpModal(props) {
 		onHide();
 		onReload();
 		//photo undefined when It's current Photo loaded by URL
-		await savePhoto();
+		await savePhoto(photo);
 	};
 
 	const savePhoto = async (photo) => {
@@ -108,19 +109,7 @@ function EditEmpModal(props) {
 									placeholder="DateOfJoining"
 								/>
 							</Form.Group>
-
-							<hr style={{ width: '225%' }} />
-							<Form.Group>
-								<Button variant="primary" type="submit">
-									Update Employee
-								</Button>
-								&nbsp;
-								<Button variant="danger" onClick={onHide}>
-									Close
-								</Button>
-							</Form.Group>
 						</Col>
-
 						<Col sm={6}>
 							<Image src={image}
 								width="200px" height="200px" />
@@ -131,6 +120,16 @@ function EditEmpModal(props) {
 							</Form.Group>
 						</Col>
 					</Row>
+
+					<hr style={{ width: '225%' }} />
+					<Form.Group>
+						<Button variant="primary" type="submit" className="mr-2">
+							Update Employee
+						</Button>
+						<Button variant="danger" onClick={onHide} className="mr-2">
+							Close
+						</Button>
+					</Form.Group>
 				</Form>
 			</Modal.Body>
 		</Modal>

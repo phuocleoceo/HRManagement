@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, ButtonToolbar } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import AddEmpModal from './AddEmpModal';
 import EditEmpModal from './EditEmpModal';
 import { useSelector, useDispatch } from 'react-redux';
-import { GetEmps, DeleteEmps } from '../../redux/slices/employeeSlice';
+import { GetEmps, GetEmpById, DeleteEmps } from '../../redux/slices/employeeSlice';
 import { toast } from 'react-toastify';
 
 function Employee() {
@@ -22,11 +22,13 @@ function Employee() {
 		dispatch(GetEmps());
 	}, [reload, dispatch]);
 
-	const addModalClose = () => setAddModalShow(false);
+	const handleEditEmp = async (empId) => {
+		const emp = await dispatch(GetEmpById(empId));
+		if (emp.payload) setCurrentEmp(emp.payload);
+		setEditModalShow(true);
+	}
 
-	const editModalClose = () => setEditModalShow(false);
-
-	const deleteEmp = async (empId) => {
+	const hanleDeleteEmp = async (empId) => {
 		if (window.confirm('Are you confirm to delete?')) {
 			const check = await dispatch(DeleteEmps(empId));
 			if (check.payload) {
@@ -38,6 +40,10 @@ function Employee() {
 			reloadPage();
 		}
 	}
+
+	const addModalClose = () => setAddModalShow(false);
+
+	const editModalClose = () => setEditModalShow(false);
 
 	const reloadPage = () => setReload(!reload);
 
@@ -61,26 +67,15 @@ function Employee() {
 							<td>{emp.Department}</td>
 							<td>{emp.DateOfJoining}</td>
 							<td>
-								<ButtonToolbar>
-									<Button className="mr-2" variant="info"
-										onClick={() => {
-											setEditModalShow(true);
-											setCurrentEmp({
-												Id: emp.Id,
-												Name: emp.Name,
-												Department: emp.Department,
-												DateOfJoining: emp.DateOfJoining,
-												PhotoURL: emp.PhotoURL
-											});
-										}}>
-										Edit
-									</Button>
+								<Button className="mr-2" variant="info"
+									onClick={() => handleEditEmp(emp.Id)}>
+									Edit
+								</Button>
 
-									<Button className="mr-2" variant="danger"
-										onClick={() => deleteEmp(emp.Id)}>
-										Delete
-									</Button>
-								</ButtonToolbar>
+								<Button className="mr-2" variant="danger"
+									onClick={() => hanleDeleteEmp(emp.Id)}>
+									Delete
+								</Button>
 							</td>
 						</tr>)
 					}

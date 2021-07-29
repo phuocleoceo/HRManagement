@@ -94,17 +94,6 @@ function AddEmpModal(props) {
 									placeholder="DateOfJoining"
 								/>
 							</Form.Group>
-
-							<hr style={{ width: '225%' }} />
-							<Form.Group>
-								<Button variant="primary" type="submit">
-									Add Employee
-								</Button>
-								&nbsp;
-								<Button variant="danger" onClick={onHide}>
-									Close
-								</Button>
-							</Form.Group>
 						</Col>
 
 						<Col sm={6}>
@@ -117,6 +106,16 @@ function AddEmpModal(props) {
 							</Form.Group>
 						</Col>
 					</Row>
+
+					<hr style={{ width: '225%' }} />
+					<Form.Group>
+						<Button variant="primary" type="submit" className="mr-2">
+							Add Employee
+						</Button>
+						<Button variant="danger" onClick={onHide} className="mr-2">
+							Close
+						</Button>
+					</Form.Group>
 				</Form>
 			</Modal.Body>
 		</Modal>

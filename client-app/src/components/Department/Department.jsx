@@ -1,30 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, ButtonToolbar } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import AddDepModal from './AddDepModal';
 import EditDepModal from './EditDepModal';
 import { useSelector, useDispatch } from 'react-redux';
-import { GetDeps, DeleteDeps } from '../../redux/slices/departmentSlice';
+import { GetDeps, GetDepById, DeleteDeps } from '../../redux/slices/departmentSlice';
 import { toast } from 'react-toastify';
 
 
 function Department() {
 	const deps = useSelector(state => state.department);
 	const dispatch = useDispatch();
-
 	const [addModalShow, setAddModalShow] = useState(false);
 	const [editModalShow, setEditModalShow] = useState(false);
-	const [currentDep, setCurrentDep] = useState({ Id: 0, Name: "" });
 	const [reload, setReload] = useState(false);
+	const [currentDep, setCurrentDep] = useState({ Id: 0, Name: "" });
 
 	useEffect(() => {
 		dispatch(GetDeps());
 	}, [reload, dispatch]);
 
-	const addModalClose = () => setAddModalShow(false);
+	const handleEditDep = async (depId) => {
+		const dep = await dispatch(GetDepById(depId));
+		if (dep.payload) setCurrentDep(dep.payload);
+		setEditModalShow(true);
+	}
 
-	const editModalClose = () => setEditModalShow(false);
-
-	const deleteDep = async (depId) => {
+	const handleDeleteDep = async (depId) => {
 		if (window.confirm('Are you confirm to delete?')) {
 			const check = await dispatch(DeleteDeps(depId));
 			if (check.payload) {
@@ -36,6 +37,10 @@ function Department() {
 			reloadPage();
 		}
 	}
+
+	const addModalClose = () => setAddModalShow(false);
+
+	const editModalClose = () => setEditModalShow(false);
 
 	const reloadPage = () => setReload(!reload);
 
@@ -55,23 +60,15 @@ function Department() {
 							<td>{dep.Id}</td>
 							<td>{dep.Name}</td>
 							<td>
-								<ButtonToolbar>
-									<Button className="mr-2" variant="info"
-										onClick={() => {
-											setEditModalShow(true);
-											setCurrentDep({
-												Id: dep.Id,
-												Name: dep.Name
-											});
-										}}>
-										Edit
-									</Button>
+								<Button className="mr-2" variant="info"
+									onClick={() => handleEditDep(dep.Id)}>
+									Edit
+								</Button>
 
-									<Button className="mr-2" variant="danger"
-										onClick={() => deleteDep(dep.Id)}>
-										Delete
-									</Button>
-								</ButtonToolbar>
+								<Button className="mr-2" variant="danger"
+									onClick={() => handleDeleteDep(dep.Id)}>
+									Delete
+								</Button>
 							</td>
 						</tr>)
 					}

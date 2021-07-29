@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { EditDeps } from '../../redux/slices/departmentSlice';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -35,38 +35,33 @@ function EditDepModal(props) {
 			</Modal.Header>
 
 			<Modal.Body>
-				<Row>
-					<Col sm={7}>
-						<Form onSubmit={handleSubmit}>
+				<Form onSubmit={handleSubmit}>
 
-							<Form.Group controlId="Id">
-								<Form.Label>Id</Form.Label>
-								<Form.Control type="text" name="Id" required
-									readOnly
-									defaultValue={currentDep.Id}
-									placeholder="Department Id" />
-							</Form.Group>
+					<Form.Group controlId="Id">
+						<Form.Label>Id</Form.Label>
+						<Form.Control type="text" name="Id" required
+							readOnly
+							defaultValue={currentDep.Id}
+							placeholder="Department Id" />
+					</Form.Group>
 
-							<Form.Group controlId="Name">
-								<Form.Label>Name</Form.Label>
-								<Form.Control type="text" name="Name" required
-									defaultValue={currentDep.Name}
-									placeholder="Department Name" />
-							</Form.Group>
+					<Form.Group controlId="Name">
+						<Form.Label>Name</Form.Label>
+						<Form.Control type="text" name="Name" required
+							defaultValue={currentDep.Name}
+							placeholder="Department Name" />
+					</Form.Group>
 
-							<hr style={{ width: '225%' }} />
-							<Form.Group>
-								<Button variant="primary" type="submit">
-									Update Department
-								</Button>
-								&nbsp;
-								<Button variant="danger" onClick={onHide}>
-									Close
-								</Button>
-							</Form.Group>
-						</Form>
-					</Col>
-				</Row>
+					<hr style={{ width: '225%' }} />
+					<Form.Group>
+						<Button variant="primary" type="submit" className="mr-2">
+							Update Department
+						</Button>
+						<Button variant="danger" onClick={onHide} className="mr-2">
+							Close
+						</Button>
+					</Form.Group>
+				</Form>
 			</Modal.Body>
 		</Modal>
 	)
