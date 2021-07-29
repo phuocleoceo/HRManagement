@@ -1,4 +1,4 @@
-import { GET_EMPLOYEE, POST_EMPLOYEE, PUT_EMPLOYEE, DELETE_EMPLOYEE, SAVE_PHOTO } from '../../api/apiEmployee';
+import { GET_EMPLOYEE, GET_EMPLOYEE_BY_ID, POST_EMPLOYEE, PUT_EMPLOYEE, DELETE_EMPLOYEE, SAVE_PHOTO } from '../../api/apiEmployee';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const GetEmps = createAsyncThunk(
@@ -9,6 +9,14 @@ export const GetEmps = createAsyncThunk(
 			return response.data;
 		}
 		catch { return []; }
+	}
+);
+
+export const GetEmpById = createAsyncThunk(
+	"employee/GetEmpById",
+	async (id) => {
+		const response = await GET_EMPLOYEE_BY_ID(id);
+		return response.data;
 	}
 );
 

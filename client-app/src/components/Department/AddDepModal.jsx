@@ -1,12 +1,12 @@
 import React from 'react';
-import { Modal, Button, Row, Col, Form, Container } from 'react-bootstrap';
+import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
 import { AddDeps } from '../../redux/slices/departmentSlice';
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
 function AddDepModal(props) {
-	const { onHide, onReload } = props;
+	const { show, onHide, onReload } = props;
 	const dispatch = useDispatch();
 
 	const handleSubmit = async (e) => {
@@ -26,44 +26,43 @@ function AddDepModal(props) {
 	};
 
 	return (
-		<Container>
-			<Modal {...props} centered>
-				<Modal.Header closeButton>
-					<Modal.Title>
-						Add Department
-					</Modal.Title>
-				</Modal.Header>
+		<Modal show={show} onHide={onHide} centered>
+			<Modal.Header closeButton>
+				<Modal.Title>
+					Add Department
+				</Modal.Title>
+			</Modal.Header>
 
-				<Modal.Body>
-					<Row>
-						<Col sm={6}>
-							<Form onSubmit={handleSubmit}>
-								<Form.Group controlId="Name">
-									<Form.Label>Name</Form.Label>
-									<Form.Control type="text" name="Name" required
-										placeholder="Department Name" />
-								</Form.Group>
+			<Modal.Body>
+				<Row>
+					<Col sm={6}>
+						<Form onSubmit={handleSubmit}>
+							<Form.Group controlId="Name">
+								<Form.Label>Name</Form.Label>
+								<Form.Control type="text" name="Name" required
+									placeholder="Department Name" />
+							</Form.Group>
 
-								<hr style={{ width: '225%' }} />
-								<Form.Group>
-									<Button variant="primary" type="submit">
-										Add Department
-									</Button>
-									&nbsp;
-									<Button variant="danger" onClick={onHide}>
-										Close
-									</Button>
-								</Form.Group>
-							</Form>
-						</Col>
-					</Row>
-				</Modal.Body>
-			</Modal>
-		</Container>
+							<hr style={{ width: '225%' }} />
+							<Form.Group>
+								<Button variant="primary" type="submit">
+									Add Department
+								</Button>
+								&nbsp;
+								<Button variant="danger" onClick={onHide}>
+									Close
+								</Button>
+							</Form.Group>
+						</Form>
+					</Col>
+				</Row>
+			</Modal.Body>
+		</Modal>
 	)
 }
 
 AddDepModal.propTypes = {
+	show: PropTypes.bool,
 	onHide: PropTypes.func,
 	onReload: PropTypes.func
 }

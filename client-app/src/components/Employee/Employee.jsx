@@ -42,7 +42,7 @@ function Employee() {
 	const reloadPage = () => setReload(!reload);
 
 	return (
-		<div >
+		<>
 			<Table className="mt-4" striped bordered hover size="sm">
 				<thead>
 					<tr>
@@ -80,12 +80,6 @@ function Employee() {
 										onClick={() => deleteEmp(emp.Id)}>
 										Delete
 									</Button>
-
-									<EditEmpModal
-										show={editModalShow}
-										onHide={editModalClose}
-										onReload={reloadPage}
-										currentEmp={currentEmp} />
 								</ButtonToolbar>
 							</td>
 						</tr>)
@@ -93,17 +87,21 @@ function Employee() {
 				</tbody>
 			</Table>
 
-			<ButtonToolbar>
-				<Button variant='primary'
-					onClick={() => setAddModalShow(true)}>
-					Add Employee
-				</Button>
+			<Button variant="primary"
+				onClick={() => setAddModalShow(true)}>
+				Add Employee
+			</Button>
 
-				<AddEmpModal show={addModalShow}
-					onHide={addModalClose}
-					onReload={reloadPage} />
-			</ButtonToolbar>
-		</div>
+			<AddEmpModal show={addModalShow}
+				onHide={addModalClose}
+				onReload={reloadPage} />
+
+			<EditEmpModal
+				show={editModalShow}
+				onHide={editModalClose}
+				onReload={reloadPage}
+				currentEmp={currentEmp} />
+		</>
 	)
 }
 

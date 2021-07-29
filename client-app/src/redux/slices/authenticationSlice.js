@@ -18,17 +18,12 @@ export const LoginAction = createAsyncThunk(
 	async (body) => {
 		try {
 			const response = await LOGIN(body);
-			if (response.status === 200) {
-				return {
-					Accepted: true,
-					ResponseData: response.data
-				}
-			}
-			return { Accepted: false }
+			return {
+				Accepted: response.status === 200,
+				ResponseData: response.data
+			};
 		}
-		catch {
-			return { Accepted: false }
-		}
+		catch { return { Accepted: false }; }
 	}
 );
 
@@ -36,10 +31,10 @@ export const authenticationSlice = createSlice({
 	name: 'authentication',
 	initialState: false,
 	reducers: {
-		CheckLoggedin: (state, action) => {
+		CheckLoggedIn: (state, action) => {
 			const hrm_user = GET_HRM_USER();
-			if (!hrm_user) return false;
-			else return true;
+			if (hrm_user) return true;
+			return false;
 		},
 		Logout: (state, action) => {
 			REMOVE_HRM_USER();
@@ -57,6 +52,6 @@ export const authenticationSlice = createSlice({
 	}
 })
 
-export const { CheckLoggedin, Logout } = authenticationSlice.actions
+export const { CheckLoggedIn, Logout } = authenticationSlice.actions
 
 export default authenticationSlice.reducer

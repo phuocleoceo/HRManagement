@@ -40,7 +40,7 @@ function Department() {
 	const reloadPage = () => setReload(!reload);
 
 	return (
-		<div >
+		<>
 			<Table className="mt-4" striped bordered hover size="sm">
 				<thead>
 					<tr>
@@ -71,11 +71,6 @@ function Department() {
 										onClick={() => deleteDep(dep.Id)}>
 										Delete
 									</Button>
-
-									<EditDepModal show={editModalShow}
-										onHide={editModalClose}
-										currentDep={currentDep}
-										onReload={reloadPage} />
 								</ButtonToolbar>
 							</td>
 						</tr>)
@@ -83,17 +78,20 @@ function Department() {
 				</tbody>
 			</Table>
 
-			<ButtonToolbar>
-				<Button variant='primary'
-					onClick={() => setAddModalShow(true)}>
-					Add Department
-				</Button>
+			<Button variant="primary"
+				onClick={() => setAddModalShow(true)}>
+				Add Department
+			</Button>
 
-				<AddDepModal show={addModalShow}
-					onHide={addModalClose}
-					onReload={reloadPage} />
-			</ButtonToolbar>
-		</div>
+			<AddDepModal show={addModalShow}
+				onHide={addModalClose}
+				onReload={reloadPage} />
+
+			<EditDepModal show={editModalShow}
+				onHide={editModalClose}
+				currentDep={currentDep}
+				onReload={reloadPage} />
+		</>
 	)
 }
 

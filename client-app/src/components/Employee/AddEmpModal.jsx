@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Button, Row, Col, Form, Container, Image } from 'react-bootstrap';
+import { Modal, Button, Row, Col, Form, Image } from 'react-bootstrap';
 import { GetDeps } from '../../redux/slices/departmentSlice';
 import { AddEmps, SavePhotoFile } from '../../redux/slices/employeeSlice';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
 function AddEmpModal(props) {
-	const { onHide, onReload } = props;
+	const { show, onHide, onReload } = props;
 	const deps = useSelector(state => state.department);
 	const dispatch = useDispatch();
 	const [image, setImage] = useState(PHOTO_PATH_URL + "anonymous.png");
@@ -57,75 +57,74 @@ function AddEmpModal(props) {
 	}
 
 	return (
-		<Container>
-			<Modal {...props} centered>
-				<Modal.Header closeButton>
-					<Modal.Title>
-						Add Employee
-					</Modal.Title>
-				</Modal.Header>
+		<Modal show={show} onHide={onHide} centered>
+			<Modal.Header closeButton>
+				<Modal.Title>
+					Add Employee
+				</Modal.Title>
+			</Modal.Header>
 
-				<Modal.Body>
-					<Form onSubmit={handleSubmit}>
-						<Row>
-							<Col sm={6}>
-								<Form.Group controlId="Name">
-									<Form.Label>Name</Form.Label>
-									<Form.Control type="text" name="Name" required
-										placeholder="Employee Name" />
-								</Form.Group>
+			<Modal.Body>
+				<Form onSubmit={handleSubmit}>
+					<Row>
+						<Col sm={6}>
+							<Form.Group controlId="Name">
+								<Form.Label>Name</Form.Label>
+								<Form.Control type="text" name="Name" required
+									placeholder="Employee Name" />
+							</Form.Group>
 
-								<Form.Group controlId="Department">
-									<Form.Label>Department</Form.Label>
-									<Form.Control name="Department" as="select">
-										{deps.map(dep =>
-											<option key={dep.Id} value={dep.Id}>
-												{dep.Name}
-											</option>)
-										}
-									</Form.Control>
-								</Form.Group>
+							<Form.Group controlId="Department">
+								<Form.Label>Department</Form.Label>
+								<Form.Control name="Department" as="select">
+									{deps.map(dep =>
+										<option key={dep.Id} value={dep.Id}>
+											{dep.Name}
+										</option>)
+									}
+								</Form.Control>
+							</Form.Group>
 
-								<Form.Group controlId="DateOfJoining">
-									<Form.Label>DateOfJoining</Form.Label>
-									<Form.Control
-										type="date"
-										name="DateOfJoining"
-										required
-										placeholder="DateOfJoining"
-									/>
-								</Form.Group>
+							<Form.Group controlId="DateOfJoining">
+								<Form.Label>DateOfJoining</Form.Label>
+								<Form.Control
+									type="date"
+									name="DateOfJoining"
+									required
+									placeholder="DateOfJoining"
+								/>
+							</Form.Group>
 
-								<hr style={{ width: '225%' }} />
-								<Form.Group>
-									<Button variant="primary" type="submit">
-										Add Employee
-									</Button>
-									&nbsp;
-									<Button variant="danger" onClick={onHide}>
-										Close
-									</Button>
-								</Form.Group>
-							</Col>
+							<hr style={{ width: '225%' }} />
+							<Form.Group>
+								<Button variant="primary" type="submit">
+									Add Employee
+								</Button>
+								&nbsp;
+								<Button variant="danger" onClick={onHide}>
+									Close
+								</Button>
+							</Form.Group>
+						</Col>
 
-							<Col sm={6}>
-								<Image src={image}
-									width="200px" height="200px" />
-								<p></p>
-								<Form.Group controlId="PhotoURL" className="mb-3">
-									<Form.Control name="PhotoURL" type="file"
-										onChange={handleFileSelected} />
-								</Form.Group>
-							</Col>
-						</Row>
-					</Form>
-				</Modal.Body>
-			</Modal>
-		</Container>
+						<Col sm={6}>
+							<Image src={image}
+								width="200px" height="200px" />
+							<p></p>
+							<Form.Group controlId="PhotoURL" className="mb-3">
+								<Form.Control name="PhotoURL" type="file"
+									onChange={handleFileSelected} />
+							</Form.Group>
+						</Col>
+					</Row>
+				</Form>
+			</Modal.Body>
+		</Modal>
 	)
 }
 
 AddEmpModal.propTypes = {
+	show: PropTypes.bool,
 	onHide: PropTypes.func,
 	onReload: PropTypes.func
 }

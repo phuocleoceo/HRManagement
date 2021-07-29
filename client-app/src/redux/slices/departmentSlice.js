@@ -1,4 +1,4 @@
-import { GET_DEPARTMENT, POST_DEPARTMENT, PUT_DEPARTMENT, DELETE_DEPARTMENT } from '../../api/apiDepartment';
+import { GET_DEPARTMENT, GET_DEPARTMENT_BY_ID, POST_DEPARTMENT, PUT_DEPARTMENT, DELETE_DEPARTMENT } from '../../api/apiDepartment';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const GetDeps = createAsyncThunk(
@@ -9,6 +9,14 @@ export const GetDeps = createAsyncThunk(
 			return response.data;
 		}
 		catch { return []; }
+	}
+);
+
+export const GetDepById = createAsyncThunk(
+	"department/GetDepById",
+	async (id) => {
+		const response = await GET_DEPARTMENT_BY_ID(id);
+		return response.data;
 	}
 );
 

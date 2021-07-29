@@ -2,6 +2,8 @@ import callAPI from './apiService';
 
 export const GET_EMPLOYEE = () => callAPI.get("employee");
 
+export const GET_EMPLOYEE_BY_ID = (id) => callAPI.get("employee/" + id);
+
 export const DELETE_EMPLOYEE = (id) => callAPI.delete("employee/" + id);
 
 export const POST_EMPLOYEE = (body) => callAPI.post("employee", body);

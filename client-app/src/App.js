@@ -7,7 +7,7 @@ import Login from './components/LoginAndRegister/Login';
 import Register from './components/LoginAndRegister/Register';
 import AccessDenied from './components/InvalidPath/AccessDenied';
 import NotFound from './components/InvalidPath/NotFound';
-import { CheckLoggedin } from './redux/slices/authenticationSlice';
+import { CheckLoggedIn } from './redux/slices/authenticationSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
@@ -20,7 +20,7 @@ function App() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(CheckLoggedin());
+		dispatch(CheckLoggedIn());
 	}, [dispatch]);
 
 	return (
