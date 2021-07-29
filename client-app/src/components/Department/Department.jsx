@@ -3,7 +3,7 @@ import { Table, Button } from 'react-bootstrap';
 import AddDepModal from './AddDepModal';
 import EditDepModal from './EditDepModal';
 import { useSelector, useDispatch } from 'react-redux';
-import { GetDeps, GetDepById, DeleteDeps } from '../../redux/slices/departmentSlice';
+import { GetDeps, DeleteDeps } from '../../redux/slices/departmentSlice';
 import { toast } from 'react-toastify';
 
 
@@ -19,9 +19,8 @@ function Department() {
 		dispatch(GetDeps());
 	}, [reload, dispatch]);
 
-	const handleEditDep = async (depId) => {
-		const dep = await dispatch(GetDepById(depId));
-		if (dep.payload) setCurrentDep(dep.payload);
+	const handleEditDep = async (dep) => {
+		setCurrentDep(dep);
 		setEditModalShow(true);
 	}
 
@@ -61,7 +60,7 @@ function Department() {
 							<td>{dep.Name}</td>
 							<td>
 								<Button className="mr-2" variant="info"
-									onClick={() => handleEditDep(dep.Id)}>
+									onClick={() => handleEditDep(dep)}>
 									Edit
 								</Button>
 

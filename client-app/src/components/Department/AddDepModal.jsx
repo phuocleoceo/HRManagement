@@ -26,7 +26,7 @@ function AddDepModal(props) {
 	};
 
 	return (
-		<Modal show={show} onHide={onHide} centered>
+		<Modal show={show} onHide={onHide} size="sm" centered>
 			<Modal.Header closeButton>
 				<Modal.Title>
 					Add Department

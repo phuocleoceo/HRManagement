@@ -3,7 +3,7 @@ import { Table, Button } from 'react-bootstrap';
 import AddEmpModal from './AddEmpModal';
 import EditEmpModal from './EditEmpModal';
 import { useSelector, useDispatch } from 'react-redux';
-import { GetEmps, GetEmpById, DeleteEmps } from '../../redux/slices/employeeSlice';
+import { GetEmps, DeleteEmps } from '../../redux/slices/employeeSlice';
 import { toast } from 'react-toastify';
 
 function Employee() {
@@ -22,9 +22,8 @@ function Employee() {
 		dispatch(GetEmps());
 	}, [reload, dispatch]);
 
-	const handleEditEmp = async (empId) => {
-		const emp = await dispatch(GetEmpById(empId));
-		if (emp.payload) setCurrentEmp(emp.payload);
+	const handleEditEmp = async (emp) => {
+		setCurrentEmp(emp);
 		setEditModalShow(true);
 	}
 
@@ -68,7 +67,7 @@ function Employee() {
 							<td>{emp.DateOfJoining}</td>
 							<td>
 								<Button className="mr-2" variant="info"
-									onClick={() => handleEditEmp(emp.Id)}>
+									onClick={() => handleEditEmp(emp)}>
 									Edit
 								</Button>
 
