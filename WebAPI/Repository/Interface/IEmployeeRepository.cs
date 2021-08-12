@@ -1,12 +1,13 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebAPI.Models.RequestModel;
 using WebAPI.Models;
+using WebAPI.Feature.Paging;
 
 namespace WebAPI.Repository.Interface
 {
 	public interface IEmployeeRepository
 	{
-		Task<IEnumerable<Employee>> GetAllEmployee();
+		Task<PagedList<Employee>> GetAllEmployee(EmployeeParameters employeeParameters);
 
 		Task<Employee> GetEmployeeById(int id);
 
