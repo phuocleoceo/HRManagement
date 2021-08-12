@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using WebAPI.Models;
 
@@ -7,17 +6,30 @@ namespace WebAPI.Feature.Filtering
 {
 	public static class Extension
 	{
-		public static int CalculateSeniority(this DateTime seniority)
+		public static DateTime CalculateMinSeniority(this int seniority)
 		{
-			return DateTime.Now.Year - seniority.Year;
+			int minYear = DateTime.Now.Year - seniority;
+			minYear = (minYear >= 1000) ? minYear : 1000;
+			return new DateTime(minYear, 1, 1);
 		}
 
-		public static IEnumerable<Employee> FilterSeniority(this List<Employee> list,
+		public static DateTime CalculateMaxSeniority(this int seniority)
+		{
+			int maxYear = DateTime.Now.Year + seniority;
+			maxYear = (maxYear <= 9999) ? maxYear : 9999;
+			return new DateTime(maxYear, 12, 31);
+		}
+
+		public static IQueryable<Employee> FilterSeniority(this IQueryable<Employee> list,
 											int minSeniority, int maxSeniority)
 		{
-			return list.Where(c =>
-				c.DateOfJoining.Value.CalculateSeniority() >= minSeniority &&
-				c.DateOfJoining.Value.CalculateSeniority() <= maxSeniority);
+			if (minSeniority >= 0 && maxSeniority != int.MaxValue)
+			{
+				return list.Where(c =>
+					c.DateOfJoining >= minSeniority.CalculateMinSeniority() &&
+					c.DateOfJoining <= maxSeniority.CalculateMaxSeniority());
+			}
+			return list;
 		}
 	}
 }

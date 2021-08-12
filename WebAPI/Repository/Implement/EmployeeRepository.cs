@@ -21,10 +21,10 @@ namespace WebAPI.Repository.Implement
 		public async Task<PagedList<Employee>> GetAllEmployee(EmployeeParameters employeeParameters)
 		{
 			var emps = await _db.Employees
+							.FilterSeniority(employeeParameters.MinSeniority, employeeParameters.MaxSeniority)
 							.Search(employeeParameters.SearchTerm)
 							.Include(c => c.Department).ToListAsync();
-			return emps.FilterSeniority(employeeParameters.MinSeniority, employeeParameters.MaxSeniority)
-					   .ToPagedList(employeeParameters.PageNumber, employeeParameters.PageSize);
+			return emps.ToPagedList(employeeParameters.PageNumber, employeeParameters.PageSize);
 		}
 
 		public async Task<Employee> GetEmployeeById(int id)
