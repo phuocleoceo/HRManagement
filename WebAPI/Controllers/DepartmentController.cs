@@ -7,6 +7,8 @@ using AutoMapper;
 using WebAPI.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using WebAPI.Repository.Interface;
+using WebAPI.Models.RequestModel;
+using Newtonsoft.Json;
 
 namespace WebAPI.Controllers
 {
@@ -27,9 +29,11 @@ namespace WebAPI.Controllers
 		// GET: api/Department
 		[HttpGet]
 		[AllowAnonymous]
-		public async Task<IEnumerable<DepartmentDTO>> GetDepartments()
+		public async Task<IEnumerable<DepartmentDTO>> GetDepartments([FromQuery] DepartmentParameters
+																		departmentParameters = null)
 		{
-			var departments = await _db.GetAllDepartment();
+			var departments = await _db.GetAllDepartment(departmentParameters);
+			Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(departments.MetaData));
 			return departments.Select(c => _mapper.Map<DepartmentDTO>(c));
 		}
 

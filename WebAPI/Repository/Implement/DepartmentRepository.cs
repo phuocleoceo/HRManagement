@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebAPI.Models.RequestModel;
 using WebAPI.Models;
 using WebAPI.Repository.Interface;
 using WebAPI.Data;
+using WebAPI.Feature.Paging;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebAPI.Repository.Implement
@@ -14,9 +16,10 @@ namespace WebAPI.Repository.Implement
 		{
 			_db = db;
 		}
-		public async Task<IEnumerable<Department>> GetAllDepartment()
+		public async Task<PagedList<Department>> GetAllDepartment(DepartmentParameters departmentParameters)
 		{
-			return await _db.Departments.ToListAsync();
+			var deps = await _db.Departments.ToListAsync();
+			return deps.ToPagedList(departmentParameters.PageNumber, departmentParameters.PageSize);
 		}
 
 		public async Task<Department> GetDepartmentById(int id)

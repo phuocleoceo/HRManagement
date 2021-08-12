@@ -1,12 +1,14 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebAPI.Models.RequestModel;
 using WebAPI.Models;
+using WebAPI.Feature.Paging;
+using System.Collections.Generic;
 
 namespace WebAPI.Repository.Interface
 {
 	public interface IDepartmentRepository
 	{
-		Task<IEnumerable<Department>> GetAllDepartment();
+		Task<PagedList<Department>> GetAllDepartment(DepartmentParameters departmentParameters);
 
 		Task<Department> GetDepartmentById(int id);
 

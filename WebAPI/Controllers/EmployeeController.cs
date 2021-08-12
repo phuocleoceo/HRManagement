@@ -11,6 +11,8 @@ using System;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using WebAPI.Models.RequestModel;
+using Newtonsoft.Json;
 
 namespace WebAPI.Controllers
 {
@@ -33,9 +35,16 @@ namespace WebAPI.Controllers
 		// GET: api/Employee
 		[HttpGet]
 		[AllowAnonymous]
-		public async Task<IEnumerable<EmployeeDTO>> GetEmployees()
+		public async Task<IEnumerable<EmployeeDTO>> GetEmployees([FromQuery] EmployeeParameters
+																	employeeParameters = null)
 		{
-			var employees = await _db.GetAllEmployee();
+			if (!employeeParameters.ValidSeniority)
+			{
+				return null;
+				//return BadRequest("Invalid seniority information !");
+			}
+			var employees = await _db.GetAllEmployee(employeeParameters);
+			Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(employees.MetaData));
 			return employees.Select(c => _mapper.Map<EmployeeDTO>(c));
 		}
 
