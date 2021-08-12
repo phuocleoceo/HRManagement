@@ -6,6 +6,7 @@ using WebAPI.Data;
 using WebAPI.Feature.Paging;
 using WebAPI.Feature.Filtering;
 using Microsoft.EntityFrameworkCore;
+using WebAPI.Feature.Searching;
 
 namespace WebAPI.Repository.Implement
 {
@@ -19,7 +20,9 @@ namespace WebAPI.Repository.Implement
 
 		public async Task<PagedList<Employee>> GetAllEmployee(EmployeeParameters employeeParameters)
 		{
-			var emps = await _db.Employees.Include(c => c.Department).ToListAsync();
+			var emps = await _db.Employees
+							.Search(employeeParameters.SearchTerm)
+							.Include(c => c.Department).ToListAsync();
 			return emps.FilterSeniority(employeeParameters.MinSeniority, employeeParameters.MaxSeniority)
 					   .ToPagedList(employeeParameters.PageNumber, employeeParameters.PageSize);
 		}

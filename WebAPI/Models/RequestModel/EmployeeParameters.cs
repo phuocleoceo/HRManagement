@@ -5,5 +5,7 @@ namespace WebAPI.Models.RequestModel
 		public int MinSeniority { get; set; } = 0;
 		public int MaxSeniority { get; set; } = int.MaxValue;
 		public bool ValidSeniority => MaxSeniority > MinSeniority;
+
+		public string SearchTerm { get; set; }
 	}
 }
