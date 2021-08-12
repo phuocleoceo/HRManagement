@@ -38,6 +38,11 @@ namespace WebAPI.Controllers
 		public async Task<IEnumerable<EmployeeDTO>> GetEmployees([FromQuery] EmployeeParameters
 																	employeeParameters = null)
 		{
+			if (!employeeParameters.ValidSeniority)
+			{
+				return null;
+				//return BadRequest("Invalid seniority information !");
+			}
 			var employees = await _db.GetAllEmployee(employeeParameters);
 			Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(employees.MetaData));
 			return employees.Select(c => _mapper.Map<EmployeeDTO>(c));
