@@ -1,4 +1,4 @@
-namespace WebAPI.Feature.Paging
+namespace WebAPI.Extension.Paging
 {
 	public class MetaData
 	{

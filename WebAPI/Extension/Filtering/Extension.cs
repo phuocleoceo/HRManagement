@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using WebAPI.Models;
 
-namespace WebAPI.Feature.Filtering
+namespace WebAPI.Extension.Filtering
 {
 	public static class Extension
 	{

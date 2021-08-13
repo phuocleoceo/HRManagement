@@ -4,7 +4,7 @@ using WebAPI.Models.RequestModel;
 using WebAPI.Models;
 using WebAPI.Repository.Interface;
 using WebAPI.Data;
-using WebAPI.Feature.Paging;
+using WebAPI.Extension.Paging;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebAPI.Repository.Implement

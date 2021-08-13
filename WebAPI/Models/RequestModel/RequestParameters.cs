@@ -17,5 +17,6 @@ namespace WebAPI.Models.RequestModel
 			}
 		}
 
+		public string OrderBy { get; set; }
 	}
 }

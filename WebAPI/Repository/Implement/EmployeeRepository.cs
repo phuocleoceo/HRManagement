@@ -3,10 +3,10 @@ using WebAPI.Models.RequestModel;
 using WebAPI.Models;
 using WebAPI.Repository.Interface;
 using WebAPI.Data;
-using WebAPI.Feature.Paging;
-using WebAPI.Feature.Filtering;
+using WebAPI.Extension.Paging;
+using WebAPI.Extension.Filtering;
 using Microsoft.EntityFrameworkCore;
-using WebAPI.Feature.Searching;
+using WebAPI.Extension.Searching;
 
 namespace WebAPI.Repository.Implement
 {

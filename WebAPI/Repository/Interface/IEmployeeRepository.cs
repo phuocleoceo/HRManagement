@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using WebAPI.Models.RequestModel;
 using WebAPI.Models;
-using WebAPI.Feature.Paging;
+using WebAPI.Extension.Paging;
 
 namespace WebAPI.Repository.Interface
 {
