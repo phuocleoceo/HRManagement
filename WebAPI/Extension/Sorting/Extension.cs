@@ -29,7 +29,7 @@ namespace WebAPI.Extension.Sorting
 		private static string CreateOrderQuery<T>(this string orderByQueryString)
 		{
 			string[] orderParams = orderByQueryString.Trim().Split(',');
-			PropertyInfo[] propertyInfos = typeof(Employee).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+			PropertyInfo[] propertyInfos = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 			StringBuilder orderQueryBuilder = new StringBuilder();
 
 			foreach (string param in orderParams)

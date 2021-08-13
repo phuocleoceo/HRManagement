@@ -14,6 +14,8 @@ using WebAPI.Repository.Implement;
 using WebAPI.Repository.Interface;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using WebAPI.Extension.DataShaping;
+using WebAPI.Models.DTO;
 
 namespace WebAPI
 {
@@ -48,6 +50,7 @@ namespace WebAPI
 			// DI
 			services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 			services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+			services.AddScoped<IDataShaper<EmployeeDTO>, DataShaper<EmployeeDTO>>();
 			services.AddAutoMapper(typeof(HRMMapping));
 
 			//Controller and JSON

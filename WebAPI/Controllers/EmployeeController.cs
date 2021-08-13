@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using WebAPI.Models.RequestModel;
 using Newtonsoft.Json;
+using WebAPI.Extension.DataShaping;
+using System.Dynamic;
 
 namespace WebAPI.Controllers
 {
@@ -24,18 +26,21 @@ namespace WebAPI.Controllers
 		private readonly IEmployeeRepository _db;
 		private readonly IMapper _mapper;
 		private readonly IWebHostEnvironment _env;
+		private readonly IDataShaper<EmployeeDTO> _dataShaper;
 
-		public EmployeeController(IEmployeeRepository db, IMapper mapper, IWebHostEnvironment env)
+		public EmployeeController(IEmployeeRepository db, IMapper mapper,
+								IWebHostEnvironment env, IDataShaper<EmployeeDTO> dataShaper)
 		{
 			_db = db;
 			_mapper = mapper;
 			_env = env;
+			_dataShaper = dataShaper;
 		}
 
 		// GET: api/Employee
 		[HttpGet]
 		[AllowAnonymous]
-		public async Task<IEnumerable<EmployeeDTO>> GetEmployees([FromQuery] EmployeeParameters
+		public async Task<IEnumerable<ExpandoObject>> GetEmployees([FromQuery] EmployeeParameters
 																	employeeParameters = null)
 		{
 			if (!employeeParameters.ValidSeniority)
@@ -45,7 +50,8 @@ namespace WebAPI.Controllers
 			}
 			var employees = await _db.GetAllEmployee(employeeParameters);
 			Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(employees.MetaData));
-			return employees.Select(c => _mapper.Map<EmployeeDTO>(c));
+			return _dataShaper.ShapeData(employees.Select(c => _mapper.Map<EmployeeDTO>(c)),
+										 employeeParameters.Fields);
 		}
 
 		// GET: api/Employee/5
