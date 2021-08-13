@@ -1,7 +1,7 @@
 using System.Linq;
 using WebAPI.Models;
 
-namespace WebAPI.Feature.Searching
+namespace WebAPI.Extension.Searching
 {
 	public static class Extension
 	{

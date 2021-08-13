@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WebAPI.Feature.Paging
+namespace WebAPI.Extension.Paging
 {
 	public static class Extension
 	{

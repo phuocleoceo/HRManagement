@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace WebAPI.Feature.Paging
+namespace WebAPI.Extension.Paging
 {
 	public class PagedList<T> : List<T>
 	{

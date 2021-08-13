@@ -3,10 +3,11 @@ using WebAPI.Models.RequestModel;
 using WebAPI.Models;
 using WebAPI.Repository.Interface;
 using WebAPI.Data;
-using WebAPI.Feature.Paging;
-using WebAPI.Feature.Filtering;
+using WebAPI.Extension.Paging;
+using WebAPI.Extension.Filtering;
 using Microsoft.EntityFrameworkCore;
-using WebAPI.Feature.Searching;
+using WebAPI.Extension.Searching;
+using WebAPI.Extension.Sorting;
 
 namespace WebAPI.Repository.Implement
 {
@@ -18,13 +19,14 @@ namespace WebAPI.Repository.Implement
 			_db = db;
 		}
 
-		public async Task<PagedList<Employee>> GetAllEmployee(EmployeeParameters employeeParameters)
+		public async Task<PagedList<Employee>> GetAllEmployee(EmployeeParameters empParams)
 		{
 			var emps = await _db.Employees
-							.FilterSeniority(employeeParameters.MinSeniority, employeeParameters.MaxSeniority)
-							.Search(employeeParameters.SearchTerm)
+							.FilterSeniority(empParams.MinSeniority, empParams.MaxSeniority)
+							.Search(empParams.SearchTerm)
+							.Sort(empParams.OrderBy)
 							.Include(c => c.Department).ToListAsync();
-			return emps.ToPagedList(employeeParameters.PageNumber, employeeParameters.PageSize);
+			return emps.ToPagedList(empParams.PageNumber, empParams.PageSize);
 		}
 
 		public async Task<Employee> GetEmployeeById(int id)
