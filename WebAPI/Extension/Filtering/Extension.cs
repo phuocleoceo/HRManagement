@@ -8,13 +8,13 @@ namespace WebAPI.Extension.Filtering
 	{
 		// Linq to Entities cannot handle complex c.DateOfJoining.CalculateSeniority() 
 		// so we take it to minSeniority and  maxSeniority
-		public static DateTime CalculateMinSeniority(this int seniority)
+		private static DateTime CalculateMinSeniority(this int seniority)
 		{
 			int Year = DateTime.Now.Year - seniority;
 			Year = (Year >= 1000) ? Year : 1000;
 			return new DateTime(Year, 12, 31);
 		}
-		public static DateTime CalculateMaxSeniority(this int seniority)
+		private static DateTime CalculateMaxSeniority(this int seniority)
 		{
 			int Year = DateTime.Now.Year - seniority;
 			Year = (Year >= 1000) ? Year : 1000;
