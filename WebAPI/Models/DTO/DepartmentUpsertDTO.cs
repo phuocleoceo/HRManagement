@@ -1,7 +1,6 @@
-namespace WebAPI.Models.DTO
+namespace WebAPI.Models.DTO;
+
+public class DepartmentUpsertDTO
 {
-	public class DepartmentUpsertDTO
-	{
-		public string Name { get; set; }
-	}
+    public string Name { get; set; }
 }

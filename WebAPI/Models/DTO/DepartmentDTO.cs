@@ -1,9 +1,8 @@
-namespace WebAPI.Models.DTO
-{
-	public class DepartmentDTO
-	{
-		public int Id { get; set; }
+namespace WebAPI.Models.DTO;
 
-		public string Name { get; set; }
-	}
+public class DepartmentDTO
+{
+    public int Id { get; set; }
+
+    public string Name { get; set; }
 }

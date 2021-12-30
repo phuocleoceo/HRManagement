@@ -1,19 +1,18 @@
-namespace WebAPI.Models.RequestModel
+namespace WebAPI.Models.RequestModel;
+
+public abstract class RequestParameters
 {
-	public abstract class RequestParameters
-	{
-		const int maxPageSize = 50;
-		public int PageNumber { get; set; } = 1;
-		private int _pageSize = 10;
-		public int PageSize
-		{
-			get => _pageSize;
+    const int maxPageSize = 50;
+    public int PageNumber { get; set; } = 1;
+    private int _pageSize = 10;
+    public int PageSize
+    {
+        get => _pageSize;
 
-			set => _pageSize = (value > maxPageSize) ? maxPageSize : value;
-		}
+        set => _pageSize = (value > maxPageSize) ? maxPageSize : value;
+    }
 
-		public string OrderBy { get; set; }
+    public string OrderBy { get; set; }
 
-		public string Fields { get; set; }
-	}
+    public string Fields { get; set; }
 }

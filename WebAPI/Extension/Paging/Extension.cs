@@ -1,18 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
+namespace WebAPI.Extension.Paging;
 
-namespace WebAPI.Extension.Paging
+public static class Extension
 {
-	public static class Extension
-	{
-		public static PagedList<T> ToPagedList<T>(this IEnumerable<T> source, int pageNumber, int pageSize)
-		{
-			int count = source.Count();
-			var items = source
-			.Skip((pageNumber - 1) * pageSize)
-			.Take(pageSize).ToList();
+    public static PagedList<T> ToPagedList<T>(this IEnumerable<T> source, int pageNumber, int pageSize)
+    {
+        int count = source.Count();
+        var items = source
+        .Skip((pageNumber - 1) * pageSize)
+        .Take(pageSize).ToList();
 
-			return new PagedList<T>(items, count, pageNumber, pageSize);
-		}
-	}
+        return new PagedList<T>(items, count, pageNumber, pageSize);
+    }
 }

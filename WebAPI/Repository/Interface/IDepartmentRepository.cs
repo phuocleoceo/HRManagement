@@ -1,27 +1,24 @@
-using System.Threading.Tasks;
 using WebAPI.Models.RequestModel;
-using WebAPI.Models;
 using WebAPI.Extension.Paging;
-using System.Collections.Generic;
+using WebAPI.Models;
 
-namespace WebAPI.Repository.Interface
+namespace WebAPI.Repository.Interface;
+
+public interface IDepartmentRepository
 {
-	public interface IDepartmentRepository
-	{
-		Task<PagedList<Department>> GetAllDepartment(DepartmentParameters departmentParameters);
+    Task<PagedList<Department>> GetAllDepartment(DepartmentParameters departmentParameters);
 
-		Task<Department> GetDepartmentById(int id);
+    Task<Department> GetDepartmentById(int id);
 
-		Task<IEnumerable<Employee>> GetListEmployee(int id);
+    Task<IEnumerable<Employee>> GetListEmployee(int id);
 
-		Task CreateDepartment(Department d);
+    Task CreateDepartment(Department d);
 
-		Task UpdateDepartment(Department d);
+    Task UpdateDepartment(Department d);
 
-		Task DeleteDepartment(int id);
+    Task DeleteDepartment(int id);
 
-		Task<bool> DepartmentExists(int id);
+    Task<bool> DepartmentExists(int id);
 
-		Task SaveAsync();
-	}
+    Task SaveAsync();
 }

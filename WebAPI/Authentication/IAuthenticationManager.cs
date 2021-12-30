@@ -1,21 +1,18 @@
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using WebAPI.Models;
 using WebAPI.Models.DTO;
+using WebAPI.Models;
 
-namespace WebAPI.Authentication
+namespace WebAPI.Authentication;
+
+public interface IAuthenticationManager
 {
-	public interface IAuthenticationManager
-	{
-		Task<User> ValidateUser(UserForAuthenticationDTO userForAuth);
+    Task<User> ValidateUser(UserForAuthenticationDTO userForAuth);
 
-		Task<IEnumerable<Claim>> GetClaims(User _user);
+    Task<IEnumerable<Claim>> GetClaims(User _user);
 
-		string CreateAccessToken(IEnumerable<Claim> claims);
+    string CreateAccessToken(IEnumerable<Claim> claims);
 
-		string CreateRefreshToken();
+    string CreateRefreshToken();
 
-		ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
-	}
+    ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
 }

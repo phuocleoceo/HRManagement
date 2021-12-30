@@ -1,6 +1,5 @@
-namespace WebAPI.Models.RequestModel
+namespace WebAPI.Models.RequestModel;
+
+public class DepartmentParameters : RequestParameters
 {
-	public class DepartmentParameters : RequestParameters
-	{
-	}
 }

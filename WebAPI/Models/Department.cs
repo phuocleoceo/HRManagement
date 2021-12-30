@@ -1,15 +1,13 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebAPI.Models
+namespace WebAPI.Models;
+
+public class Department
 {
-	public class Department
-	{
-		[Key]
-		public int Id { get; set; }
+    [Key]
+    public int Id { get; set; }
 
-		public string Name { get; set; }
+    public string Name { get; set; }
 
-		public List<Employee> Employees { get; set; }
-	}
+    public List<Employee> Employees { get; set; }
 }
